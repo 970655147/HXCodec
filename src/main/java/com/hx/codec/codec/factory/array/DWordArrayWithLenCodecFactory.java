@@ -1,0 +1,28 @@
+package com.hx.codec.codec.factory.array;
+
+import com.hx.codec.anno.Field;
+import com.hx.codec.codec.AbstractCodec;
+import com.hx.codec.codec.array.DWordArrayWithLenCodec;
+import com.hx.codec.codec.factory.AbstractCodecFactory;
+import com.hx.codec.codec.factory.CodecFactoryContext;
+import com.hx.codec.constants.ByteType;
+
+import java.nio.ByteOrder;
+
+/**
+ * DWordArrayWithLenCodecFactory
+ *
+ * @author Jerry.X.He
+ * @version 1.0
+ * @date 2021/9/28 16:33
+ */
+public class DWordArrayWithLenCodecFactory implements AbstractCodecFactory<Integer[], Integer[]> {
+
+    @Override
+    public AbstractCodec<Integer[], Integer[]> create(CodecFactoryContext context) {
+        Field fieldAnno = context.getFieldAnno();
+        ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+        ByteType lengthByteType = fieldAnno.lengthByteType();
+        return new DWordArrayWithLenCodec(byteOrder, lengthByteType);
+    }
+}
