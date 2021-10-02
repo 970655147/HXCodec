@@ -11,7 +11,6 @@ import com.hx.codec.codec.factory.string.CharsetEncodingStringWithFixedLenCodecF
 import com.hx.codec.codec.factory.string.CharsetEncodingStringWithLenCodecFactory;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
-import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
@@ -244,5 +243,34 @@ public class CodecUtils {
         return DATA_TYPE_2_CODEC.get(dataType);
     }
 
+    /**
+     * $desc
+     *
+     * @param str  str
+     * @return java.lang.String
+     * @author Jerry.X.He
+     * @date 2021-10-02 19:33
+     */
+    public static String lowerCaseFirstChar(String str) {
+        if (str.length() == 1) {
+            return str.toLowerCase();
+        }
+        if (Character.isUpperCase(str.charAt(0))) {
+            return Character.toLowerCase(str.charAt(0)) + str.substring(1);
+        }
+
+        return str;
+    }
+
+    public static String upperCaseFirstChar(String str) {
+        if (str.length() == 1) {
+            return str.toUpperCase();
+        }
+        if (Character.isLowerCase(str.charAt(0))) {
+            return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+        }
+
+        return str;
+    }
 
 }

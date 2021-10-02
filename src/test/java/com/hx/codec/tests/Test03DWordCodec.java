@@ -5,6 +5,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test01DWordProtocol
@@ -15,17 +16,8 @@ import io.netty.buffer.Unpooled;
  */
 public class Test03DWordCodec extends Test00BaseTests {
 
-    // Test01DWordProtocol
-    public static void main(String[] args) {
-
-        test01SingedDWord();
-        test01SingedDWord02();
-
-
-    }
-
-    // test01SingedDWord
-    public static void test01SingedDWord() {
+    @Test
+    public void test01SingedDWord() {
         DWordCodec protocol = new DWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = 23;
@@ -40,7 +32,8 @@ public class Test03DWordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == 4, " unexpected value ");
     }
 
-    public static void test01SingedDWord02() {
+    @Test
+    public void test01SingedDWord02() {
         DWordCodec protocol = new DWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = -23;

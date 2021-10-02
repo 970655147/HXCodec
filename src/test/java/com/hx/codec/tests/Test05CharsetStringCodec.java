@@ -9,6 +9,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test05StringProtocol
@@ -19,20 +20,8 @@ import io.netty.buffer.Unpooled;
  */
 public class Test05CharsetStringCodec extends Test00BaseTests {
 
-    public static void main(String[] args) {
-
-        test01String();
-        test01String02();
-        test01String03();
-        test01String04();
-
-        test02String01();
-        test02String02();
-
-    }
-
-    // test01String
-    public static void test01String() {
+    @Test
+    public void test01String() {
         int fixedLength = 0x10;
         CharsetEncodingStringWithFixedLenCodec protocol = new CharsetEncodingStringWithFixedLenCodec(fixedLength);
         ByteBuf buf = Unpooled.buffer(0x10);
@@ -48,7 +37,8 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
     }
 
-    public static void test01String02() {
+    @Test
+    public void test01String02() {
         byte paddingByte = 0x07;
         int fixedLength = 0x10;
         CharsetEncodingStringWithFixedLenCodec protocol = new CharsetEncodingStringWithFixedLenCodec(paddingByte, fixedLength, Constants.CHARSET_UTF8);
@@ -65,7 +55,8 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
     }
 
-    public static void test01String03() {
+    @Test
+    public void test01String03() {
         byte paddingByte = 0x07;
         int fixedLength = 0x10;
         CharsetEncodingStringWithFixedLenCodec protocol = new CharsetEncodingStringWithFixedLenCodec(paddingByte, true, fixedLength, Constants.CHARSET_UTF8);
@@ -82,7 +73,8 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
     }
 
-    public static void test01String04() {
+    @Test
+    public void test01String04() {
         byte paddingByte = 0x07;
         int fixedLength = 0x10;
         CharsetEncodingStringWithFixedLenCodec protocol = new CharsetEncodingStringWithFixedLenCodec(paddingByte, true, fixedLength, Constants.CHARSET_UTF8);
@@ -99,7 +91,8 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
     }
 
-    public static void test02String01() {
+    @Test
+    public void test02String01() {
         byte paddingByte = 0x07;
         int fixedLength = 0x10;
         CharsetEncodingStringWithLenCodec protocol = new CharsetEncodingStringWithLenCodec(ByteType.BYTE);
@@ -116,7 +109,8 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == (entity.getBytes(CodecConstants.DEFAULT_CHARSET).length + 1), " unexpected value ");
     }
 
-    public static void test02String02() {
+    @Test
+    public void test02String02() {
         byte paddingByte = 0x07;
         int fixedLength = 0x10;
         CharsetEncodingStringWithLenCodec protocol = new CharsetEncodingStringWithLenCodec(ByteType.QWORD);

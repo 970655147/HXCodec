@@ -5,6 +5,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,15 +19,8 @@ import java.util.Collection;
  */
 public class Test09ByteCollectionCodec extends Test00BaseTests {
 
-    // Test07ByteArrayCodec
-    public static void main(String[] args) {
-
-        test01ByteCollection();
-
-    }
-
-    // test01ByteArray
-    public static void test01ByteCollection() {
+    @Test
+    public void test01ByteCollection() {
         int fixedLength = 0x10;
         ByteCollectionCodec protocol = new ByteCollectionCodec();
         ByteBuf buf = Unpooled.buffer(0x10);

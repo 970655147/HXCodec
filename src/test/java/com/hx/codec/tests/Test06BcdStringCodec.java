@@ -5,6 +5,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test05StringProtocol
@@ -15,15 +16,8 @@ import io.netty.buffer.Unpooled;
  */
 public class Test06BcdStringCodec extends Test00BaseTests {
 
-    public static void main(String[] args) {
-
-        test01String();
-        test01String02();
-
-    }
-
-    // test01String
-    public static void test01String() {
+    @Test
+    public void test01String() {
         int fixedLength = 0x10;
         Bcd8421StringCodec protocol = new Bcd8421StringCodec(fixedLength);
         ByteBuf buf = Unpooled.buffer(0x10);
@@ -39,7 +33,8 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
     }
 
-    public static void test01String02() {
+    @Test
+    public void test01String02() {
         int fixedLength = 0x06;
         Bcd8421StringCodec protocol = new Bcd8421StringCodec(fixedLength);
         ByteBuf buf = Unpooled.buffer(0x10);

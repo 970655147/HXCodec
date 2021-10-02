@@ -10,6 +10,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test14GenericBeanCodec
@@ -20,16 +21,8 @@ import io.netty.buffer.Unpooled;
  */
 public class Test14GenericBeanCodec extends Test00BaseTests {
 
-    // Test14GenericBeanCodec
-    public static void main(String[] args) {
-
-        test01UpConnectReq();
-        test02UpExgMsgRealLocation();
-
-    }
-
-    // test01UpConnectReq
-    private static void test01UpConnectReq() {
+    @Test
+    public void test01UpConnectReq() {
         GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
         GenericBeanCodec<UpConnectReq> codec = new GenericBeanCodec<>(beanSchema);
 
@@ -47,6 +40,7 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
         UpConnectReq decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
+        AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
         AssertUtils.state(entity.getUserid() == decodedEntity.getUserid(), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.getDownLinkIp()), " unexpected value ");
@@ -55,8 +49,8 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
 
     }
 
-    // test02UpExgMsgRealLocation
-    private static void test02UpExgMsgRealLocation() {
+    @Test
+    public void test02UpExgMsgRealLocation() {
         GenericBeanSchema<Jt809Header> headerBeanSchema = new GenericBeanSchema<>(Jt809Header.class, 2019);
         GenericBeanCodec<Jt809Header> headerCodec = new GenericBeanCodec<>(headerBeanSchema);
         GenericBeanSchema<UpExgMsgRealLocation> entityBeanSchema = new GenericBeanSchema<>(UpExgMsgRealLocation.class, 2019);
@@ -92,6 +86,7 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
         UpExgMsgRealLocation decodedEntity = entityCodec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
+        AssertUtils.state(encodedBufHexStr.equals("000000620000000141000000000305000000000000050000000000000006310000000000000000000000000000000000000000014102000000240301020304010203000000040000000500060007000000080009000a0000000b0000000c"), " unexpected value ");
         AssertUtils.state(header.getMsgLength() == decodedHeader.getMsgLength(), " unexpected value ");
         AssertUtils.state(header.getMsgSn() == decodedHeader.getMsgSn(), " unexpected value ");
         AssertUtils.state(header.getMsgId() == decodedHeader.getMsgId(), " unexpected value ");

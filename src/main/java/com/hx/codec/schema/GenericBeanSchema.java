@@ -5,9 +5,8 @@ import com.hx.codec.anno.FieldRepeat;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
-import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.AssertUtils;
-import com.sun.xml.internal.ws.util.StringUtils;
+import com.hx.codec.utils.CodecUtils;
 import lombok.Data;
 
 import java.beans.BeanInfo;
@@ -214,7 +213,7 @@ public class GenericBeanSchema<T> {
         List<String> getterPrefix = Arrays.asList("get", "is", "has");
         try {
             for (String prefix : getterPrefix) {
-                String methodName = prefix + StringUtils.capitalize(field.getName());
+                String methodName = prefix + CodecUtils.upperCaseFirstChar(field.getName());
                 Method method = clazz.getMethod(methodName);
                 return method;
             }
@@ -237,7 +236,7 @@ public class GenericBeanSchema<T> {
         List<String> getterPrefix = Arrays.asList("set", "is", "has");
         try {
             for (String prefix : getterPrefix) {
-                String methodName = prefix + StringUtils.capitalize(field.getName());
+                String methodName = prefix + CodecUtils.upperCaseFirstChar(field.getName());
                 Method method = clazz.getMethod(methodName, field.getType());
                 return method;
             }

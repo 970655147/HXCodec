@@ -5,6 +5,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test01QWordProtocol
@@ -16,15 +17,15 @@ import io.netty.buffer.Unpooled;
 public class Test04QWordCodec extends Test00BaseTests {
 
     // Test01QWordProtocol
-    public static void main(String[] args) {
+    public void main(String[] args) {
 
         test01SingedQWord();
         test01SingedQWord02();
 
     }
 
-    // test01SingedQWord
-    public static void test01SingedQWord() {
+    @Test
+    public void test01SingedQWord() {
         QWordCodec protocol = new QWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         long entity = 23;
@@ -39,7 +40,8 @@ public class Test04QWordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == 8, " unexpected value ");
     }
 
-    public static void test01SingedQWord02() {
+    @Test
+    public void test01SingedQWord02() {
         QWordCodec protocol = new QWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         long entity = -23;

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logdir">target/logs</Property>
+        <Property name="layout">%d [%t] %-5p %c- %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout charset="utf8" pattern="${layout}"/>
+        </Console>
+        <RollingFile name="ROOT" fileName="${logdir}/ROOT.log" filePattern="${logdir}/ROOT.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout charset="utf8" pattern="${layout}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="ROOT"/>
+        </Root>
+        <!--        <Logger name="org.apache.ROOT.core.ContainerBase.[ROOT].[localhost]"-->
+        <!--                level="INFO" additivity="false">-->
+        <!--            <AppenderRef ref="LOCALHOST"/>-->
+        <!--        </Logger>-->
+    </Loggers>
+</Configuration>

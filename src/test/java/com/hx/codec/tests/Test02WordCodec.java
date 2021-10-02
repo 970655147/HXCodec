@@ -6,6 +6,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.Test;
 
 /**
  * Test01WordProtocol
@@ -16,19 +17,8 @@ import io.netty.buffer.Unpooled;
  */
 public class Test02WordCodec extends Test00BaseTests {
 
-    // Test01WordProtocol
-    public static void main(String[] args) {
-
-        test01SingedWord();
-        test01SingedWord02();
-
-        test02UnsingedWord();
-        test02UnsingedWord02();
-
-    }
-
-    // test01SingedWord
-    public static void test01SingedWord() {
+    @Test
+    public void test01SingedWord() {
         WordCodec protocol = new WordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = 23;
@@ -43,7 +33,8 @@ public class Test02WordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == 2, " unexpected value ");
     }
 
-    public static void test01SingedWord02() {
+    @Test
+    public void test01SingedWord02() {
         WordCodec protocol = new WordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = -23;
@@ -58,7 +49,8 @@ public class Test02WordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == 2, " unexpected value ");
     }
 
-    public static void test02UnsingedWord() {
+    @Test
+    public void test02UnsingedWord() {
         UnsignedWordCodec protocol = new UnsignedWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = 23;
@@ -73,7 +65,8 @@ public class Test02WordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == 2, " unexpected value ");
     }
 
-    public static void test02UnsingedWord02() {
+    @Test
+    public void test02UnsingedWord02() {
         UnsignedWordCodec protocol = new UnsignedWordCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = -23;

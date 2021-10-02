@@ -3,6 +3,7 @@ package com.hx.codec.tests;
 import com.hx.codec.model.UpConnectReq;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
+import org.junit.Test;
 
 /**
  * Test13RuntimeSchema
@@ -11,10 +12,10 @@ import com.hx.codec.utils.AssertUtils;
  * @version 1.0
  * @date 2021/9/28 11:21
  */
-public class Test13RuntimeSchema  extends Test00BaseTests {
+public class Test13RuntimeSchema extends Test00BaseTests {
 
-    // Test13RuntimeSchema
-    public static void main(String[] args) {
+    @Test
+    public void test01GenericBeanSchema() {
 
         GenericBeanSchema<UpConnectReq> beanSchemaVer2011 = new GenericBeanSchema<>(UpConnectReq.class, 2011);
         GenericBeanSchema<UpConnectReq> beanSchemaVer2019 = new GenericBeanSchema<>(UpConnectReq.class, 2019);
