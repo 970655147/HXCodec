@@ -758,12 +758,16 @@ public class AssertUtils {
      * @author Jerry.X.He
      * @date 2021-10-02 18:17
      */
-    private static int lengthOfString(String str) {
+    public static int lengthOfString(String str) {
         return str == null ? 0 : str.length();
     }
 
-    private static String trimString(String str) {
+    public static String trimString(String str) {
         return str == null ? null : str.trim();
+    }
+
+    public static boolean isNotBlank(String str) {
+        return lengthOfString(str) > 0;
     }
 
     /**
@@ -774,7 +778,7 @@ public class AssertUtils {
      * @author Jerry.X.He
      * @date 2021-10-02 18:19
      */
-    private static boolean isCollEmpty(Collection<?> collection) {
+    public static boolean isCollEmpty(Collection<?> collection) {
         return collection == null ? true : collection.isEmpty();
     }
 
@@ -786,7 +790,7 @@ public class AssertUtils {
      * @author Jerry.X.He
      * @date 2021-10-02 18:19
      */
-    private static boolean isMapEmpty(Map<?, ?> collection) {
+    public static boolean isMapEmpty(Map<?, ?> collection) {
         return collection == null ? true : collection.isEmpty();
     }
 
