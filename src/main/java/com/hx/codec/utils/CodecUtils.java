@@ -15,6 +15,7 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -272,5 +273,50 @@ public class CodecUtils {
 
         return str;
     }
+
+    /**
+     * lengthOfString
+     *
+     * @param str str
+     * @return int
+     * @author Jerry.X.He
+     * @date 2021-10-02 18:17
+     */
+    public static int lengthOfString(String str) {
+        return str == null ? 0 : str.length();
+    }
+
+    public static String trimString(String str) {
+        return str == null ? null : str.trim();
+    }
+
+    public static boolean isNotBlank(String str) {
+        return lengthOfString(str) > 0;
+    }
+
+    /**
+     * isCollEmpty
+     *
+     * @param collection collection
+     * @return boolean
+     * @author Jerry.X.He
+     * @date 2021-10-02 18:19
+     */
+    public static boolean isCollEmpty(Collection<?> collection) {
+        return collection == null ? true : collection.isEmpty();
+    }
+
+    /**
+     * isMapEmpty
+     *
+     * @param collection collection
+     * @return boolean
+     * @author Jerry.X.He
+     * @date 2021-10-02 18:19
+     */
+    public static boolean isMapEmpty(Map<?, ?> collection) {
+        return collection == null ? true : collection.isEmpty();
+    }
+
 
 }

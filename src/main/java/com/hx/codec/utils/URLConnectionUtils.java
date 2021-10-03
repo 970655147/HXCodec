@@ -40,7 +40,7 @@ public class URLConnectionUtils {
             String queryString = serializeQueryString(form);
             String queryStringSeprator = urlStr.contains("?") ? "&" : "?";
             String fullUrl = urlStr;
-            if (AssertUtils.isNotBlank(queryString)) {
+            if (CodecUtils.isNotBlank(queryString)) {
                 fullUrl = urlStr + queryStringSeprator + queryString;
             }
             URL url = new URL(fullUrl);
@@ -204,7 +204,7 @@ public class URLConnectionUtils {
         }
 
         List<String> headerValues = response.getHeaders().get(headerKey);
-        if (AssertUtils.isCollEmpty(headerValues)) {
+        if (CodecUtils.isCollEmpty(headerValues)) {
             return null;
         }
 
@@ -220,7 +220,7 @@ public class URLConnectionUtils {
      */
     public static String getCharsetFromServer(HttpResponse response) {
         String contentType = getFirstHeaderValue(response, "Content-Type");
-        if (AssertUtils.isNotBlank(contentType)) {
+        if (CodecUtils.isNotBlank(contentType)) {
             String charsetInContentType = "charset=";
             int idxOfCharset = contentType.toLowerCase().indexOf(charsetInContentType);
             if (idxOfCharset >= 0) {

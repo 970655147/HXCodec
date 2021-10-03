@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import static com.hx.codec.utils.CodecUtils.*;
+
 /**
  * AssertUtils
  * copy from : org.springframework.util.Assert
@@ -230,7 +232,7 @@ public class AssertUtils {
      * @param text    the String to check
      * @param message the exception message to use if the assertion fails
      * @throws IllegalArgumentException if the text is empty
-     * @see AssertUtils#lengthOfString
+     * @see CodecUtils#lengthOfString
      */
     public static void hasLength(String text, String message) {
         if (lengthOfString(text) <= 0) {
@@ -249,7 +251,7 @@ public class AssertUtils {
      * @param messageSupplier a supplier for the exception message to use if the
      *                        assertion fails
      * @throws IllegalArgumentException if the text is empty
-     * @see AssertUtils#lengthOfString
+     * @see CodecUtils#lengthOfString
      * @since 5.0
      */
     public static void hasLength(String text, Supplier<String> messageSupplier) {
@@ -748,50 +750,6 @@ public class AssertUtils {
 
     private static String nullSafeGet(Supplier<String> messageSupplier) {
         return (messageSupplier != null ? messageSupplier.get() : null);
-    }
-
-    /**
-     * lengthOfString
-     *
-     * @param str str
-     * @return int
-     * @author Jerry.X.He
-     * @date 2021-10-02 18:17
-     */
-    public static int lengthOfString(String str) {
-        return str == null ? 0 : str.length();
-    }
-
-    public static String trimString(String str) {
-        return str == null ? null : str.trim();
-    }
-
-    public static boolean isNotBlank(String str) {
-        return lengthOfString(str) > 0;
-    }
-
-    /**
-     * isCollEmpty
-     *
-     * @param collection collection
-     * @return boolean
-     * @author Jerry.X.He
-     * @date 2021-10-02 18:19
-     */
-    public static boolean isCollEmpty(Collection<?> collection) {
-        return collection == null ? true : collection.isEmpty();
-    }
-
-    /**
-     * isMapEmpty
-     *
-     * @param collection collection
-     * @return boolean
-     * @author Jerry.X.He
-     * @date 2021-10-02 18:19
-     */
-    public static boolean isMapEmpty(Map<?, ?> collection) {
-        return collection == null ? true : collection.isEmpty();
     }
 
 }
