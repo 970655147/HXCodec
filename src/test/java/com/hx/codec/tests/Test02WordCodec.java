@@ -79,7 +79,7 @@ public class Test02WordCodec extends Test00BaseTests {
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
         AssertUtils.state(encodedHexStr.equals("ffe9"), " unexpected value ");
-        AssertUtils.state(decoded == (256 + entity), " unexpected value ");
+        AssertUtils.state(decoded == (65536 + entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == 2, " unexpected value ");
         AssertUtils.state(buf.writerIndex() == 2, " unexpected value ");
     }

@@ -31,7 +31,7 @@ public class UnsignedWordDecoder extends AbstractDecoder<Integer> {
         }
 
         if (result < 0) {
-            result += (1 << 8);
+            result += (1 << 16);
         }
         return result;
     }

@@ -13,6 +13,9 @@ import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import io.netty.buffer.ByteBuf;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.util.Collection;
@@ -276,6 +279,26 @@ public class CodecUtils {
 
     public static AbstractCodecFactory lookupCodecFactoryByDataType(DataType dataType) {
         return DATA_TYPE_2_CODEC.get(dataType);
+    }
+
+    /**
+     * getActualTypeArgument
+     *
+     * @param field field
+     * @return java.lang.Class
+     * @author Jerry.X.He
+     * @date 2021-10-03 17:22
+     */
+    public static Class getActualTypeArgument(Field field) {
+        Type type = field.getGenericType();
+        if (type instanceof Class) {
+            return (Class) type;
+        } else if (type instanceof ParameterizedType) {
+            return (Class) ((ParameterizedType) type).getActualTypeArguments()[0];
+        } else {
+            AssertUtils.state(false, " unexpected field ");
+            return null;
+        }
     }
 
     /**

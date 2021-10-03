@@ -2,6 +2,7 @@ package com.hx.codec.encoder.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.hx.codec.codec.AbstractCodec;
+import com.hx.codec.constants.CodecConstants;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.schema.GenericFieldSchema;
@@ -9,6 +10,7 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
@@ -37,6 +39,14 @@ public class GenericBeanEncoder<T> extends AbstractEncoder<T> {
                 Method getterMethod = fieldSchema.getGetterMethod();
                 Object fieldValue = getterMethod.invoke(entity);
                 AbstractCodec codec = fieldSchema.getCodec();
+                // if fieldValue is null, only fill padding bytes
+                if (fieldValue == null) {
+                    byte[] paddingBytes = new byte[codec.length()];
+                    Arrays.fill(paddingBytes, CodecConstants.DEFAULT_PADDING_BYTE);
+                    buf.writeBytes(paddingBytes);
+                    continue;
+                }
+
                 codec.encode(fieldValue, buf);
             }
         } catch (Exception e) {

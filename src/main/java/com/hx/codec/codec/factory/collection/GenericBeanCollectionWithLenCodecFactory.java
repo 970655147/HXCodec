@@ -7,6 +7,7 @@ import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.CodecUtils;
 
 /**
  * GenericBeanArrayCodecFactory
@@ -22,7 +23,7 @@ public class GenericBeanCollectionWithLenCodecFactory implements AbstractCodecFa
         Field fieldAnno = context.getFieldAnno();
         ByteType lengthByteType = fieldAnno.lengthByteType();
         java.lang.reflect.Field field = context.getField();
-        Class eleType = (Class) field.getGenericType();
+        Class eleType = CodecUtils.getActualTypeArgument(field);
         return new GenericBeanCollectionWithLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), lengthByteType);
     }
 }
