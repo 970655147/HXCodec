@@ -21,7 +21,7 @@ public class GenericBeanCollectionWithFixedLenCodecFactory implements AbstractCo
         Field fieldAnno = context.getFieldAnno();
         int eleLength = fieldAnno.eleLength();
         java.lang.reflect.Field field = context.getField();
-        Class eleType = field.getType().getComponentType();
+        Class eleType = (Class) field.getGenericType();
         return new GenericBeanCollectionWithFixedLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), eleLength);
     }
 }

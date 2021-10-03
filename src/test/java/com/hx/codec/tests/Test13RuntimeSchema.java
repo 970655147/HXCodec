@@ -3,7 +3,9 @@ package com.hx.codec.tests;
 import com.hx.codec.tests.model.UpConnectReq;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test13RuntimeSchema
@@ -12,6 +14,7 @@ import org.junit.Test;
  * @version 1.0
  * @date 2021/9/28 11:21
  */
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class Test13RuntimeSchema extends Test00BaseTests {
 
     @Test

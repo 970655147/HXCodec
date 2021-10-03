@@ -10,7 +10,9 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test15GenericBeanArrayCodec
@@ -19,6 +21,7 @@ import org.junit.Test;
  * @version 1.0
  * @date 2021-10-03 12:12
  */
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class Test15GenericBeanArrayCodec extends Test00BaseTests {
 
     @Test

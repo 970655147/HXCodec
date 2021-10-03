@@ -9,7 +9,9 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Test05StringProtocol
@@ -18,6 +20,7 @@ import org.junit.Test;
  * @version 1.0
  * @date 2021/9/23 11:53
  */
+@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class Test05CharsetStringCodec extends Test00BaseTests {
 
     @Test
@@ -103,7 +106,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
-        AssertUtils.state(encodedHexStr.equals("06e4bda0e5a5bd"), " unexpected value ");
+        AssertUtils.state(encodedHexStr.equals("04c4e3bac3"), " unexpected value ");
         AssertUtils.state(decoded.equals(entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == (entity.getBytes(CodecConstants.DEFAULT_CHARSET).length + 1), " unexpected value ");
         AssertUtils.state(buf.writerIndex() == (entity.getBytes(CodecConstants.DEFAULT_CHARSET).length + 1), " unexpected value ");
@@ -121,7 +124,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
-        AssertUtils.state(encodedHexStr.equals("0000000000000006e4bda0e5a5bd"), " unexpected value ");
+        AssertUtils.state(encodedHexStr.equals("0000000000000004c4e3bac3"), " unexpected value ");
         AssertUtils.state(decoded.equals(entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == (entity.getBytes(CodecConstants.DEFAULT_CHARSET).length + 8), " unexpected value ");
         AssertUtils.state(buf.writerIndex() == (entity.getBytes(CodecConstants.DEFAULT_CHARSET).length + 8), " unexpected value ");

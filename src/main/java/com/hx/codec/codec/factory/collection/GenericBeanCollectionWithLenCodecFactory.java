@@ -22,7 +22,7 @@ public class GenericBeanCollectionWithLenCodecFactory implements AbstractCodecFa
         Field fieldAnno = context.getFieldAnno();
         ByteType lengthByteType = fieldAnno.lengthByteType();
         java.lang.reflect.Field field = context.getField();
-        Class eleType = field.getType().getComponentType();
+        Class eleType = (Class) field.getGenericType();
         return new GenericBeanCollectionWithLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), lengthByteType);
     }
 }

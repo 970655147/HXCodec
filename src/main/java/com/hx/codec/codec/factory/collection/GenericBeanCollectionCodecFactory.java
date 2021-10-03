@@ -21,7 +21,7 @@ public class GenericBeanCollectionCodecFactory implements AbstractCodecFactory {
     public AbstractCodec create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
         java.lang.reflect.Field field = context.getField();
-        Class eleType = field.getType().getComponentType();
+        Class eleType = (Class) field.getGenericType();
         return new GenericBeanCollectionCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()));
     }
 }
