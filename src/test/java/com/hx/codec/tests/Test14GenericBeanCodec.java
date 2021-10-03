@@ -1,10 +1,10 @@
 package com.hx.codec.tests;
 
 import com.hx.codec.codec.entity.GenericBeanCodec;
-import com.hx.codec.model.GnssDataItem;
-import com.hx.codec.model.Jt809Header;
-import com.hx.codec.model.UpConnectReq;
-import com.hx.codec.model.UpExgMsgRealLocation;
+import com.hx.codec.tests.model.GnssDataItem;
+import com.hx.codec.tests.model.Jt809Header;
+import com.hx.codec.tests.model.UpConnectReq;
+import com.hx.codec.tests.model.UpExgMsgRealLocation;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;

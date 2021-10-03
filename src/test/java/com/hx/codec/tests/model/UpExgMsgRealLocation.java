@@ -1,4 +1,4 @@
-package com.hx.codec.model;
+package com.hx.codec.tests.model;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.constants.DataType;

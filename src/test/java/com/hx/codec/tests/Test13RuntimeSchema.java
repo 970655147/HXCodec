@@ -1,6 +1,6 @@
 package com.hx.codec.tests;
 
-import com.hx.codec.model.UpConnectReq;
+import com.hx.codec.tests.model.UpConnectReq;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
 import org.junit.Test;
