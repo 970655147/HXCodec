@@ -69,6 +69,14 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_FIXED_LEN, new QWordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_FIXED_LEN, new GenericBeanArrayWithFixedLenCodecFactory());
 
+        DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_EXACTLY_LEN, new ByteArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_EXACTLY_LEN, new UnsignedByteArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_EXACTLY_LEN, new WordArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_ARRAY_WITH_EXACTLY_LEN, new UnsignedWordArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY_WITH_EXACTLY_LEN, new DWordArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_EXACTLY_LEN, new QWordArrayWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_EXACTLY_LEN, new GenericBeanArrayWithExactlyLenCodecFactory());
+
 
         // collection
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION, new ByteCollectionCodecFactory());
@@ -94,6 +102,15 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_FIXED_LEN, new DWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_FIXED_LEN, new QWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_FIXED_LEN, new GenericBeanCollectionWithFixedLenCodecFactory());
+
+        DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_EXACTLY_LEN, new ByteCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_EXACTLY_LEN, new UnsignedByteCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_EXACTLY_LEN, new WordCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_COLLECTION_WITH_EXACTLY_LEN, new UnsignedWordCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_EXACTLY_LEN, new DWordCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_EXACTLY_LEN, new QWordCollectionWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_EXACTLY_LEN, new GenericBeanCollectionWithExactlyLenCodecFactory());
+
 
         // string
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING, new Bcd8421StringCodecFactory());
@@ -299,6 +316,10 @@ public class CodecUtils {
      * @author Jerry.X.He
      * @date 2021-10-02 18:17
      */
+    public static int lengthOfString(CharSequence str) {
+        return str == null ? 0 : str.length();
+    }
+
     public static int lengthOfString(String str) {
         return str == null ? 0 : str.length();
     }
@@ -309,6 +330,18 @@ public class CodecUtils {
 
     public static boolean isNotBlank(String str) {
         return lengthOfString(str) > 0;
+    }
+
+    public static boolean isBlank(String str) {
+        return lengthOfString(str) == 0;
+    }
+
+    public static boolean isNotBlank(CharSequence str) {
+        return lengthOfString(str) > 0;
+    }
+
+    public static boolean isBlank(CharSequence str) {
+        return lengthOfString(str) == 0;
     }
 
     /**
@@ -333,6 +366,84 @@ public class CodecUtils {
      */
     public static boolean isMapEmpty(Map<?, ?> collection) {
         return collection == null ? true : collection.isEmpty();
+    }
+
+    /**
+     * setInt
+     *
+     * @param output output
+     * @param length length
+     * @param index  index
+     * @param value  value
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021-10-03 12:59
+     */
+    public static void setInt(ByteBuf output, int length, int index, int value) {
+        switch (length) {
+            case 1:
+                output.setByte(index, value);
+                break;
+            case 2:
+                output.setShort(index, value);
+                break;
+            case 3:
+                output.setMedium(index, value);
+                break;
+            case 4:
+                output.setInt(index, value);
+                break;
+            default:
+                throw new RuntimeException("unsupported length: " + length + " (expected: 1, 2, 3, 4)");
+        }
+    }
+
+    //-----------------------------------------------------------------------
+
+    /**
+     * <p>Counts how many times the substring appears in the larger string.</p>
+     *
+     * <p>A {@code null} or empty ("") String input returns {@code 0}.</p>
+     *
+     * <pre>
+     * StringUtils.countMatches(null, *)       = 0
+     * StringUtils.countMatches("", *)         = 0
+     * StringUtils.countMatches("abba", null)  = 0
+     * StringUtils.countMatches("abba", "")    = 0
+     * StringUtils.countMatches("abba", "a")   = 2
+     * StringUtils.countMatches("abba", "ab")  = 1
+     * StringUtils.countMatches("abba", "xxx") = 0
+     * </pre>
+     *
+     * @param str the CharSequence to check, may be null
+     * @param sub the substring to count, may be null
+     * @return the number of occurrences, 0 if either CharSequence is {@code null}
+     * @since 3.0 Changed signature from countMatches(String, String) to countMatches(CharSequence, CharSequence)
+     */
+    public static int countMatches(final CharSequence str, final CharSequence sub) {
+        if (isBlank(str) || isBlank(sub)) {
+            return 0;
+        }
+        int count = 0;
+        int idx = 0;
+        while ((idx = indexOf(str, sub, idx)) >= 0) {
+            count++;
+            idx += sub.length();
+        }
+        return count;
+    }
+
+    /**
+     * <p>Finds the first index in the {@code CharSequence} that matches the
+     * specified character.</p>
+     *
+     * @param cs         the {@code CharSequence} to be processed, not null
+     * @param searchChar the char to be searched for
+     * @param start      the start index, negative starts at the string start
+     * @return the index where the search char was found, -1 if not found
+     */
+    public static int indexOf(final CharSequence cs, final CharSequence searchChar, final int start) {
+        return cs.toString().indexOf(searchChar.toString(), start);
     }
 
 

@@ -6,10 +6,8 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
-import java.util.Arrays;
 import java.util.Collection;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**
@@ -19,31 +17,27 @@ import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
  * @version 1.0
  * @date 2021/9/23 14:45
  */
-public class QWordCollectionWithFixedLenEncoder extends AbstractEncoder<Collection<Long>> {
+public class QWordCollectionWithExactlyLenEncoder extends AbstractEncoder<Collection<Long>> {
 
     private QWordEncoder encoder;
     private int eleLength;
 
-    public QWordCollectionWithFixedLenEncoder(ByteOrder byteOrder, int eleLength) {
+    public QWordCollectionWithExactlyLenEncoder(ByteOrder byteOrder, int eleLength) {
         super(byteOrder);
         this.encoder = new QWordEncoder(byteOrder);
         this.eleLength = eleLength;
     }
 
-    public QWordCollectionWithFixedLenEncoder(int eleLength) {
+    public QWordCollectionWithExactlyLenEncoder(int eleLength) {
         this(DEFAULT_BYTE_ORDER, eleLength);
     }
 
     @Override
     public void encode(Collection<Long> entity, ByteBuf buf) {
-        AssertUtils.state(entity.size() <= eleLength, " unexpected Collection<Long> length ");
+        AssertUtils.state(entity.size() == eleLength, " unexpected entity length ");
         for (Long ele : entity) {
             encoder.encode(ele, buf);
         }
-
-        byte[] paddingBytes = new byte[eleLength - entity.size()];
-        Arrays.fill(paddingBytes, DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING);
-        buf.writeBytes(paddingBytes);
     }
 
 }

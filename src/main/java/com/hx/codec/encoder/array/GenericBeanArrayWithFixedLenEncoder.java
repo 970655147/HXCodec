@@ -3,6 +3,7 @@ package com.hx.codec.encoder.array;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.entity.GenericBeanEncoder;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class GenericBeanArrayWithFixedLenEncoder<T> extends AbstractEncoder<T[]>
 
     @Override
     public void encode(T[] entity, ByteBuf buf) {
+        AssertUtils.state(entity.length <= eleLength, "unexpected T[] length");
         for (T ele : entity) {
             encoder.encode(ele, buf);
         }

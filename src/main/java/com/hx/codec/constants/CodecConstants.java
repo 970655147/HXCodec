@@ -25,12 +25,12 @@ public class CodecConstants {
     public static Charset DEFAULT_CHARSET = Charset.forName("gbk");
 
     // defaults
-    public static byte DEFAULT_PADDING_BYTE = 0x0;
-    public static byte[] DEFAULT_PADDING_BYTES = new byte[]{0x0};
+    public static byte DEFAULT_PADDING_BYTE = 0x00;
+    public static byte[] DEFAULT_PADDING_BYTES = new byte[]{0x00};
     public static JSONArray DEFAULT_PADDING_BYTES_ARRAY = new JSONArray();
     public static boolean DEFAULT_PADDING_FIRST = false;
-    public static Byte DEFAULT_BCD8421_PADDING = 0xf;
-    public static Byte DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING = 0x0;
+    public static byte DEFAULT_BCD8421_PADDING = 0xf;
+    public static byte DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING = 0x00;
 
     // keys
     public static String KEY_PADDING_BYTE = "paddingByte";
