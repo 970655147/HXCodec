@@ -36,6 +36,7 @@ public class CodecUtils {
     private static Map<DataType, AbstractCodecFactory> DATA_TYPE_2_CODEC = new LinkedHashMap<>();
 
     static {
+        // simple
         DATA_TYPE_2_CODEC.put(DataType.BYTE, new ByteCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE, new UnsignedByteCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD, new WordCodecFactory());
@@ -43,51 +44,67 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD, new DWordCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD, new QWordCodecFactory());
 
+        // array
         DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY, new ByteArrayCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY, new UnsignedByteArrayCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY, new WordArrayCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_ARRAY, new UnsignedWordArrayCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY, new DWordArrayCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY, new QWordArrayCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY, new GenericBeanArrayCodecFactory());
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_LEN, new ByteArrayWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_LEN, new UnsignedByteArrayWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_LEN, new WordArrayWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_ARRAY_WITH_LEN, new UnsignedWordArrayWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY_WITH_LEN, new DWordArrayWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_LEN, new QWordArrayWithLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_LEN, new GenericBeanArrayWithLenCodecFactory());
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_FIXED_LEN, new ByteArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_FIXED_LEN, new UnsignedByteArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_FIXED_LEN, new WordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_ARRAY_WITH_FIXED_LEN, new UnsignedWordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY_WITH_FIXED_LEN, new DWordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_FIXED_LEN, new QWordArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_FIXED_LEN, new GenericBeanArrayWithFixedLenCodecFactory());
 
+
+        // collection
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION, new ByteCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION, new UnsignedByteCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION, new WordCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_COLLECTION, new UnsignedWordCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION, new DWordCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION, new QWordCollectionCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION, new GenericBeanCollectionCodecFactory());
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_LEN, new ByteCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_LEN, new UnsignedByteCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_LEN, new WordCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_COLLECTION_WITH_LEN, new UnsignedWordCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_LEN, new DWordCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_LEN, new QWordCollectionWithLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_LEN, new GenericBeanCollectionWithLenCodecFactory());
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_FIXED_LEN, new ByteCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_FIXED_LEN, new UnsignedByteCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_FIXED_LEN, new WordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_COLLECTION_WITH_FIXED_LEN, new UnsignedWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_FIXED_LEN, new DWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_FIXED_LEN, new QWordCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_FIXED_LEN, new GenericBeanCollectionWithFixedLenCodecFactory());
 
+        // string
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING, new Bcd8421StringCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_STRING, new CharsetEncodingStringCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_LEN_STRING, new CharsetEncodingStringWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, new CharsetEncodingStringWithFixedLenCodecFactory());
 
+        // entity
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN, new GenericBeanCodecFactory());
 
+        // others
         DATA_TYPE_2_CODEC.put(DataType.PADDING_BYTE, new PaddingByteCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.PADDING_BYTES, new PaddingBytesCodecFactory());
     }
@@ -247,7 +264,7 @@ public class CodecUtils {
     /**
      * $desc
      *
-     * @param str  str
+     * @param str str
      * @return java.lang.String
      * @author Jerry.X.He
      * @date 2021-10-02 19:33

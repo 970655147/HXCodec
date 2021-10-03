@@ -36,7 +36,7 @@ public class Bcd8421StringDecoder extends AbstractDecoder<String> {
 
         int startIdx = 0, endIdx = entityBytes.length - 1;
         for (startIdx = 0; entityBytes[startIdx] == DEFAULT_BCD8421_PADDING && startIdx < endIdx; startIdx++) ;
-        for (endIdx = entityBytes.length - 1; endIdx > 0 && entityBytes[endIdx] == DEFAULT_BCD8421_PADDING; endIdx--) ;
+        for (endIdx = entityBytes.length - 1; endIdx >= startIdx && entityBytes[endIdx] == DEFAULT_BCD8421_PADDING; endIdx--) ;
 
         byte[] decodedBytes = new byte[fixedLength << 1];
         int decodeIdx = 0;

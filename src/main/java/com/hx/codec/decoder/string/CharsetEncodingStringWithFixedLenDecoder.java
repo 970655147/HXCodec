@@ -56,7 +56,7 @@ public class CharsetEncodingStringWithFixedLenDecoder extends AbstractDecoder<St
 
         int startIdx = 0, endIdx = entityBytes.length - 1;
         for (startIdx = 0; entityBytes[startIdx] == paddingByte && startIdx < endIdx; startIdx++) ;
-        for (endIdx = entityBytes.length - 1; endIdx >= 0 && entityBytes[endIdx] == paddingByte; endIdx--) ;
+        for (endIdx = entityBytes.length - 1; endIdx >= startIdx && entityBytes[endIdx] == paddingByte; endIdx--) ;
         return new String(entityBytes, startIdx, (endIdx - startIdx + 1), charset);
     }
 
