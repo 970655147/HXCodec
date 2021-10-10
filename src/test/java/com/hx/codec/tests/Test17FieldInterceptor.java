@@ -4,7 +4,7 @@ import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.tests.model.GnssDataItem;
 import com.hx.codec.tests.model.Jt809Header;
-import com.hx.codec.tests.model.UpConnectReq;
+import com.hx.codec.tests.model.UpConnectReqWithVerifyFIeldInterceptor;
 import com.hx.codec.tests.model.UpExgMsgRealLocation;
 import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
@@ -23,10 +23,10 @@ public class Test17FieldInterceptor extends Test00BaseTests {
 
     @Test
     public void test01VerifyFieldValueFieldInterceptor() {
-        GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
-        GenericBeanCodec<UpConnectReq> codec = new GenericBeanCodec<>(beanSchema);
+        GenericBeanSchema<UpConnectReqWithVerifyFIeldInterceptor> beanSchema = new GenericBeanSchema<>(UpConnectReqWithVerifyFIeldInterceptor.class, 2019);
+        GenericBeanCodec<UpConnectReqWithVerifyFIeldInterceptor> codec = new GenericBeanCodec<>(beanSchema);
 
-        UpConnectReq entity = new UpConnectReq();
+        UpConnectReqWithVerifyFIeldInterceptor entity = new UpConnectReqWithVerifyFIeldInterceptor();
         entity.setDummyField("dummyField");
         entity.setUserid(0x1234);
         entity.setPassword("pass");
@@ -37,7 +37,7 @@ public class Test17FieldInterceptor extends Test00BaseTests {
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
         String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
-        UpConnectReq decodedEntity = codec.decode(encodedBuf);
+        UpConnectReqWithVerifyFIeldInterceptor decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
