@@ -2,6 +2,7 @@ package com.hx.codec.tests.model;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.constants.DataType;
+import com.hx.codec.tests.interceptor.SubDataLengthFieldInterceptor;
 
 /**
  * UpExgMsgRealLocationReq
@@ -19,15 +20,15 @@ public class UpExgMsgRealLocation {
     /**
      * 车牌颜色，按照JT/T 697J7-2014中的规定
      */
-    private int vehicleColor;
+    private Integer vehicleColor;
     /**
      * 子业务类型标识
      */
-    private int subDataType;
+    private Integer subDataType;
     /**
      * 后续数据长度
      */
-    private int subDataLength;
+    private Integer subDataLength;
     /**
      * 卫星定位数据
      */
@@ -47,33 +48,35 @@ public class UpExgMsgRealLocation {
     }
 
     @Field(name = "vehicleColor", sort = 2, dataType = DataType.BYTE, lengthInBytes = 1, desc = "车牌颜色，按照JT/T 697J7-2014中的规定", version = {2011, 2019})
-    public int getVehicleColor() {
+    public Integer getVehicleColor() {
         return vehicleColor;
     }
 
-    public void setVehicleColor(int vehicleColor) {
+    public void setVehicleColor(Integer vehicleColor) {
         this.vehicleColor = vehicleColor;
     }
 
     @Field(name = "subDataType", sort = 3, dataType = DataType.WORD, lengthInBytes = 2, desc = "子业务类型标识", version = {2011, 2019})
-    public int getSubDataType() {
+    public Integer getSubDataType() {
         return subDataType;
     }
 
-    public void setSubDataType(int subDataType) {
+    public void setSubDataType(Integer subDataType) {
         this.subDataType = subDataType;
     }
 
-    @Field(name = "subDataLength", sort = 4, dataType = DataType.DWORD, lengthInBytes = 4, desc = "后续数据长度", version = {2011, 2019})
-    public int getSubDataLength() {
+    @Field(name = "subDataLength", sort = 4, dataType = DataType.DWORD, lengthInBytes = 4, desc = "后续数据长度", version = {2011, 2019},
+            fieldInterceptorClazz = SubDataLengthFieldInterceptor.class)
+    public Integer getSubDataLength() {
         return subDataLength;
     }
 
-    public void setSubDataLength(int subDataLength) {
+    public void setSubDataLength(Integer subDataLength) {
         this.subDataLength = subDataLength;
     }
 
-    @Field(name = "gnssDataItem", sort = 5, dataType = DataType.GENERIC_BEAN, desc = "卫星定位数据", version = {2011, 2019})
+    @Field(name = "gnssDataItem", sort = 5, dataType = DataType.GENERIC_BEAN, desc = "卫星定位数据", version = {2011, 2019},
+            fieldInterceptorClazz = SubDataLengthFieldInterceptor.class)
     public GnssDataItem getGnssDataItem() {
         return gnssDataItem;
     }

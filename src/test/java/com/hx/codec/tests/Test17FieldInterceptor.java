@@ -10,22 +10,19 @@ import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 /**
- * Test14GenericBeanCodec
+ * Test17FieldInterceptor
  *
- * @author Jerry.X.He
+ * @author Jerry.X.He <970655147@qq.com>
  * @version 1.0
- * @date 2021/9/28 14:31
+ * @date 2021-10-10 10:20
  */
-@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-public class Test14GenericBeanCodec extends Test00BaseTests {
+public class Test17FieldInterceptor extends Test00BaseTests {
 
     @Test
-    public void test01UpConnectReq() {
+    public void test01VerifyFieldValueFieldInterceptor() {
         GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
         GenericBeanCodec<UpConnectReq> codec = new GenericBeanCodec<>(beanSchema);
 
@@ -52,8 +49,9 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
 
     }
 
+
     @Test
-    public void test02UpExgMsgRealLocation() {
+    public void test02SubDataLengthFieldInterceptor() {
         GenericBeanSchema<Jt809Header> headerBeanSchema = new GenericBeanSchema<>(Jt809Header.class, 2019);
         GenericBeanCodec<Jt809Header> headerCodec = new GenericBeanCodec<>(headerBeanSchema);
         GenericBeanSchema<UpExgMsgRealLocation> entityBeanSchema = new GenericBeanSchema<>(UpExgMsgRealLocation.class, 2019);
@@ -79,7 +77,7 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
                 4, 5, 6, 7, 8, 9, 10, 11, 12);
         entity.setGnssDataItem(gnssDataItem);
         entity.setSubDataType(0x4102);
-        entity.setSubDataLength(gnssDataItemCodec.length());
+        entity.setSubDataLength(0);
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         headerCodec.encode(header, encodedBuf);
@@ -90,26 +88,8 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("000000620000000141000000000305000000000000050000000000000006310000000000000000000000000000000000000000014102000000240301020304010203000000040000000500060007000000080009000a0000000b0000000c"), " unexpected value ");
-        AssertUtils.state(header.getMsgLength().equals(decodedHeader.getMsgLength()), " unexpected value ");
-        AssertUtils.state(header.getMsgSn().equals(decodedHeader.getMsgSn()), " unexpected value ");
-        AssertUtils.state(header.getMsgId().equals(decodedHeader.getMsgId()), " unexpected value ");
-        AssertUtils.state(header.getMsgGNSSCenterId().equals(decodedHeader.getMsgGNSSCenterId()), " unexpected value ");
-        AssertUtils.state(header.getEncryptFlag().equals(decodedHeader.getEncryptFlag()), " unexpected value ");
-        AssertUtils.state(header.getEncryptKey().equals(decodedHeader.getEncryptKey()), " unexpected value ");
-        AssertUtils.state(entity.getVehicleNo().equals(decodedEntity.getVehicleNo()), " unexpected value ");
-        AssertUtils.state(entity.getVehicleColor().equals(decodedEntity.getVehicleColor()), " unexpected value ");
-        AssertUtils.state(entity.getSubDataType().equals(decodedEntity.getSubDataType()), " unexpected value ");
-        AssertUtils.state(entity.getSubDataLength().equals(decodedEntity.getSubDataLength()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getEncrypt().equals(decodedEntity.getGnssDataItem().getEncrypt()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getLon().equals(decodedEntity.getGnssDataItem().getLon()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getLat().equals(decodedEntity.getGnssDataItem().getLat()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getVec1().equals(decodedEntity.getGnssDataItem().getVec1()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getVec2().equals(decodedEntity.getGnssDataItem().getVec2()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getVec3().equals(decodedEntity.getGnssDataItem().getVec3()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getDirection().equals(decodedEntity.getGnssDataItem().getDirection()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getAltitude().equals(decodedEntity.getGnssDataItem().getAltitude()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getState().equals(decodedEntity.getGnssDataItem().getState()), " unexpected value ");
-        AssertUtils.state(entity.getGnssDataItem().getAlarm().equals(decodedEntity.getGnssDataItem().getAlarm()), " unexpected value ");
+        AssertUtils.state(entity.getSubDataLength().equals(0), " unexpected value ");
+        AssertUtils.state(decodedEntity.getSubDataLength().equals(gnssDataItemBeanSchema.getLength()), " unexpected value ");
 
     }
 

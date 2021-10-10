@@ -35,8 +35,8 @@ public class Test09ByteCollectionCodec extends Test00BaseTests {
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
         AssertUtils.state(encodedHexStr.equals("01020305"), " unexpected value ");
         AssertUtils.state(Arrays.equals(decoded.toArray(new Integer[0]), entity.toArray(new Integer[0])), " unexpected value ");
-        AssertUtils.state(buf.readerIndex() == entity.size(), " unexpected value ");
-        AssertUtils.state(buf.writerIndex() == entity.size(), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == (entity.size()), " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == (entity.size()), " unexpected value ");
     }
 
 }

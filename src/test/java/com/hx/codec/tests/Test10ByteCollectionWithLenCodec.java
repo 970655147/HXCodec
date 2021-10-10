@@ -2,8 +2,8 @@ package com.hx.codec.tests;
 
 import com.hx.codec.codec.collection.ByteCollectionWithLenCodec;
 import com.hx.codec.constants.ByteType;
-import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
@@ -37,8 +37,8 @@ public class Test10ByteCollectionWithLenCodec extends Test00BaseTests {
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
         AssertUtils.state(encodedHexStr.equals("0000000401020305"), " unexpected value ");
         AssertUtils.state(Arrays.equals(decoded.toArray(new Integer[0]), entity.toArray(new Integer[0])), " unexpected value ");
-        AssertUtils.state(buf.readerIndex() == entity.size() + CodecUtils.lenBytes(ByteType.DWORD), " unexpected value ");
-        AssertUtils.state(buf.writerIndex() == entity.size() + CodecUtils.lenBytes(ByteType.DWORD), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == (entity.size() + CodecUtils.lenBytes(ByteType.DWORD)), " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == (entity.size() + CodecUtils.lenBytes(ByteType.DWORD)), " unexpected value ");
     }
 
 }

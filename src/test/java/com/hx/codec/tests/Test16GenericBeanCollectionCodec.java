@@ -48,17 +48,17 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(0).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(0).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(0).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(0).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(0).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(0).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(0).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(0).getMsgGnsscenterid()), " unexpected value ");
 
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(1).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(1).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(1).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(1).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(1).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(1).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(1).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
     @Test
@@ -81,17 +81,17 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("0000000207070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(0).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(0).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(0).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(0).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(0).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(0).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(0).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(0).getMsgGnsscenterid()), " unexpected value ");
 
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(1).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(1).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(1).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(1).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(1).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(1).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(1).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
     @Test
@@ -115,17 +115,17 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"), " unexpected value ");
         AssertUtils.state(decodedEntity.size() == 2, " unexpected value ");
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(0).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(0).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(0).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(0).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(0).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(0).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(0).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(0).getMsgGnsscenterid()), " unexpected value ");
 
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(1).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(1).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(1).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(1).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(1).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(1).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(1).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
     @Test
@@ -149,17 +149,17 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
         AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
         AssertUtils.state(decodedEntity.size() == 2, " unexpected value ");
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(0).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(0).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(0).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(0).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(0).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(0).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(0).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(0).getMsgGnsscenterid()), " unexpected value ");
 
-        AssertUtils.state(entity.getUserid() == decodedEntity.get(1).getUserid(), " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(1).getUserid()), " unexpected value ");
         AssertUtils.state(entity.getPassword().equals(decodedEntity.get(1).getPassword()), " unexpected value ");
         AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(1).getDownLinkIp()), " unexpected value ");
-        AssertUtils.state(entity.getDownLinkPort() == decodedEntity.get(1).getDownLinkPort(), " unexpected value ");
-        AssertUtils.state(entity.getMsgGnsscenterid() == decodedEntity.get(1).getMsgGnsscenterid(), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(1).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
 }

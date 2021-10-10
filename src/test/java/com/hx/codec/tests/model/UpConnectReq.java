@@ -2,6 +2,7 @@ package com.hx.codec.tests.model;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.constants.DataType;
+import com.hx.codec.tests.interceptor.VerifyFieldValueFieldInterceptor;
 
 import java.io.Serializable;
 
@@ -21,7 +22,7 @@ public class UpConnectReq implements Serializable {
     /**
      * 用户名
      */
-    private int userid;
+    private Integer userid;
     /**
      * 密码
      */
@@ -29,7 +30,7 @@ public class UpConnectReq implements Serializable {
     /**
      * 下级平台接入码，上级平台给下级平台分配的唯一标识号
      */
-    private int msgGnsscenterid;
+    private Integer msgGnsscenterid;
     /**
      * 下级平台提供对应的从链路服务端IP地址
      */
@@ -37,13 +38,13 @@ public class UpConnectReq implements Serializable {
     /**
      * 下级平台提供对应的从链路服务端口号
      */
-    private int downLinkPort;
+    private Integer downLinkPort;
 
     public UpConnectReq() {
     }
 
-    @Field(dataType = DataType.PADDING_BYTE, name = "dummyField", sort = 1, lengthInBytes = 10, version = {2011, 2019}
-            , args = "{\"paddingByte\":\"7\"}")
+    @Field(dataType = DataType.PADDING_BYTE, name = "dummyField", sort = 1, lengthInBytes = 10, version = {2011, 2019},
+            args = "{\"paddingByte\":\"7\"}", fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
     public Object getDummyField() {
         return dummyField;
     }
@@ -52,17 +53,18 @@ public class UpConnectReq implements Serializable {
         this.dummyField = dummyField;
     }
 
-    @Field(dataType = DataType.DWORD, name = "userId", sort = 2, lengthInBytes = 4, desc = "用户名", version = {2011, 2019})
-    public int getUserid() {
+    @Field(dataType = DataType.DWORD, name = "userId", sort = 2, lengthInBytes = 4, desc = "用户名", version = {2011, 2019},
+            fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 
     @Field(dataType = DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, name = "password", sort = 3, lengthInBytes = 8, desc = "密码", version = {2011, 2019}
-            , args = "{\"paddingFirst\":\"false\"}")
+            , args = "{\"paddingFirst\":\"false\"}", fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
     public String getPassword() {
         return password;
     }
@@ -71,19 +73,20 @@ public class UpConnectReq implements Serializable {
         this.password = password;
     }
 
-    @Field(dataType = DataType.DWORD, name = "msgGnsscenterid", sort = 4, lengthInBytes = 4, desc = "下级平台接入码，上级平台给下级平台分配的唯一标识号", version = {2019})
-    public int getMsgGnsscenterid() {
+    @Field(dataType = DataType.DWORD, name = "msgGnsscenterid", sort = 4, lengthInBytes = 4, desc = "下级平台接入码，上级平台给下级平台分配的唯一标识号", version = {2019},
+            fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
+    public Integer getMsgGnsscenterid() {
         return msgGnsscenterid;
     }
 
-    public void setMsgGnsscenterid(int msgGnsscenterid) {
+    public void setMsgGnsscenterid(Integer msgGnsscenterid) {
         this.msgGnsscenterid = msgGnsscenterid;
     }
 
     @Field(dataType = DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, name = "downLinkIp", sort = 5, lengthInBytes = 32, desc = "下级平台提供对应的从链路服务端IP地址", version = {2011}
-            , args = "{\"paddingFirst\":\"false\"}")
+            , args = "{\"paddingFirst\":\"false\"}", fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
     @Field(dataType = DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, name = "downLinkIp", sort = 5, lengthInBytes = 32, desc = "下级平台提供对应的从链路服务端IP地址", version = {2019}
-            , args = "{\"paddingFirst\":\"false\"}")
+            , args = "{\"paddingFirst\":\"false\"}", fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
     public String getDownLinkIp() {
         return downLinkIp;
     }
@@ -92,13 +95,15 @@ public class UpConnectReq implements Serializable {
         this.downLinkIp = downLinkIp;
     }
 
-    @Field(dataType = DataType.WORD, name = "downLinkPort", sort = 6, lengthInBytes = 2, desc = "下级平台提供对应的从链路服务端口号", version = {2011})
-    @Field(dataType = DataType.WORD, name = "downLinkPort", sort = 6, lengthInBytes = 2, desc = "下级平台提供对应的从链路服务端口号", version = {2019})
-    public int getDownLinkPort() {
+    @Field(dataType = DataType.WORD, name = "downLinkPort", sort = 6, lengthInBytes = 2, desc = "下级平台提供对应的从链路服务端口号", version = {2011},
+            fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
+    @Field(dataType = DataType.WORD, name = "downLinkPort", sort = 6, lengthInBytes = 2, desc = "下级平台提供对应的从链路服务端口号", version = {2019},
+            fieldInterceptorClazz = VerifyFieldValueFieldInterceptor.class)
+    public Integer getDownLinkPort() {
         return downLinkPort;
     }
 
-    public void setDownLinkPort(int downLinkPort) {
+    public void setDownLinkPort(Integer downLinkPort) {
         this.downLinkPort = downLinkPort;
     }
 
