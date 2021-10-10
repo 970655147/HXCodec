@@ -152,6 +152,8 @@ public class GenericBeanSchema<T> {
         for (GenericFieldSchema fieldSchema : fieldSchemaList) {
             fieldSchema.setOffset(offset);
             offset += fieldSchema.getCodec().length();
+
+            fieldSchema.init();
         }
     }
 

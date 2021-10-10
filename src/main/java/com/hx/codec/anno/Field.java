@@ -3,6 +3,7 @@ package com.hx.codec.anno;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.interceptor.FieldInterceptor;
+import com.hx.codec.schema.SchemaRegistry;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -115,13 +116,22 @@ public @interface Field {
     String args() default "";
 
     /**
-     * interceptorClazz
+     * fieldInterceptorClazz
      *
      * @return Class
      * @author Jerry.X.He
      * @date 2021/9/23 17:30
      */
-    Class<? extends FieldInterceptor> interceptorClazz() default FieldInterceptor.class;
+    Class<? extends FieldInterceptor> fieldInterceptorClazz() default FieldInterceptor.class;
+
+    /**
+     * schemaRegistryClazz
+     *
+     * @return Class
+     * @author Jerry.X.He
+     * @date 2021-10-10 10:03
+     */
+    Class<? extends SchemaRegistry> schemaRegistryClazz() default SchemaRegistry.class;
 
     /**
      * desc

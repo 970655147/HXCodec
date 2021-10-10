@@ -10,20 +10,39 @@ package com.hx.codec.interceptor;
 public interface FieldInterceptor {
 
     /**
-     * beforeProcess
+     * beforeEncode
      *
      * @return void
      * @author Jerry.X.He
      * @date 2021/9/23 17:32
      */
-    void beforeProcess();
+    void beforeEncode(FieldInterceptContext context) throws Exception;
 
     /**
-     * afterProcess
+     * afterEncode
      *
      * @return void
      * @author Jerry.X.He
      * @date 2021/9/23 17:32
      */
-    void afterProcess();
+    void afterEncode(FieldInterceptContext context) throws Exception;
+
+    /**
+     * beforeDecode
+     *
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021/9/23 17:32
+     */
+    void beforeDecode(FieldInterceptContext context) throws Exception;
+
+    /**
+     * afterEncode
+     *
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021/9/23 17:32
+     */
+    void afterDecode(FieldInterceptContext context) throws Exception;
+
 }

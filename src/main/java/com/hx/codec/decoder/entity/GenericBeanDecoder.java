@@ -2,6 +2,8 @@ package com.hx.codec.decoder.entity;
 
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.decoder.AbstractDecoder;
+import com.hx.codec.interceptor.FieldInterceptContext;
+import com.hx.codec.interceptor.FieldInterceptor;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.schema.GenericFieldSchema;
 import com.hx.codec.utils.AssertUtils;
@@ -35,12 +37,14 @@ public class GenericBeanDecoder<T> extends AbstractDecoder<T> {
         try {
             Class<T> clazz = beanSchema.getClazz();
             Object result = clazz.newInstance();
+
             List<GenericFieldSchema> fieldSchemaList = beanSchema.getFieldSchemaList();
+            FieldInterceptContext fieldInterceptContext = new FieldInterceptContext();
+            wrapSubjectRelated(fieldInterceptContext, beanSchema, (T) result, buf);
             for (GenericFieldSchema fieldSchema : fieldSchemaList) {
                 AbstractCodec codec = fieldSchema.getCodec();
-                Object fieldValue = codec.decode(buf);
-                Method setterMethod = fieldSchema.getSetterMethod();
-                setterMethod.invoke(result, fieldValue);
+                wrapFieldRelated(fieldInterceptContext, fieldSchema, null);
+                decodedField(codec, buf, fieldInterceptContext);
             }
             return (T) result;
         } catch (Exception e) {
@@ -50,4 +54,61 @@ public class GenericBeanDecoder<T> extends AbstractDecoder<T> {
         }
     }
 
+    // ------------------------------------------ assist methods ------------------------------------------
+
+    /**
+     * decodedField
+     *
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021-10-10 10:08
+     */
+    private void decodedField(AbstractCodec codec, ByteBuf buf, FieldInterceptContext fieldInterceptContext) throws Exception {
+        FieldInterceptor fieldInterceptor = fieldInterceptContext.getFieldSchema().getFieldInterceptor();
+        if (fieldInterceptor != null) {
+            fieldInterceptor.beforeDecode(fieldInterceptContext);
+        }
+
+        Object fieldValue = codec.decode(buf);
+        GenericFieldSchema fieldSchema = fieldInterceptContext.getFieldSchema();
+        Object subjectValue = fieldInterceptContext.getSubjectValue();
+        Method setterMethod = fieldSchema.getSetterMethod();
+        setterMethod.invoke(subjectValue, fieldValue);
+
+        if (fieldInterceptor != null) {
+            fieldInterceptContext.setFieldValue(fieldValue);
+            fieldInterceptor.afterDecode(fieldInterceptContext);
+        }
+    }
+
+    /**
+     * wrapSubjectRelated
+     *
+     * @param fieldInterceptContext fieldInterceptContext
+     * @param entity                entity
+     * @param byteBuf               byteBuf
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021-10-10 10:11
+     */
+    private void wrapSubjectRelated(FieldInterceptContext fieldInterceptContext, GenericBeanSchema beanSchema, T entity, ByteBuf byteBuf) {
+        fieldInterceptContext.setBeanSchema(beanSchema);
+        fieldInterceptContext.setSubjectValue(entity);
+        fieldInterceptContext.setByteBuf(byteBuf);
+    }
+
+    /**
+     * wrapFieldRelated
+     *
+     * @param fieldInterceptContext fieldInterceptContext
+     * @param fieldSchema           fieldSchema
+     * @param fieldValue            fieldValue
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021-10-10 10:12
+     */
+    private void wrapFieldRelated(FieldInterceptContext fieldInterceptContext, GenericFieldSchema fieldSchema, Object fieldValue) {
+        fieldInterceptContext.setFieldSchema(fieldSchema);
+        fieldInterceptContext.setFieldValue(fieldValue);
+    }
 }

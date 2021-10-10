@@ -392,18 +392,49 @@ public class CodecUtils {
     }
 
     /**
+     * $desc
+     *
+     * @param output        output
+     * @param lengthInBytes lengthInBytes
+     * @param index         index
+     * @return int
+     * @author Jerry.X.He
+     * @date 2021-10-10 10:51
+     */
+    public static int getInt(ByteBuf output, int lengthInBytes, int index) {
+        int value;
+        switch (lengthInBytes) {
+            case 1:
+                value = output.getUnsignedByte(index);
+                break;
+            case 2:
+                value = output.getUnsignedShort(index);
+                break;
+            case 3:
+                value = output.getUnsignedMedium(index);
+                break;
+            case 4:
+                value = output.getInt(index);
+                break;
+            default:
+                throw new RuntimeException("unsupported lengthInBytes: " + lengthInBytes + " (expected: 1, 2, 3, 4)");
+        }
+        return value;
+    }
+
+    /**
      * setInt
      *
-     * @param output output
-     * @param length length
-     * @param index  index
-     * @param value  value
+     * @param output        output
+     * @param lengthInBytes lengthInBytes
+     * @param index         index
+     * @param value         value
      * @return void
      * @author Jerry.X.He
      * @date 2021-10-03 12:59
      */
-    public static void setInt(ByteBuf output, int length, int index, int value) {
-        switch (length) {
+    public static void setInt(ByteBuf output, int lengthInBytes, int index, int value) {
+        switch (lengthInBytes) {
             case 1:
                 output.setByte(index, value);
                 break;
@@ -417,7 +448,7 @@ public class CodecUtils {
                 output.setInt(index, value);
                 break;
             default:
-                throw new RuntimeException("unsupported length: " + length + " (expected: 1, 2, 3, 4)");
+                throw new RuntimeException("unsupported lengthInBytes: " + lengthInBytes + " (expected: 1, 2, 3, 4)");
         }
     }
 
