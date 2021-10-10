@@ -51,7 +51,7 @@ public enum DataType {
     DWORD_ARRAY_WITH_EXACTLY_LEN,
     QWORD_ARRAY_WITH_EXACTLY_LEN,
     GENERIC_BEAN_ARRAY_WITH_EXACTLY_LEN,
-    
+
     // ------------------------------------------ collection types ------------------------------------------
 
     BYTE_COLLECTION,
@@ -85,7 +85,7 @@ public enum DataType {
     DWORD_COLLECTION_WITH_EXACTLY_LEN,
     QWORD_COLLECTION_WITH_EXACTLY_LEN,
     GENERIC_BEAN_COLLECTION_WITH_EXACTLY_LEN,
-    
+
     // ------------------------------------------ string types ------------------------------------------
 
     BCD_8421_STRING,
@@ -96,6 +96,15 @@ public enum DataType {
     // ------------------------------------------ entity types ------------------------------------------
 
     GENERIC_BEAN,
+
+    // ------------------------------------------ map types ------------------------------------------
+
+    GENERIC_MAP,
+    GENERIC_MAP_WITH_LEN,
+    GENERIC_MAP_WITH_EXACTLY_LEN,
+    SCHEMA_REGISTRY_BASED_MAP,
+    SCHEMA_REGISTRY_BASED_MAP_WITH_LEN,
+    SCHEMA_REGISTRY_BASED_MAP_WITH_EXACTLY_LEN,
 
     // ------------------------------------------ other types ------------------------------------------
 

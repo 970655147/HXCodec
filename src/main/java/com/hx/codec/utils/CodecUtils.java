@@ -1,16 +1,24 @@
 package com.hx.codec.utils;
 
+import com.hx.codec.codec.AbstractCodec;
+import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
+import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.factory.array.*;
 import com.hx.codec.codec.factory.collection.*;
 import com.hx.codec.codec.factory.common.*;
 import com.hx.codec.codec.factory.entity.GenericBeanCodecFactory;
+import com.hx.codec.codec.factory.map.GenericMapCodecFactory;
+import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapCodecFactory;
+import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapWithExactlyLenCodecFactory;
+import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapWithLenCodecFactory;
 import com.hx.codec.codec.factory.string.Bcd8421StringCodecFactory;
 import com.hx.codec.codec.factory.string.CharsetEncodingStringCodecFactory;
 import com.hx.codec.codec.factory.string.CharsetEncodingStringWithFixedLenCodecFactory;
 import com.hx.codec.codec.factory.string.CharsetEncodingStringWithLenCodecFactory;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
+import com.hx.codec.schema.GenericBeanSchema;
 import io.netty.buffer.ByteBuf;
 
 import java.lang.reflect.Field;
@@ -124,6 +132,16 @@ public class CodecUtils {
         // entity
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN, new GenericBeanCodecFactory());
 
+        // map
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_MAP, new GenericMapCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_MAP, new SchemaRegistryBasedMapCodecFactory());
+
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_MAP_WITH_LEN, new GenericMapCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_MAP_WITH_LEN, new SchemaRegistryBasedMapWithLenCodecFactory());
+
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_MAP_WITH_EXACTLY_LEN, new GenericMapCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_MAP_WITH_EXACTLY_LEN, new SchemaRegistryBasedMapWithExactlyLenCodecFactory());
+
         // others
         DATA_TYPE_2_CODEC.put(DataType.PADDING_BYTE, new PaddingByteCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.PADDING_BYTES, new PaddingBytesCodecFactory());
@@ -187,6 +205,29 @@ public class CodecUtils {
             AssertUtils.state(false, " unknown byteType : " + byteType);
             return -1;
         }
+    }
+
+    /**
+     * createCodeccForMapCodecFactory
+     *
+     * @param dataTypeStr dataTypeStr
+     * @param context     context
+     * @return com.hx.codec.codec.AbstractCodec
+     * @author Jerry.X.He
+     * @date 2021-10-10 17:12
+     */
+    public static AbstractCodec createCodecForMapCodecFactory(String dataTypeStr, Class fieldType, CodecFactoryContext context) {
+        DataType dataType = DataType.valueOf(dataTypeStr);
+        if (dataType == null) {
+            return new GenericBeanCodec<>(new GenericBeanSchema<>(fieldType, context.getVersion()));
+        }
+        // other, bean array/collection omit, please defined CustomCodecFacttory
+        if (dataType == DataType.GENERIC_BEAN) {
+            return new GenericBeanCodec<>(new GenericBeanSchema<>(fieldType, context.getVersion()));
+        }
+
+        AbstractCodecFactory keyCodecFactory = CodecUtils.lookupCodecFactoryByDataType(dataType);
+        return keyCodecFactory.create(context);
     }
 
     /**
@@ -289,16 +330,20 @@ public class CodecUtils {
      * @author Jerry.X.He
      * @date 2021-10-03 17:22
      */
-    public static Class getActualTypeArgument(Field field) {
+    public static Class getActualTypeArgument(Field field, int typeArgIdx) {
         Type type = field.getGenericType();
         if (type instanceof Class) {
             return (Class) type;
         } else if (type instanceof ParameterizedType) {
-            return (Class) ((ParameterizedType) type).getActualTypeArguments()[0];
+            return (Class) ((ParameterizedType) type).getActualTypeArguments()[typeArgIdx];
         } else {
             AssertUtils.state(false, " unexpected field ");
             return null;
         }
+    }
+
+    public static Class getActualTypeArgument(Field field) {
+        return getActualTypeArgument(field, 0);
     }
 
     /**

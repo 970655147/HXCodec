@@ -196,9 +196,14 @@ public class GenericBeanSchema<T> {
         result.setField(field);
         result.setGetterMethod(findGetterMethod(clazz, field));
         result.setSetterMethod(findSetterMethod(clazz, field));
+        result.init();
 
-        AbstractCodecFactory codecFactory = CodecUtils.lookupCodecFactoryByDataType(fieldAnno.dataType());
-        CodecFactoryContext codecFactoryContext = new CodecFactoryContext(field, fieldAnno, version);
+        // use customCodeFactory first or else use default configuration
+        AbstractCodecFactory codecFactory = result.getCodecFactory();
+        if (codecFactory == null) {
+            codecFactory = CodecUtils.lookupCodecFactoryByDataType(fieldAnno.dataType());
+        }
+        CodecFactoryContext codecFactoryContext = new CodecFactoryContext(field, fieldAnno, result, version);
         AbstractCodec codec = codecFactory.create(codecFactoryContext);
         result.setCodec(codec);
         return result;

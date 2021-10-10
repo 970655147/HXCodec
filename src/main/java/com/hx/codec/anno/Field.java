@@ -1,5 +1,6 @@
 package com.hx.codec.anno;
 
+import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.interceptor.FieldInterceptor;
@@ -132,6 +133,15 @@ public @interface Field {
      * @date 2021-10-10 10:03
      */
     Class<? extends SchemaRegistry> schemaRegistryClazz() default SchemaRegistry.class;
+
+    /**
+     * codecFactoryClazz
+     *
+     * @return Class
+     * @author Jerry.X.He
+     * @date 2021-10-10 17:02
+     */
+    Class<? extends AbstractCodecFactory> codecFactoryClazz() default AbstractCodecFactory.class;
 
     /**
      * desc

@@ -2,6 +2,7 @@ package com.hx.codec.schema;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
+import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.interceptor.FieldInterceptor;
 import com.hx.codec.utils.AssertUtils;
 import lombok.Data;
@@ -39,6 +40,7 @@ public class GenericFieldSchema {
     private int offset;
     private FieldInterceptor fieldInterceptor;
     private SchemaRegistry schemaRegistry;
+    private AbstractCodecFactory codecFactory;
 
     public GenericFieldSchema() {
     }
@@ -56,6 +58,8 @@ public class GenericFieldSchema {
                     null : fieldAnno.fieldInterceptorClazz().newInstance();
             schemaRegistry = fieldAnno.schemaRegistryClazz() == SchemaRegistry.class ?
                     null : fieldAnno.schemaRegistryClazz().newInstance();
+            codecFactory = fieldAnno.codecFactoryClazz() == AbstractCodecFactory.class ?
+                    null : fieldAnno.codecFactoryClazz().newInstance();
         } catch (Exception e) {
             e.printStackTrace();
             AssertUtils.state(false, " error while init GenericFieldSchema : " + this.toString());

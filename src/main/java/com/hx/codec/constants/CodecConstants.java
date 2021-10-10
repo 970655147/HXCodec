@@ -38,6 +38,8 @@ public class CodecConstants {
     public static String KEY_PADDING_FIRST = "paddingFirst";
     public static String KEY_FIXED_LENGTH = "fixedLength";
     public static String KEY_CHARSET = "charset";
+    public static String KEY_KEY_TYPE = "keyType";
+    public static String KEY_VALUE_TYPE = "valueType";
 
     // initializer
     static {
