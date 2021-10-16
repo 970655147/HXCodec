@@ -1,5 +1,7 @@
 package com.hx.codec.schema;
 
+import com.hx.codec.codec.AbstractCodec;
+
 /**
  * SchemaRegistry
  *
@@ -18,7 +20,7 @@ public interface SchemaRegistry<T> {
      * @author Jerry.X.He
      * @date 2021-10-10 10:00
      */
-    boolean registry(T key, GenericBeanSchema beanSchema);
+    boolean registry(T key, AbstractCodec beanSchema);
 
     /**
      * lookUp
@@ -28,6 +30,6 @@ public interface SchemaRegistry<T> {
      * @author Jerry.X.He
      * @date 2021-10-10 10:00
      */
-    GenericBeanSchema lookUp(T key);
+    AbstractCodec lookUp(T key);
 
 }

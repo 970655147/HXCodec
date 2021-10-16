@@ -1,5 +1,7 @@
 package com.hx.codec.schema;
 
+import com.hx.codec.codec.AbstractCodec;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,18 +14,18 @@ import java.util.Map;
  */
 public class MapBasedSchemaRegistry<T> implements SchemaRegistry<T> {
 
-    // key2Schema
-    protected Map<T, GenericBeanSchema> key2Schema = new LinkedHashMap<>();
+    // key2Codec
+    protected Map<T, AbstractCodec> key2Codec = new LinkedHashMap<>();
 
     @Override
-    public boolean registry(T key, GenericBeanSchema beanSchema) {
-        key2Schema.put(key, beanSchema);
+    public boolean registry(T key, AbstractCodec beanSchema) {
+        key2Codec.put(key, beanSchema);
         return true;
     }
 
     @Override
-    public GenericBeanSchema lookUp(T key) {
-        return key2Schema.get(key);
+    public AbstractCodec lookUp(T key) {
+        return key2Codec.get(key);
     }
 
 }
