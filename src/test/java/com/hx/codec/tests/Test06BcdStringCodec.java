@@ -1,5 +1,6 @@
 package com.hx.codec.tests;
 
+import com.hx.codec.codec.string.Bcd8421BigDecimalWithOneByteLenCodec;
 import com.hx.codec.codec.string.Bcd8421StringWithExactlyLenCodec;
 import com.hx.codec.codec.string.Bcd8421StringWithFixedLenCodec;
 import com.hx.codec.codec.string.Bcd8421StringWithLenCodec;
@@ -12,6 +13,8 @@ import io.netty.buffer.Unpooled;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import java.math.BigDecimal;
 
 /**
  * Test05StringProtocol
@@ -125,5 +128,38 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == fixedLength + CodecUtils.lenBytes(ByteType.QWORD), " unexpected value ");
     }
 
+    @Test
+    public void test04BigDecimalWithLen() {
+        int fixedLength = 0x06;
+        Bcd8421BigDecimalWithOneByteLenCodec protocol = new Bcd8421BigDecimalWithOneByteLenCodec((byte) 0x0);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        BigDecimal entity = new BigDecimal("-123456.456123");
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        BigDecimal decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("36ff123456456123"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == fixedLength + 2, " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == fixedLength + 2, " unexpected value ");
+    }
+
+    @Test
+    public void test04BigDecimalWithLen02() {
+        int fixedLength = 0x06;
+        Bcd8421BigDecimalWithOneByteLenCodec protocol = new Bcd8421BigDecimalWithOneByteLenCodec((byte) 0x0);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        BigDecimal entity = new BigDecimal("123456.45612");
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        BigDecimal decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("3500012345645612"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == fixedLength + 2, " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == fixedLength + 2, " unexpected value ");
+    }
 
 }
