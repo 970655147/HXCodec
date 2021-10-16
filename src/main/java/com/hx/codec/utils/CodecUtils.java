@@ -124,6 +124,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_LEN, new Bcd8421StringWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_FIXED_LEN, new Bcd8421StringWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_EXACTLY_LEN, new Bcd8421StringWithExactlyLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_BIG_DECIMAL_WITH_ONE_BYTE_LEN, new Bcd8421BigDecimalWithOneByteLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_STRING, new CharsetEncodingStringCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_LEN_STRING, new CharsetEncodingStringWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, new CharsetEncodingStringWithFixedLenCodecFactory());
