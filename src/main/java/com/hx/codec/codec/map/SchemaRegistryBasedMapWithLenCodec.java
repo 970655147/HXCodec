@@ -1,10 +1,8 @@
 package com.hx.codec.codec.map;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.CodecConstants;
-import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.schema.SchemaRegistry;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
@@ -35,8 +33,7 @@ public class SchemaRegistryBasedMapWithLenCodec<K> extends AbstractCodec<Map<K, 
     public void encode(Map<K, Object> entity, ByteBuf buf) {
         CodecUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
         for (Map.Entry<K, Object> entry : entity.entrySet()) {
-            GenericBeanSchema valueSchema = schemaRegistry.lookUp(entry.getKey());
-            GenericBeanCodec valueCodec = new GenericBeanCodec(valueSchema);
+            AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
             valueCodec.encode(entry.getKey(), buf);
@@ -50,8 +47,7 @@ public class SchemaRegistryBasedMapWithLenCodec<K> extends AbstractCodec<Map<K, 
         Map<K, Object> result = new LinkedHashMap<>(size);
         for (int i = 0; i < size; i++) {
             K key = keyCodec.decode(buf);
-            GenericBeanSchema valueSchema = schemaRegistry.lookUp(key);
-            GenericBeanCodec valueCodec = new GenericBeanCodec(valueSchema);
+            AbstractCodec valueCodec = schemaRegistry.lookUp(key);
 
             Object value = valueCodec.decode(buf);
             result.put(key, value);

@@ -29,8 +29,7 @@ public class SchemaRegistryBasedMapCodec<K> extends AbstractCodec<Map<K, Object>
     @Override
     public void encode(Map<K, Object> entity, ByteBuf buf) {
         for (Map.Entry<K, Object> entry : entity.entrySet()) {
-            GenericBeanSchema valueSchema = schemaRegistry.lookUp(entry.getKey());
-            GenericBeanCodec valueCodec = new GenericBeanCodec(valueSchema);
+            AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
             valueCodec.encode(entry.getKey(), buf);
@@ -43,8 +42,7 @@ public class SchemaRegistryBasedMapCodec<K> extends AbstractCodec<Map<K, Object>
         Map<K, Object> result = new LinkedHashMap<>();
         while (buf.readableBytes() > 0) {
             K key = keyCodec.decode(buf);
-            GenericBeanSchema valueSchema = schemaRegistry.lookUp(key);
-            GenericBeanCodec valueCodec = new GenericBeanCodec(valueSchema);
+            AbstractCodec valueCodec = schemaRegistry.lookUp(key);
 
             Object value = valueCodec.decode(buf);
             result.put(key, value);

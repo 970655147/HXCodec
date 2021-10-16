@@ -88,7 +88,9 @@ public enum DataType {
 
     // ------------------------------------------ string types ------------------------------------------
 
-    BCD_8421_STRING,
+    BCD_8421_STRING_WITH_LEN,
+    BCD_8421_STRING_WITH_FIXED_LEN,
+    BCD_8421_STRING_WITH_EXACTLY_LEN,
     CHARSET_ENCODING_STRING,
     CHARSET_ENCODING_WITH_LEN_STRING,
     CHARSET_ENCODING_WITH_FIXED_LEN_STRING,

@@ -1,12 +1,13 @@
 package com.hx.codec.encoder.string;
 
+import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BCD8421_PADDING;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
@@ -18,24 +19,31 @@ import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
  * @version 1.0
  * @date 2021/9/23 10:59
  */
-public class Bcd8421StringEncoder extends AbstractEncoder<String> {
+public class Bcd8421StringWithLenEncoder extends AbstractEncoder<String> {
 
-    // length
-    private int fixedLength;
+    // lenByteType
+    private ByteType lenByteType;
+    // paddingByte
+    private byte paddingByte;
 
-    public Bcd8421StringEncoder(ByteOrder byteOrder, int fixedLength) {
+    public Bcd8421StringWithLenEncoder(ByteOrder byteOrder, ByteType lenByteType, byte paddingByte) {
         super(byteOrder);
-        this.fixedLength = fixedLength;
+        this.lenByteType = lenByteType;
+        this.paddingByte = paddingByte;
     }
 
-    public Bcd8421StringEncoder(int fixedLength) {
-        this(DEFAULT_BYTE_ORDER, fixedLength);
+    public Bcd8421StringWithLenEncoder(ByteType lenByteType, byte paddingByte) {
+        this(DEFAULT_BYTE_ORDER, lenByteType, paddingByte);
+    }
+
+    public Bcd8421StringWithLenEncoder(ByteType lenByteType) {
+        this(lenByteType, DEFAULT_BCD8421_PADDING);
     }
 
     @Override
     public void encode(String entity, ByteBuf buf) {
         byte[] randomEntityBytes = entity.getBytes(Charset.defaultCharset());
-        AssertUtils.state(((randomEntityBytes.length + 1) >> 1) <= fixedLength, "unexpected string length");
+        CodecUtils.writeLen(lenByteType, byteOrder, ((randomEntityBytes.length + 1) >> 1), buf);
         for (byte b : randomEntityBytes) {
             AssertUtils.state(b >= '0' && b <= '9', "unexpected string encoding by BCD8421");
         }
@@ -49,15 +57,10 @@ public class Bcd8421StringEncoder extends AbstractEncoder<String> {
         if (isOdd) {
             int encodedLastByteIdx = entityBytes.length - 1;
             entityBytes[entityBytes.length - 1] = (byte) (((randomEntityBytes[encodedLastByteIdx << 1] - '0') << 4)
-                    | (DEFAULT_BCD8421_PADDING & 0xf));
+                    | (paddingByte & 0xf));
         }
 
-        // cache for this
-        byte[] paddingBytes = new byte[fixedLength - entityBytes.length];
-        Arrays.fill(paddingBytes, DEFAULT_BCD8421_PADDING);
-
         buf.writeBytes(entityBytes);
-        buf.writeBytes(paddingBytes);
     }
 
 }

@@ -12,10 +12,7 @@ import com.hx.codec.codec.factory.map.GenericMapCodecFactory;
 import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapCodecFactory;
 import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapWithExactlyLenCodecFactory;
 import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapWithLenCodecFactory;
-import com.hx.codec.codec.factory.string.Bcd8421StringCodecFactory;
-import com.hx.codec.codec.factory.string.CharsetEncodingStringCodecFactory;
-import com.hx.codec.codec.factory.string.CharsetEncodingStringWithFixedLenCodecFactory;
-import com.hx.codec.codec.factory.string.CharsetEncodingStringWithLenCodecFactory;
+import com.hx.codec.codec.factory.string.*;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.schema.GenericBeanSchema;
@@ -124,7 +121,9 @@ public class CodecUtils {
 
 
         // string
-        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING, new Bcd8421StringCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_LEN, new Bcd8421StringWithLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_FIXED_LEN, new Bcd8421StringWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_EXACTLY_LEN, new Bcd8421StringWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_STRING, new CharsetEncodingStringCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_LEN_STRING, new CharsetEncodingStringWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.CHARSET_ENCODING_WITH_FIXED_LEN_STRING, new CharsetEncodingStringWithFixedLenCodecFactory());
