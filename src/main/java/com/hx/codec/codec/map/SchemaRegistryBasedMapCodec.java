@@ -1,8 +1,6 @@
 package com.hx.codec.codec.map;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.codec.entity.GenericBeanCodec;
-import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.schema.SchemaRegistry;
 import io.netty.buffer.ByteBuf;
 
@@ -32,7 +30,7 @@ public class SchemaRegistryBasedMapCodec<K> extends AbstractCodec<Map<K, Object>
             AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
-            valueCodec.encode(entry.getKey(), buf);
+            valueCodec.encode(entry.getValue(), buf);
 
         }
     }

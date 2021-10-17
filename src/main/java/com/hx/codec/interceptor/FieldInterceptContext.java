@@ -44,4 +44,17 @@ public class FieldInterceptContext {
         }
     }
 
+    public FieldInterceptContext copy() {
+        FieldInterceptContext result = new FieldInterceptContext();
+        result.beanSchema = beanSchema;
+        result.subjectValue = subjectValue;
+        result.fieldSchema = fieldSchema;
+        result.fieldValue = fieldValue;
+        result.byteBuf = byteBuf;
+        result.arg = arg;
+        result.args = args;
+        result.argsMap = argsMap;
+        return result;
+    }
+
 }

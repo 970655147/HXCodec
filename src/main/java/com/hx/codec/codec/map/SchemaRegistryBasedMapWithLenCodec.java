@@ -36,7 +36,7 @@ public class SchemaRegistryBasedMapWithLenCodec<K> extends AbstractCodec<Map<K, 
             AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
-            valueCodec.encode(entry.getKey(), buf);
+            valueCodec.encode(entry.getValue(), buf);
 
         }
     }
