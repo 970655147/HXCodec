@@ -36,6 +36,25 @@ public class Test20DigestUtils extends Test00BaseTests {
     }
 
     @Test
+    public void test01CRC16_X16_15_2_1_02() {
+
+        ByteBuf byteBuf = Unpooled.buffer(0x20);
+        byteBuf.writeBytes(new byte[]{(byte) 0x7e, 0x00, (byte) 0x05, 0x60, 0x31, 0x32, 0x33});
+        int crc16 = DigestUtils.crc16_X16_15_2_1(byteBuf);
+        String crcHexStr = ByteBufUtil.hexDump(new byte[]{(byte) ((crc16 & 0xff00) >> 8), (byte) (crc16 & 0x00ff)});
+        LOGGER.info(" crcHexStr : {} ", crcHexStr);
+//        AssertUtils.state(crcHexStr.equals("0a6e"), "unexpected value");
+
+        byteBuf = Unpooled.buffer(0x20);
+        byteBuf.writeBytes(new byte[]{(byte) 0x7e, 0x00, (byte) 0x05, 0x60, 0x31, 0x32, 0x33});
+        crc16 = DigestUtils.crc16_X16_15_2_1_calc(byteBuf);
+        crcHexStr = ByteBufUtil.hexDump(new byte[]{(byte) ((crc16 & 0xff00) >> 8), (byte) (crc16 & 0x00ff)});
+        LOGGER.info(" crcHexStr : {} ", crcHexStr);
+//        AssertUtils.state(crcHexStr.equals("0a6e"), "unexpected value");
+
+    }
+
+    @Test
     public void test02CRC16_CCITT() {
         ByteBuf byteBuf = Unpooled.buffer(0x20);
         byteBuf.writeBytes(new byte[]{0x00, 0x08, (byte) 0x84, 0x00, 0x00, 0x00, 0x05, 0x50});

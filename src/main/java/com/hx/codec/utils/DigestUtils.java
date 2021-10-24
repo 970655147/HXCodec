@@ -87,10 +87,39 @@ public class DigestUtils {
         ByteBuf byteBuf = sourceBuf.copy();
         while (byteBuf.isReadable()) {
             byte b = byteBuf.readByte();
-            crc = (crc >>> 8) ^ CRC_16_X_16_15_2_1_TABLES[(crc ^ b) & 0xff];
+            crc = (crc >>> 8) ^ CRC_16_X_16_15_2_1_TABLES[((crc ^ b) & 0xff)];
         }
         return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
 //        return new byte[] { (byte) (0xff & crc), (byte) ((0xff00 & crc) >> 8) };
+    }
+
+    /**
+     * crc16_X16_15_2_1_calc
+     * 1000 0000 0000 0101 还要按照高低位颠倒以后得到1010 0000 0000 0001 即 A001
+     *
+     * @param sourceBuf sourceBuf
+     * @return byte[]
+     * @author Jerry.X.He
+     * @date 2021-10-16 11:02
+     */
+    public static short crc16_X16_15_2_1_calc(ByteBuf sourceBuf) {
+        int crc = 0xffff;
+        ByteBuf byteBuf = sourceBuf.copy();
+        while (byteBuf.isReadable()) {
+            byte b = byteBuf.readByte();
+            if (b < 0) {
+                b += 256;
+            }
+            crc ^= (b & 0xff);
+            for (int i = 0; i < 8; i++) {
+                boolean isLastBitOne = ((crc & 0x01) == 0x01);
+                crc >>>= 1;
+                if (isLastBitOne) {
+                    crc ^= 0xA001;
+                }
+            }
+        }
+        return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
     }
 
 
