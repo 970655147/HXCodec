@@ -162,4 +162,10 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
         AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
+
+    @Test
+    public void test05SchemaRegistryBasedCollectionCodec() {
+
+    }
+
 }

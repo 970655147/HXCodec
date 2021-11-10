@@ -7,6 +7,8 @@ import com.hx.codec.tests.codec.MyStringCodec;
 import com.hx.codec.tests.codec.factory.MyConfigMapCodecFactory;
 import com.hx.codec.tests.codec.factory.MyStringCodecFactory;
 import com.hx.codec.tests.model.EntityWithCodecFactory;
+import com.hx.codec.tests.model.EntityWithType;
+import com.hx.codec.tests.model.EntityWithTypeList;
 import com.hx.codec.tests.model.UpConnectReq;
 import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
@@ -14,6 +16,7 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -76,6 +79,8 @@ public class Test19CodecFactory extends Test00BaseTests {
         AssertUtils.state(upConnectReq.getDownLinkIp().equals(decodedUpConnectReqKey.getDownLinkIp()), " unexpected value ");
         AssertUtils.state(upConnectReq.getDownLinkPort().equals(decodedUpConnectReqKey.getDownLinkPort()), " unexpected value ");
         AssertUtils.state(upConnectReq.getMsgGnsscenterid().equals(decodedUpConnectReqKey.getMsgGnsscenterid()), " unexpected value ");
+
+        AssertUtils.state(encodedBufHexStr.equals("0a3132333078307831323307070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788"), " unexpected value ");
 
     }
 
