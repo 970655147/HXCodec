@@ -23,6 +23,7 @@ public class CodecConstants {
     public static ByteOrder DEFAULT_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
     public static ByteType DEFAULT_LEN_BYTE_TYPE = ByteType.DWORD;
     public static Charset DEFAULT_CHARSET = Charset.forName("gbk");
+    public static boolean DEFAULT_INCLUDE_LEN = false;
 
     // defaults
     public static byte DEFAULT_PADDING_BYTE = 0x00;
