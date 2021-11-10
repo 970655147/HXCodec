@@ -1,7 +1,7 @@
 package com.hx.codec.codec.map;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.schema.SchemaRegistry;
+import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -18,12 +18,12 @@ import java.util.Map;
 public class SchemaRegistryBasedMapWithExactlyLenCodec<K> extends AbstractCodec<Map<K, Object>, Map<K, Object>> {
 
     private AbstractCodec<K, K> keyCodec;
-    private SchemaRegistry<K> schemaRegistry;
+    private CodecRegistry<K> codecRegistry;
     private int eleLength;
 
-    public SchemaRegistryBasedMapWithExactlyLenCodec(AbstractCodec<K, K> keyCodec, SchemaRegistry<K> schemaRegistry, int eleLength) {
+    public SchemaRegistryBasedMapWithExactlyLenCodec(AbstractCodec<K, K> keyCodec, CodecRegistry<K> codecRegistry, int eleLength) {
         this.keyCodec = keyCodec;
-        this.schemaRegistry = schemaRegistry;
+        this.codecRegistry = codecRegistry;
         this.eleLength = eleLength;
     }
 
@@ -31,7 +31,7 @@ public class SchemaRegistryBasedMapWithExactlyLenCodec<K> extends AbstractCodec<
     public void encode(Map<K, Object> entity, ByteBuf buf) {
         AssertUtils.state(entity.size() == eleLength, " unexpected entity length ");
         for (Map.Entry<K, Object> entry : entity.entrySet()) {
-            AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
+            AbstractCodec valueCodec = codecRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
             valueCodec.encode(entry.getValue(), buf);
@@ -45,7 +45,7 @@ public class SchemaRegistryBasedMapWithExactlyLenCodec<K> extends AbstractCodec<
         Map<K, Object> result = new LinkedHashMap<>(size);
         for (int i = 0; i < size; i++) {
             K key = keyCodec.decode(buf);
-            AbstractCodec valueCodec = schemaRegistry.lookUp(key);
+            AbstractCodec valueCodec = codecRegistry.lookUp(key);
 
             Object value = valueCodec.decode(buf);
             result.put(key, value);

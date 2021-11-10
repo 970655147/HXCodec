@@ -1,7 +1,7 @@
 package com.hx.codec.codec.map;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.schema.SchemaRegistry;
+import com.hx.codec.codec.registry.CodecRegistry;
 import io.netty.buffer.ByteBuf;
 
 import java.util.LinkedHashMap;
@@ -17,17 +17,17 @@ import java.util.Map;
 public class SchemaRegistryBasedMapCodec<K> extends AbstractCodec<Map<K, Object>, Map<K, Object>> {
 
     private AbstractCodec<K, K> keyCodec;
-    private SchemaRegistry<K> schemaRegistry;
+    private CodecRegistry<K> codecRegistry;
 
-    public SchemaRegistryBasedMapCodec(AbstractCodec<K, K> keyCodec, SchemaRegistry<K> schemaRegistry) {
+    public SchemaRegistryBasedMapCodec(AbstractCodec<K, K> keyCodec, CodecRegistry<K> codecRegistry) {
         this.keyCodec = keyCodec;
-        this.schemaRegistry = schemaRegistry;
+        this.codecRegistry = codecRegistry;
     }
 
     @Override
     public void encode(Map<K, Object> entity, ByteBuf buf) {
         for (Map.Entry<K, Object> entry : entity.entrySet()) {
-            AbstractCodec valueCodec = schemaRegistry.lookUp(entry.getKey());
+            AbstractCodec valueCodec = codecRegistry.lookUp(entry.getKey());
 
             keyCodec.encode(entry.getKey(), buf);
             valueCodec.encode(entry.getValue(), buf);
@@ -40,7 +40,7 @@ public class SchemaRegistryBasedMapCodec<K> extends AbstractCodec<Map<K, Object>
         Map<K, Object> result = new LinkedHashMap<>();
         while (buf.readableBytes() > 0) {
             K key = keyCodec.decode(buf);
-            AbstractCodec valueCodec = schemaRegistry.lookUp(key);
+            AbstractCodec valueCodec = codecRegistry.lookUp(key);
 
             Object value = valueCodec.decode(buf);
             result.put(key, value);

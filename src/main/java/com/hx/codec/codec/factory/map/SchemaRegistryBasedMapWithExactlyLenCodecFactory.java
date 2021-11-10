@@ -7,8 +7,8 @@ import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.map.SchemaRegistryBasedMapWithExactlyLenCodec;
+import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.schema.GenericBeanSchema;
-import com.hx.codec.schema.SchemaRegistry;
 import com.hx.codec.utils.AssertUtils;
 import com.hx.codec.utils.CodecUtils;
 
@@ -31,7 +31,7 @@ public class SchemaRegistryBasedMapWithExactlyLenCodecFactory implements Abstrac
         int eleLength = fieldAnno.eleLength();
 
         try {
-            SchemaRegistry schemaRegistry = context.getFieldSchema().getSchemaRegistry();
+            CodecRegistry codecRegistry = context.getFieldSchema().getCodecRegistry();
 
             if (CodecUtils.isNotBlank(fieldAnno.args())) {
                 JSONObject args = JSONObject.parseObject(fieldAnno.args());
@@ -41,13 +41,13 @@ public class SchemaRegistryBasedMapWithExactlyLenCodecFactory implements Abstrac
                     keyCodec = CodecUtils.createCodecForMapCodecFactory(keyTypeFromArgs, keyType, context);
                 }
                 if (keyCodec != null) {
-                    return new SchemaRegistryBasedMapWithExactlyLenCodec(keyCodec, schemaRegistry, eleLength);
+                    return new SchemaRegistryBasedMapWithExactlyLenCodec(keyCodec, codecRegistry, eleLength);
                 }
             }
 
             return new SchemaRegistryBasedMapWithExactlyLenCodec(
                     new GenericBeanCodec<>(new GenericBeanSchema<>(keyType, context.getVersion())),
-                    schemaRegistry,
+                    codecRegistry,
                     eleLength);
         } catch (Exception e) {
             e.printStackTrace();

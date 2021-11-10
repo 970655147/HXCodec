@@ -94,6 +94,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION, new DWordCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION, new QWordCollectionCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION, new GenericBeanCollectionCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_COLLECTION, new SchemaRegistryBasedCollectionCodecFactory());
 
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_LEN, new ByteCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_LEN, new UnsignedByteCollectionWithLenCodecFactory());
@@ -102,6 +103,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_LEN, new DWordCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_LEN, new QWordCollectionWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_LEN, new GenericBeanCollectionWithLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_COLLECTION_WITH_LEN, new SchemaRegistryBasedCollectionWithLenCodecFactory());
 
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_FIXED_LEN, new ByteCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_FIXED_LEN, new UnsignedByteCollectionWithFixedLenCodecFactory());
@@ -118,7 +120,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_EXACTLY_LEN, new DWordCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_EXACTLY_LEN, new QWordCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_EXACTLY_LEN, new GenericBeanCollectionWithExactlyLenCodecFactory());
-
+        DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_COLLECTION_WITH_EXACTLY_LEN, new SchemaRegistryBasedCollectionWithExactlyLenCodecFactory());
 
         // string
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_LEN, new Bcd8421StringWithLenCodecFactory());

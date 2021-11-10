@@ -8,8 +8,8 @@ import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.map.SchemaRegistryBasedMapWithLenCodec;
 import com.hx.codec.constants.ByteType;
+import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.schema.GenericBeanSchema;
-import com.hx.codec.schema.SchemaRegistry;
 import com.hx.codec.utils.AssertUtils;
 import com.hx.codec.utils.CodecUtils;
 
@@ -32,7 +32,7 @@ public class SchemaRegistryBasedMapWithLenCodecFactory implements AbstractCodecF
         ByteType lenByteType = fieldAnno.lengthByteType();
 
         try {
-            SchemaRegistry schemaRegistry = context.getFieldSchema().getSchemaRegistry();
+            CodecRegistry codecRegistry = context.getFieldSchema().getCodecRegistry();
 
             if (CodecUtils.isNotBlank(fieldAnno.args())) {
                 JSONObject args = JSONObject.parseObject(fieldAnno.args());
@@ -42,13 +42,13 @@ public class SchemaRegistryBasedMapWithLenCodecFactory implements AbstractCodecF
                     keyCodec = CodecUtils.createCodecForMapCodecFactory(keyTypeFromArgs, keyType, context);
                 }
                 if (keyCodec != null) {
-                    return new SchemaRegistryBasedMapWithLenCodec(keyCodec, schemaRegistry, lenByteType);
+                    return new SchemaRegistryBasedMapWithLenCodec(keyCodec, codecRegistry, lenByteType);
                 }
             }
 
             return new SchemaRegistryBasedMapWithLenCodec(
                     new GenericBeanCodec<>(new GenericBeanSchema<>(keyType, context.getVersion())),
-                    schemaRegistry,
+                    codecRegistry,
                     lenByteType);
         } catch (Exception e) {
             e.printStackTrace();

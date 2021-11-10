@@ -1,10 +1,10 @@
 package com.hx.codec.anno;
 
 import com.hx.codec.codec.factory.AbstractCodecFactory;
+import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.interceptor.FieldInterceptor;
-import com.hx.codec.schema.SchemaRegistry;
 
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -126,13 +126,13 @@ public @interface Field {
     Class<? extends FieldInterceptor> fieldInterceptorClazz() default FieldInterceptor.class;
 
     /**
-     * schemaRegistryClazz
+     * codecRegistryClazz
      *
      * @return Class
      * @author Jerry.X.He
      * @date 2021-10-10 10:03
      */
-    Class<? extends SchemaRegistry> schemaRegistryClazz() default SchemaRegistry.class;
+    Class<? extends CodecRegistry> codecRegistryClazz() default CodecRegistry.class;
 
     /**
      * codecFactoryClazz
