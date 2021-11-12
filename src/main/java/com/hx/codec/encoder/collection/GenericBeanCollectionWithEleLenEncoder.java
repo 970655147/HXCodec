@@ -9,23 +9,23 @@ import io.netty.buffer.ByteBuf;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_ELE_LEN_PADDING;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**
- * GenericBeanCollectionWithFixedLenEncoder
+ * GenericBeanCollectionWithEleLenEncoder
  *
  * @author Jerry.X.He <970655147@qq.com>
  * @version 1.0
  * @date 2021-10-03 11:19
  */
-public class GenericBeanCollectionWithFixedLenEncoder<T> extends AbstractEncoder<Collection<T>> {
+public class GenericBeanCollectionWithEleLenEncoder<T> extends AbstractEncoder<Collection<T>> {
 
     private GenericBeanEncoder<T> encoder;
     private GenericBeanSchema<T> beanSchema;
     private int eleLength;
 
-    public GenericBeanCollectionWithFixedLenEncoder(GenericBeanSchema<T> beanSchema, int eleLength) {
+    public GenericBeanCollectionWithEleLenEncoder(GenericBeanSchema<T> beanSchema, int eleLength) {
         super(DEFAULT_BYTE_ORDER);
         this.beanSchema = beanSchema;
         this.encoder = new GenericBeanEncoder<>(beanSchema);
@@ -40,7 +40,7 @@ public class GenericBeanCollectionWithFixedLenEncoder<T> extends AbstractEncoder
         }
 
         byte[] paddingBytes = new byte[(eleLength - entity.size()) * beanSchema.getLength()];
-        Arrays.fill(paddingBytes, DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING);
+        Arrays.fill(paddingBytes, DEFAULT_ARRAY_WITH_ELE_LEN_PADDING);
         buf.writeBytes(paddingBytes);
     }
 

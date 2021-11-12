@@ -31,7 +31,7 @@ public class CodecConstants {
     public static JSONArray DEFAULT_PADDING_BYTES_ARRAY = new JSONArray();
     public static boolean DEFAULT_PADDING_FIRST = false;
     public static byte DEFAULT_BCD8421_PADDING = 0xf;
-    public static byte DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING = 0x00;
+    public static byte DEFAULT_ARRAY_WITH_ELE_LEN_PADDING = 0x00;
 
     // keys
     public static String KEY_PADDING_BYTE = "paddingByte";

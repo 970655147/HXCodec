@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
 
 import java.util.Arrays;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_ELE_LEN_PADDING;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**

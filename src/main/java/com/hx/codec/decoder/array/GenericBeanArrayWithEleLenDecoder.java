@@ -8,7 +8,7 @@ import io.netty.buffer.ByteBuf;
 import java.lang.reflect.Array;
 import java.nio.ByteOrder;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_ARRAY_WITH_ELE_LEN_PADDING;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**
@@ -38,7 +38,7 @@ public class GenericBeanArrayWithEleLenDecoder<T> extends AbstractDecoder<T[]> {
         for (int i = 0; i < eleLength; i++) {
             byte nextByte = buf.getByte(buf.readerIndex());
             T ele = decoder.decode(buf);
-            if (nextByte != DEFAULT_ARRAY_WITH_FIXED_LEN_PADDING) {
+            if (nextByte != DEFAULT_ARRAY_WITH_ELE_LEN_PADDING) {
                 length = i + 1;
                 tmpResult[i] = ele;
             }

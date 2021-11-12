@@ -1,8 +1,8 @@
 package com.hx.codec.codec.collection;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.decoder.collection.GenericBeanCollectionWithFixedLenDecoder;
-import com.hx.codec.encoder.collection.GenericBeanCollectionWithFixedLenEncoder;
+import com.hx.codec.decoder.collection.GenericBeanCollectionWithEleLenDecoder;
+import com.hx.codec.encoder.collection.GenericBeanCollectionWithEleLenEncoder;
 import com.hx.codec.schema.GenericBeanSchema;
 import io.netty.buffer.ByteBuf;
 
@@ -15,16 +15,16 @@ import java.util.Collection;
  * @version 1.0
  * @date 2021-10-03 11:47
  */
-public class GenericBeanCollectionWithFixedLenCodec<T> extends AbstractCodec<Collection<T>, Collection<T>> {
+public class GenericBeanCollectionWithEleLenCodec<T> extends AbstractCodec<Collection<T>, Collection<T>> {
 
     private GenericBeanSchema<T> beanSchema;
     private int eleLength;
 
-    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int eleLength) {
+    public GenericBeanCollectionWithEleLenCodec(GenericBeanSchema<T> beanSchema, int eleLength) {
         this.beanSchema = beanSchema;
         this.eleLength = eleLength;
-        encoder = new GenericBeanCollectionWithFixedLenEncoder<>(beanSchema, eleLength);
-        decoder = new GenericBeanCollectionWithFixedLenDecoder<>(beanSchema, eleLength);
+        encoder = new GenericBeanCollectionWithEleLenEncoder<>(beanSchema, eleLength);
+        decoder = new GenericBeanCollectionWithEleLenDecoder<>(beanSchema, eleLength);
     }
 
     @Override

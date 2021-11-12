@@ -2,7 +2,7 @@ package com.hx.codec.codec.factory.collection;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.codec.collection.GenericBeanCollectionWithFixedLenCodec;
+import com.hx.codec.codec.collection.GenericBeanCollectionWithEleLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.schema.GenericBeanSchema;
@@ -15,7 +15,7 @@ import com.hx.codec.utils.CodecUtils;
  * @version 1.0
  * @date 2021-10-03 12:06
  */
-public class GenericBeanCollectionWithFixedLenCodecFactory implements AbstractCodecFactory {
+public class GenericBeanCollectionWithEleLenCodecFactory implements AbstractCodecFactory {
 
     @Override
     public AbstractCodec create(CodecFactoryContext context) {
@@ -23,6 +23,6 @@ public class GenericBeanCollectionWithFixedLenCodecFactory implements AbstractCo
         int eleLength = fieldAnno.eleLength();
         java.lang.reflect.Field field = context.getField();
         Class eleType = CodecUtils.getActualTypeArgument(field);
-        return new GenericBeanCollectionWithFixedLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), eleLength);
+        return new GenericBeanCollectionWithEleLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), eleLength);
     }
 }

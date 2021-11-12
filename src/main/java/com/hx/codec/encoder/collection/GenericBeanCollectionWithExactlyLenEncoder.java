@@ -11,7 +11,7 @@ import java.util.Collection;
 import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**
- * GenericBeanCollectionWithFixedLenEncoder
+ * GenericBeanCollectionWithEleLenEncoder
  *
  * @author Jerry.X.He <970655147@qq.com>
  * @version 1.0
