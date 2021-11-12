@@ -1,9 +1,6 @@
 package com.hx.codec.tests;
 
-import com.hx.codec.codec.string.Bcd8421BigDecimalWithOneByteLenCodec;
-import com.hx.codec.codec.string.Bcd8421StringWithExactlyLenCodec;
-import com.hx.codec.codec.string.Bcd8421StringWithFixedLenCodec;
-import com.hx.codec.codec.string.Bcd8421StringWithLenCodec;
+import com.hx.codec.codec.string.*;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.utils.AssertUtils;
 import com.hx.codec.utils.CodecUtils;
@@ -15,6 +12,9 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import java.math.BigDecimal;
+
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BCD8421_PADDING;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
 
 /**
  * Test05StringProtocol
@@ -37,7 +37,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
-        AssertUtils.state(encodedHexStr.equals("13211111111f0f0f0f0f0f0f0f0f0f0f"), " unexpected value ");
+        AssertUtils.state(encodedHexStr.equals("13211111111fffffffffffffffffffff"), " unexpected value ");
         AssertUtils.state(decoded.equals(entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == fixedLength, " unexpected value ");
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
@@ -48,13 +48,47 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         int fixedLength = 0x06;
         Bcd8421StringWithFixedLenCodec protocol = new Bcd8421StringWithFixedLenCodec(fixedLength);
         ByteBuf buf = Unpooled.buffer(0x10);
-        String entity = "13298765077";
+        String entity = "1329876507";
         protocol.encode(entity, buf);
         String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
-        AssertUtils.state(encodedHexStr.equals("13298765077f"), " unexpected value ");
+        AssertUtils.state(encodedHexStr.equals("1329876507ff"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == fixedLength, " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
+    }
+
+    @Test
+    public void test01StringWithFixedLen03PaddingFirst() {
+        int fixedLength = 0x10;
+        Bcd8421StringWithFixedLenCodec protocol = new Bcd8421StringWithFixedLenCodec(DEFAULT_BYTE_ORDER, fixedLength, DEFAULT_BCD8421_PADDING, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "13211111111";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("fffffffffffffffffffff13211111111"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+        AssertUtils.state(buf.readerIndex() == fixedLength, " unexpected value ");
+        AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
+    }
+
+    @Test
+    public void test01StringWithFixedLen04PaddingFirst() {
+        int fixedLength = 0x06;
+        Bcd8421StringWithFixedLenCodec protocol = new Bcd8421StringWithFixedLenCodec(DEFAULT_BYTE_ORDER, fixedLength, DEFAULT_BCD8421_PADDING, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "1329876507";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("ff1329876507"), " unexpected value ");
         AssertUtils.state(decoded.equals(entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == fixedLength, " unexpected value ");
         AssertUtils.state(buf.writerIndex() == fixedLength, " unexpected value ");
@@ -160,6 +194,64 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         AssertUtils.state(decoded.equals(entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == fixedLength + 2, " unexpected value ");
         AssertUtils.state(buf.writerIndex() == fixedLength + 2, " unexpected value ");
+    }
+
+
+    @Test
+    public void test05BcdString() {
+        Bcd8421StringCodec protocol = new Bcd8421StringCodec();
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "13211111111";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("13211111111f"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+    }
+
+    @Test
+    public void test05BcdString02() {
+        Bcd8421StringCodec protocol = new Bcd8421StringCodec();
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "1329876507";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("1329876507"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+    }
+
+
+    @Test
+    public void test05BcdString03PaddingFirst() {
+        Bcd8421StringCodec protocol = new Bcd8421StringCodec(DEFAULT_BYTE_ORDER, (byte) 0xe, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "13211111111";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("e13211111111"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
+    }
+
+    @Test
+    public void test05BcdString04PaddingFirst() {
+        Bcd8421StringCodec protocol = new Bcd8421StringCodec(DEFAULT_BYTE_ORDER, (byte) 0xe, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        String entity = "1329876507";
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("1329876507"), " unexpected value ");
+        AssertUtils.state(decoded.equals(entity), " unexpected value ");
     }
 
 }
