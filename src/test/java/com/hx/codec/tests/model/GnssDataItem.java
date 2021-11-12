@@ -89,7 +89,7 @@ public class GnssDataItem {
         this.encrypt = encrypt;
     }
 
-    @Field(name = "msgLength", sort = 2, dataType = DataType.BYTE_ARRAY_WITH_FIXED_LEN, eleLength = 4, desc = "日月年（dmyy）,年的表示是先将年转换成两位十六进制数，如 2009 表示为 0x07 0xD9", version={2011, 2019})
+    @Field(name = "msgLength", sort = 2, dataType = DataType.BYTE_ARRAY_WITH_ELE_LEN, eleLength = 4, desc = "日月年（dmyy）,年的表示是先将年转换成两位十六进制数，如 2009 表示为 0x07 0xD9", version = {2011, 2019})
     public Integer[] getDate() {
         return date;
     }
@@ -98,7 +98,7 @@ public class GnssDataItem {
         this.date = date;
     }
 
-    @Field(name = "msgLength", sort = 3, dataType = DataType.BYTE_ARRAY_WITH_FIXED_LEN, eleLength = 3, desc = "时分秒（hms）", version={2011, 2019})
+    @Field(name = "msgLength", sort = 3, dataType = DataType.BYTE_ARRAY_WITH_ELE_LEN, eleLength = 3, desc = "时分秒（hms）", version = {2011, 2019})
     public Integer[] getTime() {
         return time;
     }

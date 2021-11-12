@@ -23,20 +23,9 @@ import java.util.Collection;
 public class Test09ByteCollectionCodec extends Test00BaseTests {
 
     @Test
-    public void test01ByteCollection() {
-        int fixedLength = 0x10;
-        ByteCollectionCodec protocol = new ByteCollectionCodec();
-        ByteBuf buf = Unpooled.buffer(0x10);
-        Collection<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
-        protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
-        Collection<Integer> decoded = protocol.decode(buf);
+    public void test01Dummy() {
 
-        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
-        AssertUtils.state(encodedHexStr.equals("01020305"), " unexpected value ");
-        AssertUtils.state(Arrays.equals(decoded.toArray(new Integer[0]), entity.toArray(new Integer[0])), " unexpected value ");
-        AssertUtils.state(buf.readerIndex() == (entity.size()), " unexpected value ");
-        AssertUtils.state(buf.writerIndex() == (entity.size()), " unexpected value ");
     }
+
 
 }

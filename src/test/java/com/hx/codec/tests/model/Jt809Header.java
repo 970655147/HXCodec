@@ -89,7 +89,7 @@ public class Jt809Header implements Serializable {
         this.msgGNSSCenterId = msgGNSSCenterId;
     }
 
-    @Field(name = "versionFlag", sort = 5, dataType = DataType.BYTE_ARRAY_WITH_FIXED_LEN, eleLength = 3, desc = "下级平台接入码", version = {2011, 2019})
+    @Field(name = "versionFlag", sort = 5, dataType = DataType.BYTE_ARRAY_WITH_ELE_LEN, eleLength = 3, desc = "下级平台接入码", version = {2011, 2019})
     public Integer[] getVersionFlag() {
         return versionFlag;
     }

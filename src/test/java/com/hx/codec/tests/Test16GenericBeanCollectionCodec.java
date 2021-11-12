@@ -2,7 +2,7 @@ package com.hx.codec.tests;
 
 import com.hx.codec.codec.collection.GenericBeanCollectionCodec;
 import com.hx.codec.codec.collection.GenericBeanCollectionWithExactlyLenCodec;
-import com.hx.codec.codec.collection.GenericBeanCollectionWithFixedLenCodec;
+import com.hx.codec.codec.collection.GenericBeanCollectionWithEleLenCodec;
 import com.hx.codec.codec.collection.GenericBeanCollectionWithLenCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.schema.GenericBeanSchema;
@@ -97,7 +97,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
     @Test
     public void test03UpConnectReqWithFixedLen() {
         GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
-        GenericBeanCollectionWithFixedLenCodec<UpConnectReq> codec = new GenericBeanCollectionWithFixedLenCodec<>(beanSchema, 3);
+        GenericBeanCollectionWithEleLenCodec<UpConnectReq> codec = new GenericBeanCollectionWithEleLenCodec<>(beanSchema, 3);
 
         UpConnectReq entity = new UpConnectReq();
         entity.setDummyField("dummyField");
