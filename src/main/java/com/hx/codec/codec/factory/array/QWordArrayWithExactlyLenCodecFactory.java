@@ -3,8 +3,6 @@ package com.hx.codec.codec.factory.array;
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.array.QWordArrayWithExactlyLenCodec;
-import com.hx.codec.codec.array.QWordArrayWithFixedLenCodec;
-import com.hx.codec.codec.array.QWordArrayWithLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 

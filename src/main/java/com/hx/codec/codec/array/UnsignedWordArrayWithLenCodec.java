@@ -8,6 +8,9 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_LEN_BYTE_TYPE;
+
 /**
  * ByteProtocol (1 byte)
  *
@@ -23,13 +26,11 @@ public class UnsignedWordArrayWithLenCodec extends AbstractCodec<Integer[], Inte
     }
 
     public UnsignedWordArrayWithLenCodec(ByteType lenByteType) {
-        encoder = new WordArrayWithLenEncoder(lenByteType);
-        decoder = new UnsignedWordArrayWithLenDecoder(lenByteType);
+        this(DEFAULT_BYTE_ORDER, lenByteType);
     }
 
     public UnsignedWordArrayWithLenCodec() {
-        encoder = new WordArrayWithLenEncoder();
-        decoder = new UnsignedWordArrayWithLenDecoder();
+        this(DEFAULT_LEN_BYTE_TYPE);
     }
 
     @Override

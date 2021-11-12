@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.BYTE_UNIT;
+
 /**
  * ByteProtocol (1 byte)
  *
@@ -43,6 +45,6 @@ public class ByteCodec extends AbstractCodec<Integer, Integer> {
 
     @Override
     public int length() {
-        return 1;
+        return BYTE_UNIT;
     }
 }

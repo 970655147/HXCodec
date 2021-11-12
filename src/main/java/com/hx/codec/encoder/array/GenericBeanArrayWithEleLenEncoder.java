@@ -18,13 +18,13 @@ import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
  * @version 1.0
  * @date 2021-10-03 11:19
  */
-public class GenericBeanArrayWithFixedLenEncoder<T> extends AbstractEncoder<T[]> {
+public class GenericBeanArrayWithEleLenEncoder<T> extends AbstractEncoder<T[]> {
 
     private GenericBeanEncoder<T> encoder;
     private GenericBeanSchema<T> beanSchema;
     private int eleLength;
 
-    public GenericBeanArrayWithFixedLenEncoder(GenericBeanSchema<T> beanSchema, int eleLength) {
+    public GenericBeanArrayWithEleLenEncoder(GenericBeanSchema<T> beanSchema, int eleLength) {
         super(DEFAULT_BYTE_ORDER);
         this.beanSchema = beanSchema;
         this.encoder = new GenericBeanEncoder<>(beanSchema);

@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.WORD_UNIT;
+
 /**
  * WordProtocol (2 byte)
  *
@@ -43,7 +45,7 @@ public class WordCodec extends AbstractCodec<Integer, Integer> {
 
     @Override
     public int length() {
-        return 2;
+        return WORD_UNIT;
     }
 
 }

@@ -8,6 +8,7 @@ import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.string.CharsetEncodingStringCodec;
 import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.JSONUtils;
+import org.apache.logging.log4j.util.Strings;
 
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -28,7 +29,7 @@ public class CharsetEncodingStringCodecFactory implements AbstractCodecFactory<S
     public AbstractCodec<String, String> create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
         ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
-        JSONObject args = JSONObject.parseObject(fieldAnno.args());
+        JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         String charsetStr = JSONUtils.getStringOrDefault(args, KEY_CHARSET, DEFAULT_CHARSET.name());
         Charset charset = CodecUtils.charsetForName(charsetStr);
         return new CharsetEncodingStringCodec(byteOrder, charset);

@@ -1,8 +1,8 @@
 package com.hx.codec.codec.array;
 
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.decoder.array.GenericBeanArrayWithFixedLenDecoder;
-import com.hx.codec.encoder.array.GenericBeanArrayWithFixedLenEncoder;
+import com.hx.codec.decoder.array.GenericBeanArrayWithEleLenDecoder;
+import com.hx.codec.encoder.array.GenericBeanArrayWithEleLenEncoder;
 import com.hx.codec.schema.GenericBeanSchema;
 import io.netty.buffer.ByteBuf;
 
@@ -13,16 +13,16 @@ import io.netty.buffer.ByteBuf;
  * @version 1.0
  * @date 2021-10-03 11:47
  */
-public class GenericBeanArrayWithFixedLenCodec<T> extends AbstractCodec<T[], T[]> {
+public class GenericBeanArrayWithEleLenCodec<T> extends AbstractCodec<T[], T[]> {
 
     private GenericBeanSchema<T> beanSchema;
     private int eleLength;
 
-    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int eleLength) {
+    public GenericBeanArrayWithEleLenCodec(GenericBeanSchema<T> beanSchema, int eleLength) {
         this.beanSchema = beanSchema;
         this.eleLength = eleLength;
-        encoder = new GenericBeanArrayWithFixedLenEncoder<>(beanSchema, eleLength);
-        decoder = new GenericBeanArrayWithFixedLenDecoder<>(beanSchema, eleLength);
+        encoder = new GenericBeanArrayWithEleLenEncoder<>(beanSchema, eleLength);
+        decoder = new GenericBeanArrayWithEleLenDecoder<>(beanSchema, eleLength);
     }
 
 

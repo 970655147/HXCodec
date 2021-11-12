@@ -7,6 +7,7 @@ import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.string.Bcd8421StringWithFixedLenCodec;
 import com.hx.codec.utils.JSONUtils;
+import org.apache.logging.log4j.util.Strings;
 
 import java.nio.ByteOrder;
 
@@ -26,7 +27,7 @@ public class Bcd8421StringWithFixedLenCodecFactory implements AbstractCodecFacto
     public AbstractCodec<String, String> create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
         ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
-        JSONObject args = JSONObject.parseObject(fieldAnno.args());
+        JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_BCD8421_PADDING);
         int fixedLength = fieldAnno.lengthInBytes();
         return new Bcd8421StringWithFixedLenCodec(byteOrder, fixedLength, paddingByte);

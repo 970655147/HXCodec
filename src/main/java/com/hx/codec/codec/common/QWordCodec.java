@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.QWORD_UNIT;
+
 /**
  * WordProtocol (2 byte)
  *
@@ -43,7 +45,7 @@ public class QWordCodec extends AbstractCodec<Long, Long> {
 
     @Override
     public int length() {
-        return 8;
+        return QWORD_UNIT;
     }
 
 }

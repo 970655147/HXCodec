@@ -7,6 +7,7 @@ import com.hx.codec.codec.common.PaddingByteCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.utils.JSONUtils;
+import org.apache.logging.log4j.util.Strings;
 
 import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_BYTE;
 import static com.hx.codec.constants.CodecConstants.KEY_PADDING_BYTE;
@@ -23,7 +24,7 @@ public class PaddingByteCodecFactory implements AbstractCodecFactory<Object, Obj
     @Override
     public AbstractCodec<Object, Object> create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
-        JSONObject args = JSONObject.parseObject(fieldAnno.args());
+        JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_PADDING_BYTE);
         int fixedLength = fieldAnno.lengthInBytes();
         return new PaddingByteCodec(paddingByte, fixedLength);

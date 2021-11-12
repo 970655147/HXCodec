@@ -42,6 +42,12 @@ public class CodecConstants {
     public static String KEY_KEY_TYPE = "keyType";
     public static String KEY_VALUE_TYPE = "valueType";
 
+    // byteUnit
+    public static int BYTE_UNIT = 1;
+    public static int WORD_UNIT = 2;
+    public static int DWORD_UNIT = 4;
+    public static int QWORD_UNIT = 8;
+
     // initializer
     static {
         DEFAULT_PADDING_BYTES_ARRAY.add(DEFAULT_PADDING_BYTE);

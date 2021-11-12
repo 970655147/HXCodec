@@ -12,6 +12,7 @@ import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
 import com.hx.codec.utils.CodecUtils;
+import org.apache.logging.log4j.util.Strings;
 
 import static com.hx.codec.constants.CodecConstants.KEY_KEY_TYPE;
 
@@ -35,7 +36,7 @@ public class SchemaRegistryBasedMapWithLenCodecFactory implements AbstractCodecF
             CodecRegistry codecRegistry = context.getFieldSchema().getCodecRegistry();
 
             if (CodecUtils.isNotBlank(fieldAnno.args())) {
-                JSONObject args = JSONObject.parseObject(fieldAnno.args());
+                JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
                 String keyTypeFromArgs = args.getString(KEY_KEY_TYPE);
                 AbstractCodec keyCodec = null;
                 if (CodecUtils.isNotBlank(keyTypeFromArgs)) {

@@ -2,10 +2,7 @@ package com.hx.codec.codec.factory.array;
 
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.codec.array.ByteArrayWithFixedLenCodec;
 import com.hx.codec.codec.array.UnsignedByteArrayWithExactlyLenCodec;
-import com.hx.codec.codec.array.UnsignedByteArrayWithFixedLenCodec;
-import com.hx.codec.codec.array.UnsignedByteArrayWithLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 

@@ -7,6 +7,8 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
+
 /**
  * ByteProtocol (1 byte)
  *
@@ -22,8 +24,7 @@ public class DWordArrayCodec extends AbstractCodec<Integer[], Integer[]> {
     }
 
     public DWordArrayCodec() {
-        encoder = new DWordArrayEncoder();
-        decoder = new DWordArrayDecoder();
+        this(DEFAULT_BYTE_ORDER);
     }
 
     @Override

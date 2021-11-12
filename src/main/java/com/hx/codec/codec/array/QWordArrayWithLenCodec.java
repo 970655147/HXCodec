@@ -8,6 +8,9 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_LEN_BYTE_TYPE;
+
 /**
  * ByteProtocol (1 byte)
  *
@@ -23,14 +26,13 @@ public class QWordArrayWithLenCodec extends AbstractCodec<Long[], Long[]> {
     }
 
     public QWordArrayWithLenCodec(ByteType lenByteType) {
-        encoder = new QWordArrayWithLenEncoder(lenByteType);
-        decoder = new QWordArrayWithLenDecoder(lenByteType);
+        this(DEFAULT_BYTE_ORDER, lenByteType);
     }
 
     public QWordArrayWithLenCodec() {
-        encoder = new QWordArrayWithLenEncoder();
-        decoder = new QWordArrayWithLenDecoder();
+        this(DEFAULT_LEN_BYTE_TYPE);
     }
+
     @Override
     public void encode(Long[] entity, ByteBuf buf) {
         encoder.encode(entity, buf);

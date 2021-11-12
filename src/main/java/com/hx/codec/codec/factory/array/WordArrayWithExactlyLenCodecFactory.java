@@ -3,8 +3,6 @@ package com.hx.codec.codec.factory.array;
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.array.WordArrayWithExactlyLenCodec;
-import com.hx.codec.codec.array.WordArrayWithFixedLenCodec;
-import com.hx.codec.codec.array.WordArrayWithLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 

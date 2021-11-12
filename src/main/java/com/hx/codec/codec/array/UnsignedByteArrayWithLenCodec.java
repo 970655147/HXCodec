@@ -8,6 +8,9 @@ import io.netty.buffer.ByteBuf;
 
 import java.nio.ByteOrder;
 
+import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_LEN_BYTE_TYPE;
+
 /**
  * ByteProtocol (1 byte)
  *
@@ -23,14 +26,13 @@ public class UnsignedByteArrayWithLenCodec extends AbstractCodec<Integer[], Inte
     }
 
     public UnsignedByteArrayWithLenCodec(ByteType lenByteType) {
-        encoder = new ByteArrayWithLenEncoder(lenByteType);
-        decoder = new UnsignedByteArrayWithLenDecoder(lenByteType);
+        this(DEFAULT_BYTE_ORDER, lenByteType);
     }
 
     public UnsignedByteArrayWithLenCodec() {
-        encoder = new ByteArrayWithLenEncoder();
-        decoder = new UnsignedByteArrayWithLenDecoder();
+        this(DEFAULT_LEN_BYTE_TYPE);
     }
+
 
     @Override
     public void encode(Integer[] entity, ByteBuf buf) {

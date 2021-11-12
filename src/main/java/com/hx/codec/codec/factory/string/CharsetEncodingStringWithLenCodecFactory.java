@@ -9,6 +9,7 @@ import com.hx.codec.codec.string.CharsetEncodingStringWithLenCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.JSONUtils;
+import org.apache.logging.log4j.util.Strings;
 
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -30,7 +31,7 @@ public class CharsetEncodingStringWithLenCodecFactory implements AbstractCodecFa
         Field fieldAnno = context.getFieldAnno();
         ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
         ByteType lengthByteType = fieldAnno.lengthByteType();
-        JSONObject args = JSONObject.parseObject(fieldAnno.args());
+        JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         String charsetStr = JSONUtils.getStringOrDefault(args, KEY_CHARSET, DEFAULT_CHARSET.name());
         Charset charset = CodecUtils.charsetForName(charsetStr);
         return new CharsetEncodingStringWithLenCodec(byteOrder, lengthByteType, charset);

@@ -24,7 +24,6 @@ public class GenericBeanArrayWithLenCodec<T> extends AbstractCodec<T[], T[]> {
         decoder = new GenericBeanArrayWithLenDecoder<>(beanSchema, lenByteType);
     }
 
-
     @Override
     public void encode(T[] entity, ByteBuf buf) {
         encoder.encode(entity, buf);
