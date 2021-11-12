@@ -1,57 +1,37 @@
 package com.hx.codec.codec.string;
 
-import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.decoder.string.Bcd8421StringWithFixedLenDecoder;
-import com.hx.codec.encoder.string.Bcd8421StringWithFixedLenEncoder;
-import io.netty.buffer.ByteBuf;
+import com.hx.codec.codec.common.DelegateCodec;
+import com.hx.codec.codec.common.DelegateWithFixedLenCodec;
 
 import java.nio.ByteOrder;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_BCD8421_PADDING;
-import static com.hx.codec.constants.CodecConstants.DEFAULT_BYTE_ORDER;
+import static com.hx.codec.constants.CodecConstants.*;
 
 /**
- * ByteProtocol (1 byte)
+ * Bcd8421StringWithFixedLenCodec
  *
  * @author Jerry.X.He
  * @version 1.0
  * @date 2021/9/23 10:22
  */
-public class Bcd8421StringWithFixedLenCodec extends AbstractCodec<String, String> {
+public class Bcd8421StringWithFixedLenCodec extends DelegateCodec<String, String> {
 
-    private int fixedLength;
-
-    public Bcd8421StringWithFixedLenCodec(ByteOrder byteOrder, int fixedLength, byte paddingByte) {
-        this.fixedLength = fixedLength;
-        encoder = new Bcd8421StringWithFixedLenEncoder(byteOrder, fixedLength, paddingByte);
-        decoder = new Bcd8421StringWithFixedLenDecoder(byteOrder, fixedLength, paddingByte);
+    public Bcd8421StringWithFixedLenCodec(ByteOrder byteOrder, int fixedLength, byte paddingByte, boolean paddingFirst) {
+        super(new DelegateWithFixedLenCodec<>(new Bcd8421StringCodec(byteOrder, paddingByte, paddingFirst),
+                ((byte) ((paddingByte << 4) | paddingByte)),
+                paddingFirst, fixedLength));
     }
 
-    public Bcd8421StringWithFixedLenCodec(ByteOrder byteOrder, int fixedLength) {
-        this(byteOrder, fixedLength, DEFAULT_BCD8421_PADDING);
+    public Bcd8421StringWithFixedLenCodec(ByteOrder byteOrder, int lengthInBytes, byte paddingByte) {
+        this(byteOrder, lengthInBytes, paddingByte, DEFAULT_PADDING_FIRST);
     }
 
-    public Bcd8421StringWithFixedLenCodec(int fixedLength) {
-        this(DEFAULT_BYTE_ORDER, fixedLength);
+    public Bcd8421StringWithFixedLenCodec(ByteOrder byteOrder, int lengthInBytes) {
+        this(byteOrder, lengthInBytes, DEFAULT_BCD8421_PADDING);
     }
 
-    @Override
-    public void encode(String entity, ByteBuf buf) {
-        encoder.encode(entity, buf);
+    public Bcd8421StringWithFixedLenCodec(int lengthInBytes) {
+        this(DEFAULT_BYTE_ORDER, lengthInBytes);
     }
 
-    @Override
-    public String decode(ByteBuf buf) {
-        return decoder.decode(buf);
-    }
-
-    @Override
-    public boolean isFixedLength() {
-        return true;
-    }
-
-    @Override
-    public int length() {
-        return fixedLength;
-    }
 }

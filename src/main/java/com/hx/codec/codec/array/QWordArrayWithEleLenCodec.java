@@ -17,7 +17,7 @@ import static com.hx.codec.constants.CodecConstants.*;
 public class QWordArrayWithEleLenCodec extends DelegateCodec<Long[], Long[]> {
 
     public QWordArrayWithEleLenCodec(ByteOrder byteOrder, int eleLength, byte paddingByte, boolean paddingFirst) {
-        super(new DelegateWithFixedLenCodec<>(new QWordArrayCodec(byteOrder), paddingByte, QWORD_UNIT, paddingFirst, eleLength * QWORD_UNIT));
+        super(new DelegateWithFixedLenCodec<>(new QWordArrayCodec(byteOrder), paddingByte, paddingFirst, QWORD_UNIT, eleLength * QWORD_UNIT));
     }
 
     public QWordArrayWithEleLenCodec(ByteOrder byteOrder, int eleLength, byte paddingByte) {

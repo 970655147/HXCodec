@@ -11,8 +11,8 @@ import org.apache.logging.log4j.util.Strings;
 
 import java.nio.ByteOrder;
 
-import static com.hx.codec.constants.CodecConstants.DEFAULT_BCD8421_PADDING;
-import static com.hx.codec.constants.CodecConstants.KEY_PADDING_BYTE;
+import static com.hx.codec.constants.CodecConstants.*;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_FIRST;
 
 /**
  * Bcd8421StringWithFixedLenCodecFactory
@@ -27,10 +27,11 @@ public class Bcd8421StringWithFixedLenCodecFactory implements AbstractCodecFacto
     public AbstractCodec<String, String> create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
         ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+        int fixedLength = fieldAnno.lengthInBytes();
         JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_BCD8421_PADDING);
-        int fixedLength = fieldAnno.lengthInBytes();
-        return new Bcd8421StringWithFixedLenCodec(byteOrder, fixedLength, paddingByte);
+        boolean paddingFirst = JSONUtils.getBooleanOrDefault(args, KEY_PADDING_FIRST, DEFAULT_PADDING_FIRST);
+        return new Bcd8421StringWithFixedLenCodec(byteOrder, fixedLength, paddingByte, paddingFirst);
     }
 
 }

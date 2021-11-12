@@ -123,6 +123,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.SCHEMA_REGISTRY_BASED_COLLECTION_WITH_EXACTLY_LEN, new SchemaRegistryBasedCollectionWithExactlyLenCodecFactory());
 
         // string
+        DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING, new Bcd8421StringCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_LEN, new Bcd8421StringWithLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_FIXED_LEN, new Bcd8421StringWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.BCD_8421_STRING_WITH_EXACTLY_LEN, new Bcd8421StringWithExactlyLenCodecFactory());

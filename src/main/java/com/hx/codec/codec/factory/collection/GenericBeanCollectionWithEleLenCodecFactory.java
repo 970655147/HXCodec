@@ -1,5 +1,6 @@
 package com.hx.codec.codec.factory.collection;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.collection.GenericBeanCollectionWithEleLenCodec;
@@ -7,6 +8,12 @@ import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.CodecUtils;
+import com.hx.codec.utils.JSONUtils;
+import org.apache.logging.log4j.util.Strings;
+
+import java.nio.ByteOrder;
+
+import static com.hx.codec.constants.CodecConstants.*;
 
 /**
  * GenericBeanArrayCodecFactory
@@ -20,9 +27,13 @@ public class GenericBeanCollectionWithEleLenCodecFactory implements AbstractCode
     @Override
     public AbstractCodec create(CodecFactoryContext context) {
         Field fieldAnno = context.getFieldAnno();
+        ByteOrder byteOrder = fieldAnno.bigEndian() ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
         int eleLength = fieldAnno.eleLength();
         java.lang.reflect.Field field = context.getField();
         Class eleType = CodecUtils.getActualTypeArgument(field);
-        return new GenericBeanCollectionWithEleLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), eleLength);
+        JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
+        byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_PADDING_BYTE);
+        boolean paddingFirst = JSONUtils.getBooleanOrDefault(args, KEY_PADDING_FIRST, DEFAULT_PADDING_FIRST);
+        return new GenericBeanCollectionWithEleLenCodec<>(new GenericBeanSchema<>(eleType, context.getVersion()), byteOrder, eleLength, paddingByte, paddingFirst);
     }
 }

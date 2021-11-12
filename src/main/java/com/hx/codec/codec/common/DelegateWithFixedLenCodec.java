@@ -25,23 +25,23 @@ public class DelegateWithFixedLenCodec<IN, OUT> extends AbstractCodec<IN, OUT> {
     private AbstractCodec<IN, OUT> delegate;
     // padding related
     private byte paddingByte;
-    // byteUnit
-    private int byteUnit;
     // paddingFirst
     private boolean paddingFirst;
+    // byteUnit
+    private int byteUnit;
     // length
     private int fixedLength;
 
-    public DelegateWithFixedLenCodec(AbstractCodec<IN, OUT> delegate, byte paddingByte, int byteUnit, boolean paddingFirst, int fixedLength) {
+    public DelegateWithFixedLenCodec(AbstractCodec<IN, OUT> delegate, byte paddingByte, boolean paddingFirst, int byteUnit, int fixedLength) {
         this.delegate = delegate;
         this.paddingByte = paddingByte;
-        this.byteUnit = byteUnit;
         this.paddingFirst = paddingFirst;
+        this.byteUnit = byteUnit;
         this.fixedLength = fixedLength;
     }
 
     public DelegateWithFixedLenCodec(AbstractCodec<IN, OUT> delegate, byte paddingByte, boolean paddingFirst, int fixedLength) {
-        this(delegate, paddingByte, 1, paddingFirst, fixedLength);
+        this(delegate, paddingByte, paddingFirst, 1, fixedLength);
     }
 
     public DelegateWithFixedLenCodec(AbstractCodec<IN, OUT> delegate, byte paddingByte, int fixedLength) {

@@ -18,7 +18,7 @@ import static com.hx.codec.constants.CodecConstants.*;
 public class WordCollectionWithEleLenCodec extends DelegateCodec<Collection<Integer>, Collection<Integer>> {
 
     public WordCollectionWithEleLenCodec(ByteOrder byteOrder, int eleLength, byte paddingByte, boolean paddingFirst) {
-        super(new DelegateWithFixedLenCodec<>(new WordCollectionCodec(byteOrder), paddingByte, WORD_UNIT, paddingFirst, eleLength * WORD_UNIT));
+        super(new DelegateWithFixedLenCodec<>(new WordCollectionCodec(byteOrder), paddingByte, paddingFirst, WORD_UNIT, eleLength * WORD_UNIT));
     }
 
     public WordCollectionWithEleLenCodec(ByteOrder byteOrder, int eleLength, byte paddingByte) {
