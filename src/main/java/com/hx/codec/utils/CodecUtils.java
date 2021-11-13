@@ -77,6 +77,14 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_ELE_LEN, new QWordArrayWithEleLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_ELE_LEN, new GenericBeanArrayWithEleLenCodecFactory());
 
+        DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_FIXED_LEN, new ByteArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_FIXED_LEN, new UnsignedByteArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_FIXED_LEN, new WordArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_ARRAY_WITH_FIXED_LEN, new UnsignedWordArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY_WITH_FIXED_LEN, new DWordArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_FIXED_LEN, new QWordArrayWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_FIXED_LEN, new GenericBeanArrayWithFixedLenCodecFactory());
+        
         DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_EXACTLY_LEN, new ByteArrayWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_EXACTLY_LEN, new UnsignedByteArrayWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_EXACTLY_LEN, new WordArrayWithExactlyLenCodecFactory());

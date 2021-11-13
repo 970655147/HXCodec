@@ -8,7 +8,7 @@ import java.nio.ByteOrder;
 import static com.hx.codec.constants.CodecConstants.*;
 
 /**
- * WordProtocol (1 byte)
+ * DWordArrayWithEleLenCodec
  *
  * @author Jerry.X.He
  * @version 1.0
