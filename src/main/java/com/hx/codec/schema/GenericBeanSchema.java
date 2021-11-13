@@ -1,5 +1,7 @@
 package com.hx.codec.schema;
 
+import com.hx.codec.anno.Entity;
+import com.hx.codec.anno.EntityRepeat;
 import com.hx.codec.anno.Field;
 import com.hx.codec.anno.FieldRepeat;
 import com.hx.codec.codec.AbstractCodec;
@@ -102,7 +104,7 @@ public class GenericBeanSchema<T> {
             java.lang.reflect.Field field = clazz.getDeclaredField(fieldName);
             Field fieldAnno = readMethod.getDeclaredAnnotation(Field.class);
             FieldRepeat fieldRepeatAnno = readMethod.getDeclaredAnnotation(FieldRepeat.class);
-            Field fieldAnnoToUse = getFieldAnnoByVersion(fieldAnno, fieldRepeatAnno, version);
+            Field fieldAnnoToUse = CodecUtils.getFieldAnnoByVersion(fieldAnno, fieldRepeatAnno, version);
             if (fieldAnnoToUse != null) {
                 name2FieldSchema.put(field.getName(), createFieldSchema(clazz, field, fieldAnnoToUse));
             }
@@ -117,7 +119,7 @@ public class GenericBeanSchema<T> {
 
             Field fieldAnno = field.getDeclaredAnnotation(Field.class);
             FieldRepeat fieldRepeatAnno = field.getDeclaredAnnotation(FieldRepeat.class);
-            Field fieldAnnoToUse = getFieldAnnoByVersion(fieldAnno, fieldRepeatAnno, version);
+            Field fieldAnnoToUse = CodecUtils.getFieldAnnoByVersion(fieldAnno, fieldRepeatAnno, version);
             if (fieldAnnoToUse != null) {
                 name2FieldSchema.put(field.getName(), createFieldSchema(clazz, field, fieldAnnoToUse));
             }
@@ -158,30 +160,6 @@ public class GenericBeanSchema<T> {
     }
 
     /**
-     * getFieldAnnoByVersion
-     *
-     * @return com.hx.codec.anno.Field
-     * @author Jerry.X.He
-     * @date 2021/9/28 11:02
-     */
-    private Field getFieldAnnoByVersion(Field fieldAnno, FieldRepeat fieldRepeatAnno, int version) {
-        if (fieldAnno != null) {
-            if (Arrays.binarySearch(fieldAnno.version(), version) >= 0) {
-                return fieldAnno;
-            }
-        }
-
-        if (fieldRepeatAnno != null) {
-            for (Field fieldAnnoEle : fieldRepeatAnno.value()) {
-                if (Arrays.binarySearch(fieldAnnoEle.version(), version) >= 0) {
-                    return fieldAnnoEle;
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
      * createFieldSchema
      *
      * @return com.hx.codec.schema.GenericFieldSchema
@@ -203,7 +181,12 @@ public class GenericBeanSchema<T> {
         if (codecFactory == null) {
             codecFactory = CodecUtils.lookupCodecFactoryByDataType(fieldAnno.dataType());
         }
-        CodecFactoryContext codecFactoryContext = new CodecFactoryContext(field, fieldAnno, result, version);
+
+        Entity entityAnno = clazz.getDeclaredAnnotation(Entity.class);
+        EntityRepeat entityRepeatAnno = clazz.getDeclaredAnnotation(EntityRepeat.class);
+        Entity entityAnnoToUse = CodecUtils.getEntityAnnoByVersion(entityAnno, entityRepeatAnno, version);
+        CodecFactoryContext codecFactoryContext = new CodecFactoryContext(clazz, entityAnnoToUse,
+                field, fieldAnno, result, version);
         AbstractCodec codec = codecFactory.create(codecFactoryContext);
         result.setCodec(codec);
         return result;

@@ -1,5 +1,8 @@
 package com.hx.codec.utils;
 
+import com.hx.codec.anno.Entity;
+import com.hx.codec.anno.EntityRepeat;
+import com.hx.codec.anno.FieldRepeat;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
@@ -7,6 +10,7 @@ import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.factory.array.*;
 import com.hx.codec.codec.factory.collection.*;
 import com.hx.codec.codec.factory.common.*;
+import com.hx.codec.codec.factory.entity.CustomBeanCodecFactory;
 import com.hx.codec.codec.factory.entity.GenericBeanCodecFactory;
 import com.hx.codec.codec.factory.map.GenericMapCodecFactory;
 import com.hx.codec.codec.factory.map.SchemaRegistryBasedMapCodecFactory;
@@ -23,6 +27,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -84,7 +89,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_ARRAY_WITH_FIXED_LEN, new DWordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_ARRAY_WITH_FIXED_LEN, new QWordArrayWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_ARRAY_WITH_FIXED_LEN, new GenericBeanArrayWithFixedLenCodecFactory());
-        
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_ARRAY_WITH_EXACTLY_LEN, new ByteArrayWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_ARRAY_WITH_EXACTLY_LEN, new UnsignedByteArrayWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_ARRAY_WITH_EXACTLY_LEN, new WordArrayWithExactlyLenCodecFactory());
@@ -128,7 +133,7 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_FIXED_LEN, new DWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_FIXED_LEN, new QWordCollectionWithFixedLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_FIXED_LEN, new GenericBeanCollectionWithFixedLenCodecFactory());
-        
+
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_EXACTLY_LEN, new ByteCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_EXACTLY_LEN, new UnsignedByteCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_EXACTLY_LEN, new WordCollectionWithExactlyLenCodecFactory());
@@ -150,6 +155,7 @@ public class CodecUtils {
 
         // entity
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN, new GenericBeanCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.CUSTOM_BEAN, new CustomBeanCodecFactory());
 
         // map
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_MAP, new GenericMapCodecFactory());
@@ -224,6 +230,82 @@ public class CodecUtils {
             AssertUtils.state(false, " unknown byteType : " + byteType);
             return -1;
         }
+    }
+
+    /**
+     * createCodecForClazz
+     *
+     * @return com.hx.codec.codec.AbstractCodec
+     * @author Jerry.X.He
+     * @date 2021-11-13 19:39
+     */
+    public static <T> AbstractCodec<T, T> createCodecForClazz(Class<T> clazz, Integer version) {
+        Entity entityAnno = (Entity) clazz.getDeclaredAnnotation(Entity.class);
+        EntityRepeat entityRepeatAnno = (EntityRepeat) clazz.getDeclaredAnnotation(EntityRepeat.class);
+        Entity entityAnnoToUse = getEntityAnnoByVersion(entityAnno, entityRepeatAnno, version);
+
+        if (entityAnnoToUse == null) {
+            return new GenericBeanCodec<>(new GenericBeanSchema<>(clazz, version));
+        }
+        try {
+            AbstractCodecFactory codecFactory = entityAnnoToUse.codecFactoryClazz().newInstance();
+            CodecFactoryContext context = new CodecFactoryContext();
+            context.setClazz(clazz);
+            context.setEntityAnno(entityAnnoToUse);
+            context.setVersion(version);
+            return codecFactory.create(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new GenericBeanCodec<>(new GenericBeanSchema<>(clazz, version));
+        }
+    }
+
+    /**
+     * getFieldAnnoByVersion
+     *
+     * @return com.hx.codec.anno.Field
+     * @author Jerry.X.He
+     * @date 2021/9/28 11:02
+     */
+    public static com.hx.codec.anno.Field getFieldAnnoByVersion(com.hx.codec.anno.Field fieldAnno, FieldRepeat fieldRepeatAnno, int version) {
+        if (fieldAnno != null) {
+            if (Arrays.binarySearch(fieldAnno.version(), version) >= 0) {
+                return fieldAnno;
+            }
+        }
+
+        if (fieldRepeatAnno != null) {
+            for (com.hx.codec.anno.Field fieldAnnoEle : fieldRepeatAnno.value()) {
+                if (Arrays.binarySearch(fieldAnnoEle.version(), version) >= 0) {
+                    return fieldAnnoEle;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * getEntityAnnoByVersion
+     *
+     * @return com.hx.codec.anno.Field
+     * @author Jerry.X.He
+     * @date 2021/9/28 11:02
+     */
+    public static Entity getEntityAnnoByVersion(Entity entityAnno, EntityRepeat entityRepeatAnno, int version) {
+        if (entityAnno != null) {
+            if (Arrays.binarySearch(entityAnno.version(), version) >= 0) {
+                return entityAnno;
+            }
+        }
+
+        if (entityRepeatAnno != null) {
+            for (Entity fieldAnnoEle : entityRepeatAnno.value()) {
+                if (Arrays.binarySearch(fieldAnnoEle.version(), version) >= 0) {
+                    return fieldAnnoEle;
+                }
+            }
+        }
+        return null;
     }
 
     /**

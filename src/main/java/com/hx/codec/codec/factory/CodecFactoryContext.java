@@ -1,5 +1,6 @@
 package com.hx.codec.codec.factory;
 
+import com.hx.codec.anno.Entity;
 import com.hx.codec.anno.Field;
 import com.hx.codec.schema.GenericFieldSchema;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class CodecFactoryContext {
 
+    private java.lang.Class clazz;
+    private Entity entityAnno;
     private java.lang.reflect.Field field;
     private Field fieldAnno;
     private GenericFieldSchema fieldSchema;
