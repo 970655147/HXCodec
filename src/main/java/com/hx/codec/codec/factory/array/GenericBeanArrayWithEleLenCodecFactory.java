@@ -33,6 +33,6 @@ public class GenericBeanArrayWithEleLenCodecFactory implements AbstractCodecFact
         JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_PADDING_BYTE);
         boolean paddingFirst = JSONUtils.getBooleanOrDefault(args, KEY_PADDING_FIRST, DEFAULT_PADDING_FIRST);
-        return new GenericBeanArrayWithEleLenCodec(new GenericBeanSchema<>(eleType, context.getVersion()), byteOrder, eleLength, paddingByte, paddingFirst);
+        return new GenericBeanArrayWithEleLenCodec(new GenericBeanSchema<>(eleType, context.getVersion()), eleLength, paddingByte, paddingFirst);
     }
 }

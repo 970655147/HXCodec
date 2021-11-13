@@ -3,7 +3,6 @@ package com.hx.codec.codec.factory.array;
 import com.alibaba.fastjson.JSONObject;
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
-import com.hx.codec.codec.array.GenericBeanArrayWithEleLenCodec;
 import com.hx.codec.codec.array.GenericBeanArrayWithFixedLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
@@ -34,6 +33,6 @@ public class GenericBeanArrayWithFixedLenCodecFactory implements AbstractCodecFa
         JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_PADDING_BYTE);
         boolean paddingFirst = JSONUtils.getBooleanOrDefault(args, KEY_PADDING_FIRST, DEFAULT_PADDING_FIRST);
-        return new GenericBeanArrayWithFixedLenCodec(new GenericBeanSchema<>(eleType, context.getVersion()), byteOrder, fixedLength, paddingByte, paddingFirst);
+        return new GenericBeanArrayWithFixedLenCodec(new GenericBeanSchema<>(eleType, context.getVersion()), fixedLength, paddingByte, paddingFirst);
     }
 }

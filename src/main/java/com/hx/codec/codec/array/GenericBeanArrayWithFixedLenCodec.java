@@ -4,9 +4,8 @@ import com.hx.codec.codec.common.DelegateCodec;
 import com.hx.codec.codec.common.DelegateWithFixedLenCodec;
 import com.hx.codec.schema.GenericBeanSchema;
 
-import java.nio.ByteOrder;
-
-import static com.hx.codec.constants.CodecConstants.*;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_BYTE;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_FIRST;
 
 /**
  * GenericBeanArrayWithFixedLenCodec
@@ -17,20 +16,16 @@ import static com.hx.codec.constants.CodecConstants.*;
  */
 public class GenericBeanArrayWithFixedLenCodec<T> extends DelegateCodec<T[], T[]> {
 
-    // todo, apply byteOrder
-    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength, byte paddingByte, boolean paddingFirst) {
+    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength, byte paddingByte, boolean paddingFirst) {
         super(new DelegateWithFixedLenCodec<>(new GenericBeanArrayCodec<>(beanSchema), paddingByte, paddingFirst, beanSchema.getLength(), fixedLength));
     }
 
-    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength, byte paddingByte) {
-        this(beanSchema, byteOrder, fixedLength, paddingByte, DEFAULT_PADDING_FIRST);
-    }
-
-    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength) {
-        this(beanSchema, byteOrder, fixedLength, DEFAULT_PADDING_BYTE);
+    public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength, byte paddingByte) {
+        this(beanSchema, fixedLength, paddingByte, DEFAULT_PADDING_FIRST);
     }
 
     public GenericBeanArrayWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength) {
-        this(beanSchema, DEFAULT_BYTE_ORDER, fixedLength);
+        this(beanSchema, fixedLength, DEFAULT_PADDING_BYTE);
     }
+
 }

@@ -4,10 +4,10 @@ import com.hx.codec.codec.common.DelegateCodec;
 import com.hx.codec.codec.common.DelegateWithFixedLenCodec;
 import com.hx.codec.schema.GenericBeanSchema;
 
-import java.nio.ByteOrder;
 import java.util.Collection;
 
-import static com.hx.codec.constants.CodecConstants.*;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_BYTE;
+import static com.hx.codec.constants.CodecConstants.DEFAULT_PADDING_FIRST;
 
 /**
  * GenericBeanCollectionCodec
@@ -18,21 +18,16 @@ import static com.hx.codec.constants.CodecConstants.*;
  */
 public class GenericBeanCollectionWithFixedLenCodec<T> extends DelegateCodec<Collection<T>, Collection<T>> {
 
-    // todo, apply byteOrder
-    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength, byte paddingByte, boolean paddingFirst) {
+    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength, byte paddingByte, boolean paddingFirst) {
         super(new DelegateWithFixedLenCodec<>(new GenericBeanCollectionCodec<>(beanSchema), paddingByte, paddingFirst, beanSchema.getLength(), fixedLength));
     }
 
-    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength, byte paddingByte) {
-        this(beanSchema, byteOrder, fixedLength, paddingByte, DEFAULT_PADDING_FIRST);
-    }
-
-    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, ByteOrder byteOrder, int fixedLength) {
-        this(beanSchema, byteOrder, fixedLength, DEFAULT_PADDING_BYTE);
+    public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength, byte paddingByte) {
+        this(beanSchema, fixedLength, paddingByte, DEFAULT_PADDING_FIRST);
     }
 
     public GenericBeanCollectionWithFixedLenCodec(GenericBeanSchema<T> beanSchema, int fixedLength) {
-        this(beanSchema, DEFAULT_BYTE_ORDER, fixedLength);
+        this(beanSchema, fixedLength, DEFAULT_PADDING_BYTE);
     }
 
 }
