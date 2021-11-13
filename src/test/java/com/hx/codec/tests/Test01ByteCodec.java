@@ -6,6 +6,7 @@ import com.hx.codec.codec.array.ByteArrayWithFixedLenCodec;
 import com.hx.codec.codec.array.ByteArrayWithLenCodec;
 import com.hx.codec.codec.collection.ByteCollectionCodec;
 import com.hx.codec.codec.collection.ByteCollectionWithEleLenCodec;
+import com.hx.codec.codec.collection.ByteCollectionWithFixedLenCodec;
 import com.hx.codec.codec.collection.ByteCollectionWithLenCodec;
 import com.hx.codec.codec.common.ByteCodec;
 import com.hx.codec.codec.common.UnsignedByteCodec;
@@ -356,6 +357,51 @@ public class Test01ByteCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == (entity.size() * BYTE_UNIT) + CodecUtils.lenBytes(ByteType.QWORD), " unexpected value ");
     }
 
+    @Test
+    public void test34ByteCollectionWithFixedLen() {
+        int eleLength = 0x5 * BYTE_UNIT;
+        ByteCollectionWithFixedLenCodec protocol = new ByteCollectionWithFixedLenCodec(eleLength);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Integer> decoded = (List<Integer>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("0102030500"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test34ByteCollectionWithFixedLen02PaddingFirst() {
+        int eleLength = 0x5 * BYTE_UNIT;
+        ByteCollectionWithFixedLenCodec protocol = new ByteCollectionWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x00, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Integer> decoded = (List<Integer>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("0001020305"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test34ByteCollectionWithFixedLen03PaddingByte() {
+        int eleLength = 0x5 * BYTE_UNIT;
+        ByteCollectionWithFixedLenCodec protocol = new ByteCollectionWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x7e, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Integer> decoded = (List<Integer>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("7e01020305"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
+    
     // ------------------------------------------ assist methods ------------------------------------------
 
     /**

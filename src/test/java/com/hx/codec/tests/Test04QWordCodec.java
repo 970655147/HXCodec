@@ -6,6 +6,7 @@ import com.hx.codec.codec.array.QWordArrayWithFixedLenCodec;
 import com.hx.codec.codec.array.QWordArrayWithLenCodec;
 import com.hx.codec.codec.collection.QWordCollectionCodec;
 import com.hx.codec.codec.collection.QWordCollectionWithEleLenCodec;
+import com.hx.codec.codec.collection.QWordCollectionWithFixedLenCodec;
 import com.hx.codec.codec.collection.QWordCollectionWithLenCodec;
 import com.hx.codec.codec.common.QWordCodec;
 import com.hx.codec.constants.ByteType;
@@ -324,5 +325,49 @@ public class Test04QWordCodec extends Test00BaseTests {
         AssertUtils.state(buf.writerIndex() == (entity.size() * QWORD_UNIT) + CodecUtils.lenBytes(ByteType.QWORD), " unexpected value ");
     }
 
+    @Test
+    public void test34QWordCollectionWithFixedLen() {
+        int eleLength = 0x5 * QWORD_UNIT;
+        QWordCollectionWithFixedLenCodec protocol = new QWordCollectionWithFixedLenCodec(eleLength);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Long> decoded = (List<Long>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("00000000000000010000000000000002000000000000000300000000000000050000000000000000"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test34QWordCollectionWithFixedLen02PaddingFirst() {
+        int eleLength = 0x5 * QWORD_UNIT;
+        QWordCollectionWithFixedLenCodec protocol = new QWordCollectionWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x00, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Long> decoded = (List<Long>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("00000000000000000000000000000001000000000000000200000000000000030000000000000005"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test34QWordCollectionWithFixedLen03PaddingByte() {
+        int eleLength = 0x5 * QWORD_UNIT;
+        QWordCollectionWithFixedLenCodec protocol = new QWordCollectionWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x7e, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        List<Long> decoded = (List<Long>) protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("7e7e7e7e7e7e7e7e0000000000000001000000000000000200000000000000030000000000000005"), " unexpected value ");
+        AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
+    }
 
 }

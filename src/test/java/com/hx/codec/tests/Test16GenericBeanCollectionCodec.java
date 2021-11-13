@@ -1,9 +1,6 @@
 package com.hx.codec.tests;
 
-import com.hx.codec.codec.collection.GenericBeanCollectionCodec;
-import com.hx.codec.codec.collection.GenericBeanCollectionWithExactlyLenCodec;
-import com.hx.codec.codec.collection.GenericBeanCollectionWithEleLenCodec;
-import com.hx.codec.codec.collection.GenericBeanCollectionWithLenCodec;
+import com.hx.codec.codec.collection.*;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.tests.model.UpConnectReq;
@@ -95,7 +92,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
     }
 
     @Test
-    public void test03UpConnectReqWithFixedLen() {
+    public void test03UpConnectReqWithEleLen() {
         GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
         GenericBeanCollectionWithEleLenCodec<UpConnectReq> codec = new GenericBeanCollectionWithEleLenCodec<>(beanSchema, 3);
 
@@ -164,8 +161,37 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
 
     @Test
-    public void test05SchemaRegistryBasedCollectionCodec() {
+    public void test05UpConnectReqWithFixedLen() {
+        GenericBeanSchema<UpConnectReq> beanSchema = new GenericBeanSchema<>(UpConnectReq.class, 2019);
+        GenericBeanCollectionWithFixedLenCodec<UpConnectReq> codec = new GenericBeanCollectionWithFixedLenCodec<>(beanSchema, 3 * beanSchema.getLength());
 
+        UpConnectReq entity = new UpConnectReq();
+        entity.setDummyField("dummyField");
+        entity.setUserid(0x1234);
+        entity.setPassword("pass");
+        entity.setDownLinkIp("127.0.0.2");
+        entity.setDownLinkPort(0x7788);
+        entity.setMsgGnsscenterid(0x1111);
+
+        ByteBuf encodedBuf = Unpooled.buffer(128);
+        codec.encode(Arrays.asList(entity, entity), encodedBuf);
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
+
+        LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
+        AssertUtils.state(encodedBufHexStr.equals("07070707070707070707000012347061737300000000000011113132372e302e302e320000000000000000000000000000000000000000000000778807070707070707070707000012347061737300000000000011113132372e302e302e3200000000000000000000000000000000000000000000007788000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"), " unexpected value ");
+        AssertUtils.state(decodedEntity.size() == 2, " unexpected value ");
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(0).getUserid()), " unexpected value ");
+        AssertUtils.state(entity.getPassword().equals(decodedEntity.get(0).getPassword()), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(0).getDownLinkIp()), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(0).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(0).getMsgGnsscenterid()), " unexpected value ");
+
+        AssertUtils.state(entity.getUserid().equals(decodedEntity.get(1).getUserid()), " unexpected value ");
+        AssertUtils.state(entity.getPassword().equals(decodedEntity.get(1).getPassword()), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkIp().equals(decodedEntity.get(1).getDownLinkIp()), " unexpected value ");
+        AssertUtils.state(entity.getDownLinkPort().equals(decodedEntity.get(1).getDownLinkPort()), " unexpected value ");
+        AssertUtils.state(entity.getMsgGnsscenterid().equals(decodedEntity.get(1).getMsgGnsscenterid()), " unexpected value ");
     }
 
 }
