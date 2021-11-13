@@ -2,6 +2,7 @@ package com.hx.codec.tests;
 
 import com.hx.codec.codec.array.DWordArrayCodec;
 import com.hx.codec.codec.array.DWordArrayWithEleLenCodec;
+import com.hx.codec.codec.array.DWordArrayWithFixedLenCodec;
 import com.hx.codec.codec.array.DWordArrayWithLenCodec;
 import com.hx.codec.codec.collection.DWordCollectionCodec;
 import com.hx.codec.codec.collection.DWordCollectionWithEleLenCodec;
@@ -171,6 +172,51 @@ public class Test03DWordCodec extends Test00BaseTests {
         AssertUtils.state(Arrays.equals(decoded, entity), " unexpected value ");
         AssertUtils.state(buf.readerIndex() == (entity.length * DWORD_UNIT) + CodecUtils.lenBytes(ByteType.QWORD), " unexpected value ");
         AssertUtils.state(buf.writerIndex() == (entity.length * DWORD_UNIT) + CodecUtils.lenBytes(ByteType.QWORD), " unexpected value ");
+    }
+
+    @Test
+    public void test24DWordArrayWithFixedLen() {
+        int eleLength = 0x5 * DWORD_UNIT;
+        DWordArrayWithFixedLenCodec protocol = new DWordArrayWithFixedLenCodec(eleLength);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        Integer[] decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("0000000100000002000000030000000500000000"), " unexpected value ");
+        AssertUtils.state(Arrays.equals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test24DWordArrayWithFixedLen02PaddingFirst() {
+        int eleLength = 0x5 * DWORD_UNIT;
+        DWordArrayWithFixedLenCodec protocol = new DWordArrayWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x00, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        Integer[] decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("0000000000000001000000020000000300000005"), " unexpected value ");
+        AssertUtils.state(Arrays.equals(decoded, entity), " unexpected value ");
+    }
+
+    @Test
+    public void test24DWordArrayWithFixedLen03PaddingByte() {
+        int eleLength = 0x5 * DWORD_UNIT;
+        DWordArrayWithFixedLenCodec protocol = new DWordArrayWithFixedLenCodec(ByteOrder.BIG_ENDIAN, eleLength, (byte) 0x7e, true);
+        ByteBuf buf = Unpooled.buffer(0x10);
+        Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
+        protocol.encode(entity, buf);
+        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        Integer[] decoded = protocol.decode(buf);
+
+        LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
+        AssertUtils.state(encodedHexStr.equals("7e7e7e7e00000001000000020000000300000005"), " unexpected value ");
+        AssertUtils.state(Arrays.equals(decoded, entity), " unexpected value ");
     }
 
     // ------------------------------------------ dword collection methods ------------------------------------------
