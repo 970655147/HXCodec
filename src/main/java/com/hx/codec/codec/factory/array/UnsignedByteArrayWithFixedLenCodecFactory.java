@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.array.UnsignedByteArrayWithEleLenCodec;
+import com.hx.codec.codec.array.UnsignedByteArrayWithFixedLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.utils.JSONUtils;
@@ -30,6 +31,6 @@ public class UnsignedByteArrayWithFixedLenCodecFactory implements AbstractCodecF
         JSONObject args = Strings.isBlank(fieldAnno.args()) ? null : JSONObject.parseObject(fieldAnno.args());
         byte paddingByte = JSONUtils.getByteOrDefault(args, KEY_PADDING_BYTE, DEFAULT_PADDING_BYTE);
         boolean paddingFirst = JSONUtils.getBooleanOrDefault(args, KEY_PADDING_FIRST, DEFAULT_PADDING_FIRST);
-        return new UnsignedByteArrayWithEleLenCodec(byteOrder, fixedLength, paddingByte, paddingFirst);
+        return new UnsignedByteArrayWithFixedLenCodec(byteOrder, fixedLength, paddingByte, paddingFirst);
     }
 }

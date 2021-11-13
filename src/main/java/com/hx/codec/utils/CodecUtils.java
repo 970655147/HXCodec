@@ -121,6 +121,14 @@ public class CodecUtils {
         DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_ELE_LEN, new QWordCollectionWithEleLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_ELE_LEN, new GenericBeanCollectionWithEleLenCodecFactory());
 
+        DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_FIXED_LEN, new ByteCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_FIXED_LEN, new UnsignedByteCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_FIXED_LEN, new WordCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_WORD_COLLECTION_WITH_FIXED_LEN, new UnsignedWordCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.DWORD_COLLECTION_WITH_FIXED_LEN, new DWordCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.QWORD_COLLECTION_WITH_FIXED_LEN, new QWordCollectionWithFixedLenCodecFactory());
+        DATA_TYPE_2_CODEC.put(DataType.GENERIC_BEAN_COLLECTION_WITH_FIXED_LEN, new GenericBeanCollectionWithFixedLenCodecFactory());
+        
         DATA_TYPE_2_CODEC.put(DataType.BYTE_COLLECTION_WITH_EXACTLY_LEN, new ByteCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.UNSIGNED_BYTE_COLLECTION_WITH_EXACTLY_LEN, new UnsignedByteCollectionWithExactlyLenCodecFactory());
         DATA_TYPE_2_CODEC.put(DataType.WORD_COLLECTION_WITH_EXACTLY_LEN, new WordCollectionWithExactlyLenCodecFactory());
