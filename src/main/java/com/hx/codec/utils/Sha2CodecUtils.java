@@ -1,7 +1,7 @@
 package com.hx.codec.utils;
 
 import com.hx.codec.constants.CodecConstants;
-import org.apache.commons.codec.digest.Sha2Crypt;
+import com.hx.codec.thirdparties.org.apache.commons.codec.digest.Sha2Crypt;
 
 /**
  * Sha2CodecUtils

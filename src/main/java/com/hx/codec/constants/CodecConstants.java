@@ -19,6 +19,9 @@ public class CodecConstants {
         throw new RuntimeException(" can't be instantiate ");
     }
 
+    public static Charset CHARSET_GBK = Charset.forName("gbk");
+    public static Charset CHARSET_UTF8 = Charset.forName("utf8");
+
     // defaults
     public static ByteOrder DEFAULT_BYTE_ORDER = ByteOrder.BIG_ENDIAN;
     public static ByteType DEFAULT_LEN_BYTE_TYPE = ByteType.DWORD;

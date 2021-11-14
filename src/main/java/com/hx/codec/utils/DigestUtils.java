@@ -11,6 +11,7 @@ import java.security.MessageDigest;
 
 /**
  * DigestUtils
+ * 一部分拷贝自 commons-codec
  *
  * @author Jerry.X.He
  * @version 1.0
@@ -132,247 +133,247 @@ public class DigestUtils {
     // ------------------------------------------ DigestUtils methods ------------------------------------------
 
     public static byte[] digest(MessageDigest messageDigest, byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
     }
 
     public static byte[] digest(MessageDigest messageDigest, ByteBuffer data) {
-        return org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
     }
 
     public static byte[] digest(MessageDigest messageDigest, File data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
     }
 
     public static byte[] digest(MessageDigest messageDigest, InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.digest(messageDigest, data);
     }
 
     public static MessageDigest getDigest(String algorithm) {
-        return org.apache.commons.codec.digest.DigestUtils.getDigest(algorithm);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getDigest(algorithm);
     }
 
     public static MessageDigest getDigest(String algorithm, MessageDigest defaultMessageDigest) {
-        return org.apache.commons.codec.digest.DigestUtils.getDigest(algorithm, defaultMessageDigest);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getDigest(algorithm, defaultMessageDigest);
     }
 
     public static MessageDigest getMd2Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getMd2Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getMd2Digest();
     }
 
     public static MessageDigest getMd5Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getMd5Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getMd5Digest();
     }
 
     public static MessageDigest getSha1Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getSha1Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getSha1Digest();
     }
 
     public static MessageDigest getSha256Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getSha256Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getSha256Digest();
     }
 
     public static MessageDigest getSha384Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getSha384Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getSha384Digest();
     }
 
     public static MessageDigest getSha512Digest() {
-        return org.apache.commons.codec.digest.DigestUtils.getSha512Digest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getSha512Digest();
     }
 
     public static MessageDigest getShaDigest() {
-        return org.apache.commons.codec.digest.DigestUtils.getShaDigest();
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.getShaDigest();
     }
 
     public static byte[] md2(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.md2(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2(data);
     }
 
     public static byte[] md2(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.md2(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2(data);
     }
 
     public static byte[] md2(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.md2(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String md2Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.md2Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2Hex(data);
     }
 
     public static String md2Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.md2Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2Hex(data);
     }
 
     public static String md2Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.md2Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md2Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] md5(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.md5(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5(data);
     }
 
     public static byte[] md5(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.md5(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5(data);
     }
 
     public static byte[] md5(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.md5(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String md5Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.md5Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5Hex(data);
     }
 
     public static String md5Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.md5Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5Hex(data);
     }
 
     public static String md5Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.md5Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.md5Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] sha(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha(data);
     }
 
     public static byte[] sha(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha(data);
     }
 
     public static byte[] sha(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] sha1(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha1(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1(data);
     }
 
     public static byte[] sha1(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha1(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1(data);
     }
 
     public static byte[] sha1(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha1(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String sha1Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha1Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1Hex(data);
     }
 
     public static String sha1Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha1Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1Hex(data);
     }
 
     public static String sha1Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha1Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha1Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] sha256(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha256(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256(data);
     }
 
     public static byte[] sha256(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha256(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256(data);
     }
 
     public static byte[] sha256(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha256(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String sha256Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256Hex(data);
     }
 
     public static String sha256Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256Hex(data);
     }
 
     public static String sha256Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha256Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] sha384(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha384(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384(data);
     }
 
     public static byte[] sha384(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha384(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384(data);
     }
 
     public static byte[] sha384(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha384(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String sha384Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha384Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384Hex(data);
     }
 
     public static String sha384Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha384Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384Hex(data);
     }
 
     public static String sha384Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha384Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha384Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static byte[] sha512(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha512(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512(data);
     }
 
     public static byte[] sha512(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha512(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512(data);
     }
 
     public static byte[] sha512(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha512(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String sha512Hex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha512Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512Hex(data);
     }
 
     public static String sha512Hex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.sha512Hex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512Hex(data);
     }
 
     public static String sha512Hex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.sha512Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.sha512Hex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static String shaHex(byte[] data) {
-        return org.apache.commons.codec.digest.DigestUtils.shaHex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.shaHex(data);
     }
 
     public static String shaHex(InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.shaHex(data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.shaHex(data);
     }
 
     public static String shaHex(String data) {
-        return org.apache.commons.codec.digest.DigestUtils.shaHex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.shaHex(data.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static MessageDigest updateDigest(MessageDigest messageDigest, byte[] valueToDigest) {
-        return org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest);
     }
 
     public static MessageDigest updateDigest(MessageDigest messageDigest, ByteBuffer valueToDigest) {
-        return org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest);
     }
 
     public static MessageDigest updateDigest(MessageDigest digest, File data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.updateDigest(digest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.updateDigest(digest, data);
     }
 
     public static MessageDigest updateDigest(MessageDigest digest, InputStream data) throws IOException {
-        return org.apache.commons.codec.digest.DigestUtils.updateDigest(digest, data);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.updateDigest(digest, data);
     }
 
     public static MessageDigest updateDigest(MessageDigest messageDigest, String valueToDigest) {
-        return org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest.getBytes(CodecConstants.DEFAULT_CHARSET));
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.updateDigest(messageDigest, valueToDigest.getBytes(CodecConstants.DEFAULT_CHARSET));
     }
 
     public static boolean isAvailable(String messageDigestAlgorithm) {
-        return org.apache.commons.codec.digest.DigestUtils.isAvailable(messageDigestAlgorithm);
+        return com.hx.codec.thirdparties.org.apache.commons.codec.digest.DigestUtils.isAvailable(messageDigestAlgorithm);
     }
 
 }

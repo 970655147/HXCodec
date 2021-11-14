@@ -1,7 +1,6 @@
 package com.hx.codec.utils;
 
 import com.hx.codec.constants.CodecConstants;
-import sun.misc.BASE64Decoder;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
@@ -93,7 +92,7 @@ public final class RsaCodecUtils {
     }
 
     public static PrivateKey getPrivateKey(String key) throws Exception {
-        byte[] keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        byte[] keyBytes = Base64CodecUtils.decodeBase64(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
@@ -101,7 +100,7 @@ public final class RsaCodecUtils {
     }
 
     public static PublicKey getPublicKey(String key) throws Exception {
-        byte[] keyBytes = (new BASE64Decoder()).decodeBuffer(key);
+        byte[] keyBytes = Base64CodecUtils.decodeBase64(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PublicKey publicKey = keyFactory.generatePublic(keySpec);
