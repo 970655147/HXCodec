@@ -2,8 +2,13 @@ package com.hx.codec.utils;
 
 import com.hx.codec.constants.ByteType;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Pooled;
 
 import java.nio.ByteOrder;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * ByteBufUtils
@@ -186,5 +191,70 @@ public class ByteBufUtils {
         return indexOf(haystack, needle, 0);
     }
 
+    public static int indexOf(ByteBuf haystack, byte[] needle, int startIndex) {
+        return ByteBufUtils.doWith(Pooled.wrappedBuffer(needle), needleBuf -> {
+            return indexOf(haystack, needleBuf, startIndex);
+        });
+    }
+
+    public static int indexOf(ByteBuf haystack, byte[] needle) {
+        return indexOf(haystack, needle, 0);
+    }
+
+
+    /**
+     * doWith
+     *
+     * @param buf  buf
+     * @param func func
+     * @return T
+     * @author Jerry.X.He
+     * @date 2021-12-05 10:42
+     */
+    public static <T> T doWith(ByteBuf buf, Function<ByteBuf, T> func) {
+        try {
+            return func.apply(buf);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            buf.release();
+        }
+    }
+
+    public static void doWith(ByteBuf buf, Consumer<ByteBuf> func) {
+        try {
+            func.accept(buf);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            buf.release();
+        }
+    }
+
+    public static <T> T doWith(ByteBuf buf1, ByteBuf buf2, BiFunction<ByteBuf, ByteBuf, T> func) {
+        try {
+            return func.apply(buf1, buf2);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            buf1.release();
+            if (buf2 != buf1) {
+                buf2.release();
+            }
+        }
+    }
+
+    public static void doWith(ByteBuf buf1, ByteBuf buf2, BiConsumer<ByteBuf, ByteBuf> func) {
+        try {
+            func.accept(buf1, buf2);
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            buf1.release();
+            if (buf2 != buf1) {
+                buf2.release();
+            }
+        }
+    }
 
 }

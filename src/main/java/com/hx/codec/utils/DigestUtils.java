@@ -53,11 +53,12 @@ public class DigestUtils {
      * @date 2021/9/8 16:40
      */
     public static byte bcc(ByteBuf sourceBuf) {
-        ByteBuf byteBuf = sourceBuf.copy();
-        byte cs = 0;
-        while (byteBuf.isReadable())
-            cs ^= byteBuf.readByte();
-        return cs;
+        return ByteBufUtils.doWith(sourceBuf.copy(), buf -> {
+            byte cs = 0;
+            while (buf.isReadable())
+                cs ^= buf.readByte();
+            return cs;
+        });
     }
 
     /**
@@ -68,18 +69,19 @@ public class DigestUtils {
      * @date 2021/9/8 16:41
      */
     public static short crc16_CCITT(ByteBuf sourceBuf) {
-        int crc = 0xFFFF;
-        ByteBuf byteBuf = sourceBuf.copy();
-        while (byteBuf.isReadable()) {
-            byte b = byteBuf.readByte();
-            crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
-            crc ^= (b & 0xff);//byte to int, trunc sign
-            crc ^= ((crc & 0xff) >> 4);
-            crc ^= (crc << 12) & 0xffff;
-            crc ^= ((crc & 0xFF) << 5) & 0xffff;
-        }
-        crc &= 0xffff;
-        return (short) crc;
+        return ByteBufUtils.doWith(sourceBuf.copy(), buf -> {
+            int crc = 0xFFFF;
+            while (buf.isReadable()) {
+                byte b = buf.readByte();
+                crc = ((crc >>> 8) | (crc << 8)) & 0xffff;
+                crc ^= (b & 0xff);//byte to int, trunc sign
+                crc ^= ((crc & 0xff) >> 4);
+                crc ^= (crc << 12) & 0xffff;
+                crc ^= ((crc & 0xFF) << 5) & 0xffff;
+            }
+            crc &= 0xffff;
+            return (short) crc;
+        });
     }
 
     /**
@@ -91,14 +93,15 @@ public class DigestUtils {
      * @date 2021-10-16 11:02
      */
     public static short crc16_X16_15_2_1(ByteBuf sourceBuf) {
-        int crc = 0x0000;
-        ByteBuf byteBuf = sourceBuf.copy();
-        while (byteBuf.isReadable()) {
-            byte b = byteBuf.readByte();
-            crc = (crc >>> 8) ^ CRC_16_X_16_15_2_1_TABLES[((crc ^ b) & 0xff)];
-        }
-        return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
+        return ByteBufUtils.doWith(sourceBuf.copy(), buf -> {
+            int crc = 0x0000;
+            while (buf.isReadable()) {
+                byte b = buf.readByte();
+                crc = (crc >>> 8) ^ CRC_16_X_16_15_2_1_TABLES[((crc ^ b) & 0xff)];
+            }
+            return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
 //        return new byte[] { (byte) (0xff & crc), (byte) ((0xff00 & crc) >> 8) };
+        });
     }
 
     /**
@@ -111,23 +114,24 @@ public class DigestUtils {
      * @date 2021-10-16 11:02
      */
     public static short crc16_X16_15_2_1_calc(ByteBuf sourceBuf) {
-        int crc = 0xffff;
-        ByteBuf byteBuf = sourceBuf.copy();
-        while (byteBuf.isReadable()) {
-            byte b = byteBuf.readByte();
-            if (b < 0) {
-                b += 256;
-            }
-            crc ^= (b & 0xff);
-            for (int i = 0; i < 8; i++) {
-                boolean isLastBitOne = ((crc & 0x01) == 0x01);
-                crc >>>= 1;
-                if (isLastBitOne) {
-                    crc ^= 0xA001;
+        return ByteBufUtils.doWith(sourceBuf.copy(), buf -> {
+            int crc = 0xffff;
+            while (buf.isReadable()) {
+                byte b = buf.readByte();
+                if (b < 0) {
+                    b += 256;
+                }
+                crc ^= (b & 0xff);
+                for (int i = 0; i < 8; i++) {
+                    boolean isLastBitOne = ((crc & 0x01) == 0x01);
+                    crc >>>= 1;
+                    if (isLastBitOne) {
+                        crc ^= 0xA001;
+                    }
                 }
             }
-        }
-        return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
+            return (short) (((0xff & crc) << 8) | ((0xff00 & crc) >> 8));
+        });
     }
 
     // ------------------------------------------ DigestUtils methods ------------------------------------------

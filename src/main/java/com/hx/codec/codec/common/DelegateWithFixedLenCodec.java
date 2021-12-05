@@ -2,8 +2,9 @@ package com.hx.codec.codec.common;
 
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import io.netty.buffer.Pooled;
 
 import java.util.Arrays;
 
@@ -55,26 +56,27 @@ public class DelegateWithFixedLenCodec<IN, OUT> extends AbstractCodec<IN, OUT> {
     @Override
     public void encode(OUT entity, ByteBuf buf) {
         // write entity
-        ByteBuf entityBytes = Unpooled.buffer(delegate.length());
-        int writerIndex = entityBytes.writerIndex();
-        delegate.encode(entity, entityBytes);
-        int writtenLen = entityBytes.writerIndex() - writerIndex;
+        ByteBufUtils.doWith(Pooled.buffer(delegate.length()), entityBytes -> {
+            int writerIndex = entityBytes.writerIndex();
+            delegate.encode(entity, entityBytes);
+            int writtenLen = entityBytes.writerIndex() - writerIndex;
 
-        // calc padding
-        AssertUtils.state(writtenLen <= fixedLength, "unexpected string length");
-        int paddingLength = fixedLength - writtenLen;
-        // cache for this
-        byte[] paddingBytes = new byte[paddingLength];
-        Arrays.fill(paddingBytes, paddingByte);
+            // calc padding
+            AssertUtils.state(writtenLen <= fixedLength, "unexpected string length");
+            int paddingLength = fixedLength - writtenLen;
+            // cache for this
+            byte[] paddingBytes = new byte[paddingLength];
+            Arrays.fill(paddingBytes, paddingByte);
 
-        // apply padding & entityBytes
-        if (paddingFirst) {
-            buf.writeBytes(paddingBytes);
-        }
-        buf.writeBytes(entityBytes);
-        if (!paddingFirst) {
-            buf.writeBytes(paddingBytes);
-        }
+            // apply padding & entityBytes
+            if (paddingFirst) {
+                buf.writeBytes(paddingBytes);
+            }
+            buf.writeBytes(entityBytes);
+            if (!paddingFirst) {
+                buf.writeBytes(paddingBytes);
+            }
+        });
     }
 
     @Override
@@ -91,8 +93,9 @@ public class DelegateWithFixedLenCodec<IN, OUT> extends AbstractCodec<IN, OUT> {
             endIdx = endIdx + ((endIdx % byteUnit == 0) ? 0 : (byteUnit - (endIdx % byteUnit))) - 1;
         }
 
-        ByteBuf entityBytes = Unpooled.wrappedBuffer(entityBytesWithPadding, startIdx, (endIdx - startIdx + 1));
-        return delegate.decode(entityBytes);
+        return ByteBufUtils.doWith(Pooled.wrappedBuffer(entityBytesWithPadding, startIdx, (endIdx - startIdx + 1)), entityBytes -> {
+            return delegate.decode(entityBytes);
+        });
     }
 
     @Override

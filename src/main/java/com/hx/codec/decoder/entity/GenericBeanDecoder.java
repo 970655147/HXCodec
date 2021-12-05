@@ -7,6 +7,7 @@ import com.hx.codec.interceptor.FieldInterceptor;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.schema.GenericFieldSchema;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 
@@ -33,25 +34,26 @@ public class GenericBeanDecoder<T> extends AbstractDecoder<T> {
 
     @Override
     public T decode(ByteBuf buf) {
-        ByteBuf dupBuf = buf.copy();
-        try {
-            Class<T> clazz = beanSchema.getClazz();
-            Object result = clazz.newInstance();
+        return ByteBufUtils.doWith(buf.copy(), dupBuf -> {
+            try {
+                Class<T> clazz = beanSchema.getClazz();
+                Object result = clazz.newInstance();
 
-            List<GenericFieldSchema> fieldSchemaList = beanSchema.getFieldSchemaList();
-            FieldInterceptContext fieldInterceptContext = new FieldInterceptContext();
-            wrapSubjectRelated(fieldInterceptContext, beanSchema, (T) result, buf);
-            for (GenericFieldSchema fieldSchema : fieldSchemaList) {
-                AbstractCodec codec = fieldSchema.getCodec();
-                wrapFieldRelated(fieldInterceptContext, fieldSchema, null);
-                decodedField(codec, buf, fieldInterceptContext);
+                List<GenericFieldSchema> fieldSchemaList = beanSchema.getFieldSchemaList();
+                FieldInterceptContext fieldInterceptContext = new FieldInterceptContext();
+                wrapSubjectRelated(fieldInterceptContext, beanSchema, (T) result, buf);
+                for (GenericFieldSchema fieldSchema : fieldSchemaList) {
+                    AbstractCodec codec = fieldSchema.getCodec();
+                    wrapFieldRelated(fieldInterceptContext, fieldSchema, null);
+                    decodedField(codec, buf, fieldInterceptContext);
+                }
+                return (T) result;
+            } catch (Exception e) {
+                e.printStackTrace();
+                AssertUtils.state(false, " an error occurred while decode the buf : " + ByteBufUtil.hexDump(dupBuf));
+                return null;
             }
-            return (T) result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            AssertUtils.state(false, " an error occurred while decode the buf : " + ByteBufUtil.hexDump(dupBuf));
-            return null;
-        }
+        });
     }
 
     // ------------------------------------------ assist methods ------------------------------------------
