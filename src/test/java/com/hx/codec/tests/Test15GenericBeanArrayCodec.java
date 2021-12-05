@@ -39,7 +39,7 @@ public class Test15GenericBeanArrayCodec extends Test00BaseTests {
         codec.encode(new UpConnectReq[]{
                 entity, entity
         }, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq[] decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -74,7 +74,7 @@ public class Test15GenericBeanArrayCodec extends Test00BaseTests {
         codec.encode(new UpConnectReq[]{
                 entity, entity
         }, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq[] decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -109,7 +109,7 @@ public class Test15GenericBeanArrayCodec extends Test00BaseTests {
         codec.encode(new UpConnectReq[]{
                 entity, entity
         }, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq[] decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -145,7 +145,7 @@ public class Test15GenericBeanArrayCodec extends Test00BaseTests {
         codec.encode(new UpConnectReq[]{
                 entity, entity
         }, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq[] decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -181,7 +181,7 @@ public class Test15GenericBeanArrayCodec extends Test00BaseTests {
         codec.encode(new UpConnectReq[]{
                 entity, entity
         }, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq[] decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);

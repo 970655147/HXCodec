@@ -16,10 +16,13 @@ import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+import io.netty.util.ResourceLeakDetector;
+import org.apache.logging.log4j.core.util.ReflectionUtil;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import java.lang.reflect.Field;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.List;
@@ -40,11 +43,13 @@ public class Test01ByteCodec extends Test00BaseTests {
 
     @Test
     public void test01SingedByte() {
+        resetReportLeakLevel();
+
         ByteCodec protocol = new ByteCodec();
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = 23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         int decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -60,7 +65,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = -23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         int decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -76,7 +81,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = 23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         int decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -92,7 +97,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         int entity = -23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         int decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -111,7 +116,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -128,7 +133,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -145,7 +150,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -162,7 +167,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -179,7 +184,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -197,7 +202,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -214,7 +219,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -229,7 +234,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -244,7 +249,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Integer[] entity = new Integer[]{0x01, 0x02, 0x03, 0x05};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Integer[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -261,7 +266,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -278,7 +283,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -295,7 +300,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -312,7 +317,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -329,7 +334,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -347,7 +352,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -364,7 +369,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -379,7 +384,7 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -394,15 +399,31 @@ public class Test01ByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Integer> entity = Arrays.asList(0x01, 0x02, 0x03, 0x05);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Integer> decoded = (List<Integer>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
         AssertUtils.state(encodedHexStr.equals("7e01020305"), " unexpected value ");
         AssertUtils.state(listEquals(decoded, entity), " unexpected value ");
     }
-    
+
     // ------------------------------------------ assist methods ------------------------------------------
+
+    /**
+     * resetReportLeakLevel
+     *
+     * @return void
+     * @author Jerry.X.He
+     * @date 2021-12-05 21:45
+     */
+    public static void resetReportLeakLevel() {
+        try {
+            Field levelField = ResourceLeakDetector.class.getDeclaredField("level");
+            ReflectionUtil.setFieldValue(levelField, null, ResourceLeakDetector.Level.PARANOID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * listEquals

@@ -30,7 +30,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "cafebabe";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -48,7 +48,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "cafebabe";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -66,7 +66,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "cafebabe";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -84,7 +84,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "你好";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -102,7 +102,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "你好";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -120,7 +120,7 @@ public class Test05CharsetStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "你好";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);

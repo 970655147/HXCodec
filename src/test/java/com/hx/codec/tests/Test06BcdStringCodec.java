@@ -33,7 +33,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "13211111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -50,7 +50,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "1329876507";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -67,7 +67,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "13211111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -84,7 +84,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "1329876507";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -101,7 +101,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "132111111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -118,7 +118,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "132987650771";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -135,7 +135,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "13211111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -152,7 +152,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "132987650771";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -169,7 +169,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         BigDecimal entity = new BigDecimal("-123456.456123");
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         BigDecimal decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -186,7 +186,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         BigDecimal entity = new BigDecimal("123456.45612");
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         BigDecimal decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -203,7 +203,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "13211111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -217,7 +217,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "1329876507";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -232,7 +232,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "13211111111";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -246,7 +246,7 @@ public class Test06BcdStringCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "1329876507";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         String decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);

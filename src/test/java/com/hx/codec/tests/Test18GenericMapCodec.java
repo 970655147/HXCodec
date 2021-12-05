@@ -49,7 +49,7 @@ public class Test18GenericMapCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         Map<String, UpConnectReq> decodedEntity = codec.decode(encodedBuf);
         UpConnectReq decodedUpConnectReq = decodedEntity.get(mapKey);
 
@@ -88,7 +88,7 @@ public class Test18GenericMapCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         EntityWithMap decodedEntity = codec.decode(encodedBuf);
         UpConnectReq decodedUpConnectReq = decodedEntity.getConfigMap().get(mapKey);
 

@@ -26,7 +26,7 @@ public class Test11PaddingByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "dummy";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Object decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -40,7 +40,7 @@ public class Test11PaddingByteCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         String entity = "dummy";
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Object decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);

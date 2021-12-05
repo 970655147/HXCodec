@@ -44,7 +44,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         long entity = 23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         long decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -60,7 +60,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         long entity = -23;
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         long decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -79,7 +79,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -96,7 +96,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -113,7 +113,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -130,7 +130,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -147,7 +147,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -165,7 +165,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -182,7 +182,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -197,7 +197,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -212,7 +212,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         Long[] entity = new Long[]{0x01L, 0x02L, 0x03L, 0x05L};
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         Long[] decoded = protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -229,7 +229,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -246,7 +246,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -263,7 +263,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -280,7 +280,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -297,7 +297,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -315,7 +315,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -332,7 +332,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -347,7 +347,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);
@@ -362,7 +362,7 @@ public class Test04QWordCodec extends Test00BaseTests {
         ByteBuf buf = Unpooled.buffer(0x10);
         List<Long> entity = Arrays.asList(0x01L, 0x02L, 0x03L, 0x05L);
         protocol.encode(entity, buf);
-        String encodedHexStr = ByteBufUtil.hexDump(buf.copy());
+        String encodedHexStr = ByteBufUtil.hexDump(buf);
         List<Long> decoded = (List<Long>) protocol.decode(buf);
 
         LOGGER.info(" encodedHexStr : {} ", encodedHexStr);

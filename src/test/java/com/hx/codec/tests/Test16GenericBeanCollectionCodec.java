@@ -40,7 +40,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(Arrays.asList(entity, entity), encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -73,7 +73,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(Arrays.asList(entity, entity), encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -106,7 +106,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(Arrays.asList(entity, entity), encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -140,7 +140,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(Arrays.asList(entity, entity), encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -175,7 +175,7 @@ public class Test16GenericBeanCollectionCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(Arrays.asList(entity, entity), encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         List<UpConnectReq> decodedEntity = (List<UpConnectReq>) codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);

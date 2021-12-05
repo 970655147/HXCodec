@@ -51,7 +51,7 @@ public class Test19CodecFactory extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         EntityWithCodecFactory decodedEntity = codec.decode(encodedBuf);
         UpConnectReq decodedUpConnectReqKey = decodedEntity.getConfigMap().keySet().iterator().next();
         UpConnectReq decodedUpConnectReqValue = decodedEntity.getConfigMap().get(decodedEntity.getConfigMap().keySet().iterator().next());

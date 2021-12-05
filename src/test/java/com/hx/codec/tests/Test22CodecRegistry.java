@@ -46,7 +46,7 @@ public class Test22CodecRegistry extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         EntityWithCodecRegistry decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -76,7 +76,7 @@ public class Test22CodecRegistry extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         EntityWithTypeList decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);

@@ -39,7 +39,7 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
 
         ByteBuf encodedBuf = Unpooled.buffer(128);
         codec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         UpConnectReq decodedEntity = codec.decode(encodedBuf);
 
         LOGGER.info(" encodedBufHexStr : " + encodedBufHexStr);
@@ -84,7 +84,7 @@ public class Test14GenericBeanCodec extends Test00BaseTests {
         ByteBuf encodedBuf = Unpooled.buffer(128);
         headerCodec.encode(header, encodedBuf);
         entityCodec.encode(entity, encodedBuf);
-        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf.copy());
+        String encodedBufHexStr = ByteBufUtil.hexDump(encodedBuf);
         Jt809Header decodedHeader = headerCodec.decode(encodedBuf);
         UpExgMsgRealLocation decodedEntity = entityCodec.decode(encodedBuf);
 
