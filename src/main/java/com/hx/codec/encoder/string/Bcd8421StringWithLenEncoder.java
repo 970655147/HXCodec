@@ -3,6 +3,7 @@ package com.hx.codec.encoder.string;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -43,7 +44,7 @@ public class Bcd8421StringWithLenEncoder extends AbstractEncoder<String> {
     @Override
     public void encode(String entity, ByteBuf buf) {
         byte[] randomEntityBytes = entity.getBytes(Charset.defaultCharset());
-        CodecUtils.writeLen(lenByteType, byteOrder, ((randomEntityBytes.length + 1) >> 1), buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, ((randomEntityBytes.length + 1) >> 1), buf);
         for (byte b : randomEntityBytes) {
             AssertUtils.state(b >= '0' && b <= '9', "unexpected string encoding by BCD8421");
         }

@@ -20,12 +20,10 @@ import com.hx.codec.codec.factory.string.*;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.schema.GenericBeanSchema;
-import io.netty.buffer.ByteBuf;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
@@ -332,83 +330,6 @@ public class CodecUtils {
     }
 
     /**
-     * writeLen
-     *
-     * @return void
-     * @author Jerry.X.He
-     * @date 2021/9/23 15:03
-     */
-    public static void writeLen(ByteType byteType, ByteOrder byteOrder, int len, ByteBuf buf) {
-        if (byteType == ByteType.BYTE) {
-            AssertUtils.state(len <= maxLenCouldHold(byteType), " length overflow : " + len);
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                buf.writeByte(len);
-            } else {
-                buf.writeByte(len);
-            }
-        } else if (byteType == ByteType.WORD) {
-            AssertUtils.state(len <= maxLenCouldHold(byteType), " length overflow : " + len);
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                buf.writeShort(len);
-            } else {
-                buf.writeShortLE(len);
-            }
-        } else if (byteType == ByteType.DWORD) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                buf.writeInt(len);
-            } else {
-                buf.writeIntLE(len);
-            }
-        } else if (byteType == ByteType.QWORD) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                buf.writeLong(len);
-            } else {
-                buf.writeLong(len);
-            }
-        } else {
-            AssertUtils.state(false, " unknown byteType : " + byteType);
-        }
-    }
-
-    /**
-     * writeLen
-     *
-     * @return void
-     * @author Jerry.X.He
-     * @date 2021/9/23 15:03
-     */
-    public static long readLen(ByteType byteType, ByteOrder byteOrder, ByteBuf buf) {
-        if (byteType == ByteType.BYTE) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                return buf.readByte();
-            } else {
-                return buf.readByte();
-            }
-        } else if (byteType == ByteType.WORD) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                return buf.readShort();
-            } else {
-                return buf.readShortLE();
-            }
-        } else if (byteType == ByteType.DWORD) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                return buf.readInt();
-            } else {
-                return buf.readIntLE();
-            }
-        } else if (byteType == ByteType.QWORD) {
-            if (byteOrder == ByteOrder.BIG_ENDIAN) {
-                return buf.readLong();
-            } else {
-                return buf.readLongLE();
-            }
-        } else {
-            AssertUtils.state(false, " unknown byteType : " + byteType);
-            return -1;
-        }
-    }
-
-    /**
      * registerDataType2Codec
      *
      * @return boolean
@@ -535,67 +456,6 @@ public class CodecUtils {
      */
     public static boolean isMapEmpty(Map<?, ?> collection) {
         return collection == null ? true : collection.isEmpty();
-    }
-
-    /**
-     * $desc
-     *
-     * @param output        output
-     * @param lengthInBytes lengthInBytes
-     * @param index         index
-     * @return int
-     * @author Jerry.X.He
-     * @date 2021-10-10 10:51
-     */
-    public static int getInt(ByteBuf output, int lengthInBytes, int index) {
-        int value;
-        switch (lengthInBytes) {
-            case 1:
-                value = output.getUnsignedByte(index);
-                break;
-            case 2:
-                value = output.getUnsignedShort(index);
-                break;
-            case 3:
-                value = output.getUnsignedMedium(index);
-                break;
-            case 4:
-                value = output.getInt(index);
-                break;
-            default:
-                throw new RuntimeException("unsupported lengthInBytes: " + lengthInBytes + " (expected: 1, 2, 3, 4)");
-        }
-        return value;
-    }
-
-    /**
-     * setInt
-     *
-     * @param output        output
-     * @param lengthInBytes lengthInBytes
-     * @param index         index
-     * @param value         value
-     * @return void
-     * @author Jerry.X.He
-     * @date 2021-10-03 12:59
-     */
-    public static void setInt(ByteBuf output, int lengthInBytes, int index, int value) {
-        switch (lengthInBytes) {
-            case 1:
-                output.setByte(index, value);
-                break;
-            case 2:
-                output.setShort(index, value);
-                break;
-            case 3:
-                output.setMedium(index, value);
-                break;
-            case 4:
-                output.setInt(index, value);
-                break;
-            default:
-                throw new RuntimeException("unsupported lengthInBytes: " + lengthInBytes + " (expected: 1, 2, 3, 4)");
-        }
     }
 
     //-----------------------------------------------------------------------

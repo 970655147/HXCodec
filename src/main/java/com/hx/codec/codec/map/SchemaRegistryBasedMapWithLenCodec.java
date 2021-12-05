@@ -4,6 +4,7 @@ import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.CodecConstants;
 import com.hx.codec.codec.registry.CodecRegistry;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -31,7 +32,7 @@ public class SchemaRegistryBasedMapWithLenCodec<K> extends AbstractCodec<Map<K, 
 
     @Override
     public void encode(Map<K, Object> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
         for (Map.Entry<K, Object> entry : entity.entrySet()) {
             AbstractCodec valueCodec = codecRegistry.lookUp(entry.getKey());
 
@@ -43,7 +44,7 @@ public class SchemaRegistryBasedMapWithLenCodec<K> extends AbstractCodec<Map<K, 
 
     @Override
     public Map<K, Object> decode(ByteBuf buf) {
-        int size = (int) CodecUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
+        int size = (int) ByteBufUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
         Map<K, Object> result = new LinkedHashMap<>(size);
         for (int i = 0; i < size; i++) {
             K key = keyCodec.decode(buf);

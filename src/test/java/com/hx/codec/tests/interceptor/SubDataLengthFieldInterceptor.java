@@ -2,6 +2,7 @@ package com.hx.codec.tests.interceptor;
 
 import com.hx.codec.interceptor.FieldInterceptContext;
 import com.hx.codec.interceptor.FieldInterceptor;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -34,7 +35,7 @@ public class SubDataLengthFieldInterceptor implements FieldInterceptor {
 
             int subDataLengthLenInBytes = context.getBeanSchema().lookupFieldSchema("subDataLength").getFieldAnno().lengthInBytes();
             int subDataLength = writerIndex - subDataLengthWriterIndex - subDataLengthLenInBytes;
-            CodecUtils.setInt(byteBuf, subDataLengthLenInBytes, subDataLengthWriterIndex, subDataLength);
+            ByteBufUtils.setInt(byteBuf, subDataLengthLenInBytes, subDataLengthWriterIndex, subDataLength);
         }
     }
 

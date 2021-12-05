@@ -2,6 +2,7 @@ package com.hx.codec.decoder.string;
 
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.decoder.AbstractDecoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -40,7 +41,7 @@ public class Bcd8421StringWithLenDecoder extends AbstractDecoder<String> {
 
     @Override
     public String decode(ByteBuf buf) {
-        long len = CodecUtils.readLen(lenByteType, byteOrder, buf);
+        long len = ByteBufUtils.readLen(lenByteType, byteOrder, buf);
         byte[] entityBytes = new byte[(int) len];
         buf.readBytes(entityBytes);
 

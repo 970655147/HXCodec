@@ -4,6 +4,7 @@ import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.entity.GenericBeanEncoder;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -31,7 +32,7 @@ public class GenericBeanCollectionWithLenEncoder<T> extends AbstractEncoder<Coll
 
     @Override
     public void encode(Collection<T> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
         for (T ele : entity) {
             encoder.encode(ele, buf);
         }

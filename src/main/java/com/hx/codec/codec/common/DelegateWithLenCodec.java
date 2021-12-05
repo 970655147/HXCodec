@@ -2,6 +2,7 @@ package com.hx.codec.codec.common;
 
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.constants.ByteType;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -46,7 +47,7 @@ public class DelegateWithLenCodec<IN, OUT> extends AbstractCodec<IN, OUT> {
     @Override
     public void encode(OUT entity, ByteBuf buf) {
         int writerLenIdx = buf.writerIndex();
-        CodecUtils.writeLen(lenByteType, DEFAULT_BYTE_ORDER, 0, buf);
+        ByteBufUtils.writeLen(lenByteType, DEFAULT_BYTE_ORDER, 0, buf);
 
         int writerIndex = buf.writerIndex();
         delegate.encode(entity, buf);
@@ -54,12 +55,12 @@ public class DelegateWithLenCodec<IN, OUT> extends AbstractCodec<IN, OUT> {
         if (includeLen) {
             writtenLen += CodecUtils.lenBytes(lenByteType);
         }
-        CodecUtils.setInt(buf, CodecUtils.lenBytes(lenByteType), writerLenIdx, writtenLen);
+        ByteBufUtils.setInt(buf, CodecUtils.lenBytes(lenByteType), writerLenIdx, writtenLen);
     }
 
     @Override
     public IN decode(ByteBuf buf) {
-        int len = (int) CodecUtils.readLen(lenByteType, DEFAULT_BYTE_ORDER, buf);
+        int len = (int) ByteBufUtils.readLen(lenByteType, DEFAULT_BYTE_ORDER, buf);
         if (includeLen) {
             len -= CodecUtils.lenBytes(lenByteType);
         }

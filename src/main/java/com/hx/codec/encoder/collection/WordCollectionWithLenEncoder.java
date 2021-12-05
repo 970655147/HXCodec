@@ -3,6 +3,7 @@ package com.hx.codec.encoder.collection;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.common.WordEncoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -40,7 +41,7 @@ public class WordCollectionWithLenEncoder extends AbstractEncoder<Collection<Int
 
     @Override
     public void encode(Collection<Integer> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
         for (Integer ele : entity) {
             encoder.encode(ele, buf);
         }

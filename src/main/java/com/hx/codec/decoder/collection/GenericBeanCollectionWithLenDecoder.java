@@ -4,6 +4,7 @@ import com.hx.codec.constants.ByteType;
 import com.hx.codec.decoder.AbstractDecoder;
 import com.hx.codec.decoder.entity.GenericBeanDecoder;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -35,7 +36,7 @@ public class GenericBeanCollectionWithLenDecoder<T> extends AbstractDecoder<Coll
 
     @Override
     public Collection<T> decode(ByteBuf buf) {
-        long len = CodecUtils.readLen(lenByteType, byteOrder, buf);
+        long len = ByteBufUtils.readLen(lenByteType, byteOrder, buf);
         List<T> result = new ArrayList<>((int) len);
         for (int i = 0; i < len; i++) {
             T b = decoder.decode(buf);

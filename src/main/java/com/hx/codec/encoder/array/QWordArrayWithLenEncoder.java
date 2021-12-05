@@ -3,6 +3,8 @@ package com.hx.codec.encoder.array;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.common.QWordEncoder;
+import com.hx.codec.utils.ByteBufUtils;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -39,7 +41,7 @@ public class QWordArrayWithLenEncoder extends AbstractEncoder<Long[]> {
 
     @Override
     public void encode(Long[] entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, byteOrder, entity.length, buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entity.length, buf);
         for (long ele : entity) {
             encoder.encode(ele, buf);
         }

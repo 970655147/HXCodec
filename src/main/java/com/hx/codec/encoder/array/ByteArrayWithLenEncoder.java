@@ -3,6 +3,7 @@ package com.hx.codec.encoder.array;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.common.ByteEncoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -39,7 +40,7 @@ public class ByteArrayWithLenEncoder extends AbstractEncoder<Integer[]> {
 
     @Override
     public void encode(Integer[] entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, byteOrder, entity.length, buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entity.length, buf);
         for (int ele : entity) {
             encoder.encode(ele, buf);
         }

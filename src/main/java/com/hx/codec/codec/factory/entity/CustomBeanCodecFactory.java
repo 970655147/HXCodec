@@ -4,6 +4,7 @@ import com.hx.codec.anno.Field;
 import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 
 import java.nio.ByteOrder;

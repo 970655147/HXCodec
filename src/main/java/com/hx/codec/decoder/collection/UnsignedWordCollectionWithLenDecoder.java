@@ -3,6 +3,7 @@ package com.hx.codec.decoder.collection;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.decoder.AbstractDecoder;
 import com.hx.codec.decoder.common.UnsignedWordDecoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -42,7 +43,7 @@ public class UnsignedWordCollectionWithLenDecoder extends AbstractDecoder<Collec
 
     @Override
     public Collection<Integer> decode(ByteBuf buf) {
-        long len = CodecUtils.readLen(lenByteType, byteOrder, buf);
+        long len = ByteBufUtils.readLen(lenByteType, byteOrder, buf);
         List<Integer> result = new ArrayList<>((int) len);
         for (int i = 0; i < len; i++) {
             Integer b = decoder.decode(buf);

@@ -9,6 +9,7 @@ import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.codec.map.GenericMapWithLenCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import org.apache.logging.log4j.util.Strings;
 

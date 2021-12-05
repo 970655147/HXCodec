@@ -11,6 +11,7 @@ import com.hx.codec.constants.ByteType;
 import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.schema.GenericBeanSchema;
 import com.hx.codec.utils.AssertUtils;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import org.apache.logging.log4j.util.Strings;
 

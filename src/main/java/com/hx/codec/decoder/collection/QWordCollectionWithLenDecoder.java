@@ -3,6 +3,7 @@ package com.hx.codec.decoder.collection;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.decoder.AbstractDecoder;
 import com.hx.codec.decoder.common.QWordDecoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -42,7 +43,7 @@ public class QWordCollectionWithLenDecoder extends AbstractDecoder<Collection<Lo
 
     @Override
     public Collection<Long> decode(ByteBuf buf) {
-        long len = CodecUtils.readLen(lenByteType, byteOrder, buf);
+        long len = ByteBufUtils.readLen(lenByteType, byteOrder, buf);
         List<Long> result = new ArrayList<>((int) len);
         for (int i = 0; i < len; i++) {
             Long b = decoder.decode(buf);

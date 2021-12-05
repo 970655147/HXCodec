@@ -3,6 +3,7 @@ package com.hx.codec.decoder.array;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.decoder.AbstractDecoder;
 import com.hx.codec.decoder.common.UnsignedWordDecoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -39,7 +40,7 @@ public class UnsignedWordArrayWithLenDecoder extends AbstractDecoder<Integer[]> 
 
     @Override
     public Integer[] decode(ByteBuf buf) {
-        long len = CodecUtils.readLen(lenByteType, byteOrder, buf);
+        long len = ByteBufUtils.readLen(lenByteType, byteOrder, buf);
         Integer[] result = new Integer[(int) len];
         for (int i = 0; i < len; i++) {
             Integer b = decoder.decode(buf);

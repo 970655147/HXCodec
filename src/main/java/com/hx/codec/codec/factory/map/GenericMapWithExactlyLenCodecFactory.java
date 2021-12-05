@@ -10,6 +10,7 @@ import com.hx.codec.codec.map.GenericMapCodec;
 import com.hx.codec.codec.map.GenericMapWithExactlyLenCodec;
 import com.hx.codec.constants.DataType;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import org.apache.logging.log4j.util.Strings;
 

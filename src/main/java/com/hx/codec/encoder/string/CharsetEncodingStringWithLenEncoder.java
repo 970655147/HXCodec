@@ -2,6 +2,7 @@ package com.hx.codec.encoder.string;
 
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.AssertUtils;
 import io.netty.buffer.ByteBuf;
@@ -44,7 +45,7 @@ public class CharsetEncodingStringWithLenEncoder extends AbstractEncoder<String>
         byte[] entityBytes = entity.getBytes(charset);
         AssertUtils.state(entityBytes.length <= CodecUtils.maxLenCouldHold(lenByteType), "unexpected string length");
 
-        CodecUtils.writeLen(lenByteType, byteOrder, entityBytes.length, buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entityBytes.length, buf);
         buf.writeBytes(entityBytes);
     }
 

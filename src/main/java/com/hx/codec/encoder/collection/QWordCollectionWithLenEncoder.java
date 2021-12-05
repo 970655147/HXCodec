@@ -3,6 +3,7 @@ package com.hx.codec.encoder.collection;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.encoder.AbstractEncoder;
 import com.hx.codec.encoder.common.QWordEncoder;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -40,7 +41,7 @@ public class QWordCollectionWithLenEncoder extends AbstractEncoder<Collection<Lo
 
     @Override
     public void encode(Collection<Long> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, byteOrder, entity.size(), buf);
         for (Long ele : entity) {
             encoder.encode(ele, buf);
         }

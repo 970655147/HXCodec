@@ -4,6 +4,7 @@ import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.entity.GenericBeanCodec;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.CodecConstants;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -32,7 +33,7 @@ public class GenericMapWithLenCodec<K, V> extends AbstractCodec<Map<K, V>, Map<K
 
     @Override
     public void encode(Map<K, V> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
         for (Map.Entry<K, V> entry : entity.entrySet()) {
             keyCodec.encode(entry.getKey(), buf);
             valueCodec.encode(entry.getValue(), buf);
@@ -41,7 +42,7 @@ public class GenericMapWithLenCodec<K, V> extends AbstractCodec<Map<K, V>, Map<K
 
     @Override
     public Map<K, V> decode(ByteBuf buf) {
-        int size = (int) CodecUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
+        int size = (int) ByteBufUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
         Map<K, V> result = new LinkedHashMap<>(size);
         for (int i = 0; i < size; i++) {
             K key = keyCodec.decode(buf);

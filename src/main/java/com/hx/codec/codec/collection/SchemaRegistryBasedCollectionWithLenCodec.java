@@ -4,6 +4,7 @@ import com.hx.codec.codec.AbstractCodec;
 import com.hx.codec.codec.registry.CodecRegistry;
 import com.hx.codec.constants.ByteType;
 import com.hx.codec.constants.CodecConstants;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import io.netty.buffer.ByteBuf;
 
@@ -31,7 +32,7 @@ public class SchemaRegistryBasedCollectionWithLenCodec<T> extends AbstractCodec<
 
     @Override
     public void encode(Collection<T> entity, ByteBuf buf) {
-        CodecUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
+        ByteBufUtils.writeLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, entity.size(), buf);
         for (T ele : entity) {
             AbstractCodec valueCodec = codecRegistry.lookUp(ele);
             valueCodec.encode(ele, buf);
@@ -40,7 +41,7 @@ public class SchemaRegistryBasedCollectionWithLenCodec<T> extends AbstractCodec<
 
     @Override
     public Collection<T> decode(ByteBuf buf) {
-        int size = (int) CodecUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
+        int size = (int) ByteBufUtils.readLen(lenByteType, CodecConstants.DEFAULT_BYTE_ORDER, buf);
         List<T> result = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             T registryKey = codecRegistry.readKeyFrom(buf);

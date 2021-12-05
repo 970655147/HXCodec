@@ -7,6 +7,7 @@ import com.hx.codec.codec.collection.GenericBeanCollectionWithFixedLenCodec;
 import com.hx.codec.codec.factory.AbstractCodecFactory;
 import com.hx.codec.codec.factory.CodecFactoryContext;
 import com.hx.codec.schema.GenericBeanSchema;
+import com.hx.codec.utils.ByteBufUtils;
 import com.hx.codec.utils.CodecUtils;
 import com.hx.codec.utils.JSONUtils;
 import org.apache.logging.log4j.util.Strings;
