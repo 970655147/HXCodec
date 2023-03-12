@@ -1,15 +1,21 @@
 package com.hx.codec.utils;
 
+import com.hx.codec.constants.Constants;
+import com.hx.codec.utils.IoUtils;
+
+import javax.net.ssl.*;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
-
-import static com.hx.codec.constants.Constants.STRING_UTF8;
 
 
 /**
@@ -37,10 +43,11 @@ public class URLConnectionUtils {
                                    String respCharset) {
         HttpURLConnection conn = null;
         try {
+            disableSSLVerification();
             String queryString = serializeQueryString(form);
             String queryStringSeprator = urlStr.contains("?") ? "&" : "?";
             String fullUrl = urlStr;
-            if (CodecUtils.isNotBlank(queryString)) {
+            if (isNotBlank(queryString)) {
                 fullUrl = urlStr + queryStringSeprator + queryString;
             }
             URL url = new URL(fullUrl);
@@ -101,6 +108,7 @@ public class URLConnectionUtils {
                                     String respCharset) {
         HttpURLConnection conn = null;
         try {
+            disableSSLVerification();
             URL url = new URL(urlStr);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");//POST GET PUT DELETE
@@ -153,6 +161,69 @@ public class URLConnectionUtils {
     }
 
     /**
+     * postBody
+     *
+     * @return java.lang.String
+     * @author Jerry.X.He
+     * @date 2021/5/5 10:26
+     */
+    public static HttpResponse postBody(String urlStr, Map<String, String> headers, String postBody,
+                                        String respCharset) {
+        HttpURLConnection conn = null;
+        try {
+            disableSSLVerification();
+            URL url = new URL(urlStr);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");//POST GET PUT DELETE
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                conn.setRequestProperty(entry.getKey(), entry.getValue());
+            }
+            conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.connect();
+            OutputStream os = conn.getOutputStream();
+            os.write(postBody.getBytes());
+            os.flush();
+            os.close();
+
+            HttpResponse result = new HttpResponse();
+            result.setUrl(conn.getURL());
+            result.setMethod(conn.getRequestMethod());
+            result.setHeaders(conn.getHeaderFields());
+            result.setResponseCode(conn.getResponseCode());
+            result.setResponseMessage(conn.getResponseMessage());
+            // if success, read response from server
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
+                if (respCharset == null) {
+                    respCharset = getCharsetFromServer(result);
+                }
+                String respFromServer = IoUtils.readStringFromInputStream(conn.getInputStream(), respCharset);
+                result.setRespCharset(respCharset);
+                result.setRespFromServer(respFromServer);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
+        }
+    }
+
+    public static HttpResponse postBody(String urlStr, Map<String, String> headers, String postBody) {
+        return postBody(urlStr, headers, postBody, null);
+    }
+
+    public static HttpResponse postBody(String urlStr, String postBody) {
+        Map<String, String> defaultHeaders = new HashMap<>();
+        defaultHeaders.put("Content-Type", "application/json;charset=UTF-8");
+        return postBody(urlStr, defaultHeaders, postBody);
+    }
+
+    /**
      * 序列化給定的 form 为查询字符串
      *
      * @return java.lang.String
@@ -163,8 +234,9 @@ public class URLConnectionUtils {
         StringJoiner joiner = new StringJoiner("&");
         for (Map.Entry<String, String> entry : form.entrySet()) {
             try {
-                joiner.add(URLEncoder.encode(entry.getKey(), STRING_UTF8) + "=" + URLEncoder.encode(entry.getValue(), STRING_UTF8));
-//                joiner.add(entry.getKey() + "=" + entry.getValue());
+                joiner.add(URLEncoder.encode(entry.getKey(), Constants.STRING_UTF8) + "=" + URLEncoder
+                        .encode(entry.getValue(), Constants.STRING_UTF8));
+                //                joiner.add(entry.getKey() + "=" + entry.getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -180,7 +252,11 @@ public class URLConnectionUtils {
      * @date 2021/5/5 10:35
      */
     public static Map<String, String> deserializeQueryString(String queryString) {
-//        jobGroup=1&jobDesc=task desc &author=MEIYA&alarmEmail=&scheduleType=CRON&scheduleConf=0 0 * * * ?&cronGen_display=0 0 * * * ?&schedule_conf_CRON=&schedule_conf_FIX_RATE=&schedule_conf_FIX_DELAY=&glueType=BEAN&executorHandler=companyEmergencyRescueAndMaterialJobHandler&executorParam=&executorRouteStrategy=FIRST&childJobId=&misfireStrategy=DO_NOTHING&executorBlockStrategy=SERIAL_EXECUTION&executorTimeout=0&executorFailRetryCount=3&glueRemark=GLUE代码初始化&glueSource=
+        //        jobGroup=1&jobDesc=task desc &author=MEIYA&alarmEmail=&scheduleType=CRON&scheduleConf=0 0 * * *
+        //        ?&cronGen_display=0 0 * * * ?&schedule_conf_CRON=&schedule_conf_FIX_RATE=&schedule_conf_FIX_DELAY
+        //        =&glueType=BEAN&executorHandler=companyEmergencyRescueAndMaterialJobHandler&executorParam
+        //        =&executorRouteStrategy=FIRST&childJobId=&misfireStrategy=DO_NOTHING&executorBlockStrategy
+        //        =SERIAL_EXECUTION&executorTimeout=0&executorFailRetryCount=3&glueRemark=GLUE代码初始化&glueSource=
         String[] kvList = queryString.split("&");
         Map<String, String> result = new HashMap<>();
         for (String kv : kvList) {
@@ -204,7 +280,7 @@ public class URLConnectionUtils {
         }
 
         List<String> headerValues = response.getHeaders().get(headerKey);
-        if (CodecUtils.isCollEmpty(headerValues)) {
+        if (headerValues == null || headerValues.isEmpty()) {
             return null;
         }
 
@@ -220,94 +296,81 @@ public class URLConnectionUtils {
      */
     public static String getCharsetFromServer(HttpResponse response) {
         String contentType = getFirstHeaderValue(response, "Content-Type");
-        if (CodecUtils.isNotBlank(contentType)) {
+        if (isNotBlank(contentType)) {
             String charsetInContentType = "charset=";
             int idxOfCharset = contentType.toLowerCase().indexOf(charsetInContentType);
             if (idxOfCharset >= 0) {
                 int idxOfCharsetEnd = contentType.toLowerCase().indexOf(";", idxOfCharset);
-                return contentType.substring(idxOfCharset + charsetInContentType.length(), idxOfCharsetEnd < 0 ? contentType.length() : idxOfCharsetEnd);
+                return contentType.substring(idxOfCharset + charsetInContentType.length(),
+                        idxOfCharsetEnd < 0 ? contentType.length() : idxOfCharsetEnd);
             }
         }
 
-        return STRING_UTF8;
+        return Constants.STRING_UTF8;
     }
 
-    /**
-     * HttpResponse
-     *
-     * @author Jerry.X.He
-     * @version 1.0
-     * @date 2021-10-02 19:43
-     */
-    public static class HttpResponse {
-        private URL url;
-        private String method;
-        private int responseCode;
-        private String responseMessage;
-        private Map<String, List<String>> headers;
-        private String respCharset;
-        private String respFromServer;
-
-        public HttpResponse() {
-        }
-
-        public URL getUrl() {
-            return url;
-        }
-
-        public void setUrl(URL url) {
-            this.url = url;
-        }
-
-        public String getMethod() {
-            return method;
-        }
-
-        public void setMethod(String method) {
-            this.method = method;
-        }
-
-        public int getResponseCode() {
-            return responseCode;
-        }
-
-        public void setResponseCode(int responseCode) {
-            this.responseCode = responseCode;
-        }
-
-        public String getResponseMessage() {
-            return responseMessage;
-        }
-
-        public void setResponseMessage(String responseMessage) {
-            this.responseMessage = responseMessage;
-        }
-
-        public Map<String, List<String>> getHeaders() {
-            return headers;
-        }
-
-        public void setHeaders(Map<String, List<String>> headers) {
-            this.headers = headers;
-        }
-
-        public String getRespCharset() {
-            return respCharset;
-        }
-
-        public void setRespCharset(String respCharset) {
-            this.respCharset = respCharset;
-        }
-
-        public String getRespFromServer() {
-            return respFromServer;
-        }
-
-        public void setRespFromServer(String respFromServer) {
-            this.respFromServer = respFromServer;
-        }
+    public static Map<String, String> commonHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("accept", "*/*");
+        headers.put("connection", "Keep-Alive");
+        headers.put("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+        headers.put("Accept-Charset", "utf-8");
+        headers.put("contentType", "utf-8");
+        return headers;
     }
 
+    // Method used for bypassing SSL verification
+    public static void disableSSLVerification() {
+
+        TrustManager[] trustAllCerts = new TrustManager[]{new X509ExtendedTrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) {
+
+            }
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine) {
+
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine) {
+
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            }
+
+        }};
+
+        SSLContext sc = null;
+        try {
+            sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+    }
+
+    public static boolean isNotBlank(String str) {
+        return (str != null) && (!str.trim().isEmpty());
+    }
 
 }
 
